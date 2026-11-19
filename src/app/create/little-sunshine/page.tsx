@@ -1,11 +1,6 @@
-import type { Metadata } from "next";
-import { SunshineStudio } from "@/components/editor/SunshineStudio";
+import { redirect } from "next/navigation";
 
-export const metadata: Metadata = {
-  title: "Personalize A Little Sunshine — little moments",
-  description: "Write a little note and preview an interactive envelope card.",
-};
-
-export default function SunshineCreatePage() {
-  return <SunshineStudio />;
+// Previous mock sender-studio URL now points to the recipient-first card demo.
+export default function OldSunshineStudioRoute() {
+  redirect("/cards/little-sunshine");
 }
