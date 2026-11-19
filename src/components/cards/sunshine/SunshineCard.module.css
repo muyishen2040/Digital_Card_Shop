@@ -135,6 +135,7 @@
   transition-delay: 0s;
 }
 .closing .envelope { pointer-events: none; }
+.closing .letter { z-index: 3; }
 .closing .envelopeFlap { transition-delay: .58s; }
 .open .seal { opacity: 0; }
 .letter {

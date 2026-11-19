@@ -147,7 +147,7 @@ export function SunshineCard({ content }: { content: CardPersonalization }) {
         </div>
       </div>
       <span className={styles.srOnly} role="status">
-        {phase === "open" ? "Letter opened" : phase === "closed" && hasInteracted.current ? "Letter folded away" : ""}
+        {phase === "open" ? "Letter opened" : ""}
       </span>
     </main>
   );
