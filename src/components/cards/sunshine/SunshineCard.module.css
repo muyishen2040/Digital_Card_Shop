@@ -1,0 +1,289 @@
+.card {
+  --card-ink: #514638;
+  --card-pink: #f0d2c1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  isolation: isolate;
+  overflow: hidden;
+  width: 100%;
+  min-height: 635px;
+  border-radius: 9px;
+  background: #fbf4e9;
+  color: var(--card-ink);
+  box-shadow: 0 22px 70px rgba(66, 48, 30, 0.085), 0 2px 8px rgba(66, 48, 30, 0.06);
+}
+.card * { box-sizing: border-box; }
+.sunwash {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(ellipse at 76% 17%, rgba(250, 213, 145, .45) 0, transparent 53%),
+              linear-gradient(145deg, #fffaf0 0%, #f8eddf 100%);
+}
+.outline {
+  position: absolute;
+  inset: 13px;
+  border: 1px solid rgba(127, 99, 74, .16);
+  border-radius: 3px;
+  pointer-events: none;
+}
+.masthead {
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 34px 38px 0;
+  color: #827666;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 12px;
+  letter-spacing: .02em;
+}
+.masthead span:first-child { font-style: italic; font-size: 16px; color: #946d62; }
+.masthead span:last-child { font-family: Arial, Helvetica, sans-serif; font-size: 9px; letter-spacing: .08em; }
+.scene {
+  position: relative;
+  flex: 1;
+  min-height: 478px;
+}
+.sundisc {
+  position: absolute;
+  top: 17px;
+  right: 16%;
+  width: 100px;
+  height: 100px;
+  border: 1px solid rgba(198, 163, 111, .30);
+  border-radius: 50%;
+  opacity: .75;
+}
+.sundisc::before, .sundisc::after {
+  content: "";
+  position: absolute;
+  inset: 16px;
+  border: 1px solid rgba(198, 163, 111, .22);
+  border-radius: 50%;
+}
+.sundisc::after { inset: 31px; background: rgba(235, 188, 119, .18); }
+.botanicalLeft, .botanicalRight {
+  position: absolute;
+  width: 145px;
+  height: 223px;
+  z-index: 1;
+  transform-origin: 50% 95%;
+  pointer-events: none;
+}
+.botanicalLeft { bottom: 1%; left: -1%; transform: rotate(-18deg); }
+.botanicalRight { right: 0; top: 8%; transform: scaleX(-1) rotate(-16deg); opacity: .65; }
+.flower { transform-origin: 114px 31px; }
+.isOpen .botanicalLeft .flower, .isOpen .botanicalRight .flower {
+  animation: blossom .85s cubic-bezier(.22, 1, .36, 1) both;
+}
+.envelope {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  top: 44%;
+  width: min(68%, 320px);
+  aspect-ratio: 1.52;
+  transform: translate(-50%, -40%);
+  perspective: 700px;
+  filter: drop-shadow(0 17px 12px rgba(111, 78, 53, .14));
+  transition: transform .85s cubic-bezier(.22, 1, .36, 1), opacity .6s ease;
+}
+.envelopeBack, .envelopeInsert, .envelopeFront, .envelopeFlap { position: absolute; inset: 0; border-radius: 3px; }
+.envelopeBack { background: #c89b7b; box-shadow: inset 0 0 0 1px rgba(122, 77, 57, .14); }
+.envelopeInsert {
+  top: 10%;
+  left: 9%;
+  width: 82%;
+  height: 70%;
+  background: #fffcf4;
+  border: 1px solid #e9dfd1;
+  transform: rotate(-3deg);
+}
+.envelopeFront {
+  z-index: 2;
+  background: linear-gradient(152deg, #efceb3 0%, #ddb495 85%);
+  clip-path: polygon(0 32%, 50% 73%, 100% 32%, 100% 100%, 0 100%);
+  box-shadow: inset 0 0 0 1px rgba(119, 74, 47, .14);
+}
+.envelopeFlap {
+  z-index: 3;
+  background: #efd0b5;
+  clip-path: polygon(0 0, 100% 0, 50% 59%);
+  transform-origin: 50% 0%;
+  backface-visibility: hidden;
+  transition: transform .8s cubic-bezier(.22, 1, .36, 1);
+}
+.seal {
+  position: absolute;
+  z-index: 4;
+  left: 50%;
+  top: 43%;
+  display: grid;
+  place-items: center;
+  width: 57px;
+  height: 57px;
+  border: 3px solid rgba(255, 245, 233, .72);
+  border-radius: 50%;
+  background: #b97065;
+  color: #ffede0;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 3px 6px rgba(75, 45, 38, .2), inset 0 0 0 1px rgba(119, 53, 45, .4);
+  transition: opacity .2s ease;
+}
+.seal svg { width: 34px; height: 34px; }
+.forYou {
+  position: absolute;
+  z-index: 3;
+  top: calc(44% + min(17%, 95px));
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  color: #7a6657;
+  text-align: center;
+}
+.forYou span { font: italic 15px Georgia, serif; }
+.forYou strong { font: normal 25px Georgia, serif; overflow-wrap: anywhere; }
+.isOpen .envelope {
+  transform: translate(-50%, 90%) scale(.78) rotate(-5deg);
+  opacity: .32;
+}
+.isOpen .envelopeFlap { transform: rotateX(180deg); }
+.isOpen .seal { opacity: 0; }
+.letter {
+  position: absolute;
+  z-index: 4;
+  top: 50%;
+  left: 50%;
+  width: min(calc(100% - 52px), 397px);
+  height: min(424px, calc(100% - 36px));
+  padding: 31px 34px 27px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: #fffdf8;
+  color: #534538;
+  border: 1px solid #e8dccd;
+  box-shadow: 0 13px 35px rgba(91, 65, 48, .13);
+  transform: translate(-50%, -50%);
+  animation: letterRise .9s cubic-bezier(.22, 1, .36, 1) both;
+  scrollbar-color: #ccb39c transparent;
+  scrollbar-width: thin;
+}
+.letter::before {
+  content: "";
+  position: absolute;
+  inset: 11px;
+  border: 1px solid rgba(170, 135, 107, .22);
+  pointer-events: none;
+}
+.letterTop { position: relative; display: flex; justify-content: space-between; align-items: center; color: #a77e64; font: italic 13px Georgia, serif; }
+.letterSun { display: grid; place-items: center; color: #b99563; }
+.letterSun svg { width: 28px; height: 28px; }
+.letterTitle {
+  position: relative;
+  margin: 24px 0 22px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(26px, 4vw, 37px);
+  font-weight: 400;
+  line-height: 1.18;
+  letter-spacing: -.035em;
+  overflow-wrap: anywhere;
+}
+.letterMessage {
+  position: relative;
+  margin: 0;
+  font: 16px/1.72 Georgia, "Times New Roman", serif;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.letterSignoff {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 28px;
+  max-width: 80%;
+  font: italic 14px Georgia, serif;
+  color: #8a7061;
+}
+.letterSignoff strong {
+  font: normal 19px Georgia, serif;
+  color: #594a3d;
+  overflow-wrap: anywhere;
+}
+.letterFlower {
+  position: absolute;
+  z-index: 0;
+  right: -8px;
+  bottom: -38px;
+  width: 98px;
+  height: 156px;
+  transform: rotate(4deg);
+  opacity: .63;
+  pointer-events: none;
+}
+.actionRow {
+  position: relative;
+  z-index: 8;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 38px 36px;
+}
+.actionHint { margin: 0; font: italic 13px/1.4 Georgia, serif; color: #887968; }
+.actionButton {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  min-height: 46px;
+  min-width: 177px;
+  padding: 11px 18px;
+  border: 1px solid #966f61;
+  border-radius: 3px;
+  background: #8c6355;
+  color: #fffaf2;
+  font: 500 12px Arial, sans-serif;
+  letter-spacing: .01em;
+  cursor: pointer;
+  transition: background-color .16s ease, transform .16s ease;
+}
+.actionButton:hover { background: #775246; }
+.actionButton:active { transform: scale(.98); }
+.actionButton:focus-visible { outline: 3px solid #4e6c59; outline-offset: 3px; }
+.actionArrow { font-size: 18px; line-height: 1; font-weight: 400; }
+@keyframes letterRise {
+  0% { transform: translate(-50%, -40%) scale(.96); opacity: 0; }
+  100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
+@keyframes blossom {
+  0% { transform: scale(.32); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+@media (max-width: 520px) {
+  .card { min-height: 585px; }
+  .masthead { padding: 28px 27px 0; }
+  .masthead span:last-child { font-size: 8px; }
+  .scene { min-height: 440px; }
+  .envelope { width: min(74%, 310px); }
+  .botanicalLeft { left: -8%; width: 119px; }
+  .botanicalRight { right: -7%; width: 115px; }
+  .forYou { top: 62%; }
+  .forYou strong { font-size: 22px; }
+  .letter { width: calc(100% - 42px); height: min(395px, calc(100% - 26px)); padding: 29px 25px 28px; }
+  .letterTitle { margin: 20px 0 16px; font-size: 29px; }
+  .letterMessage { font-size: 15px; line-height: 1.65; }
+  .actionRow { padding: 10px 27px 29px; gap: 8px; }
+  .actionHint { font-size: 11px; max-width: 140px; }
+  .actionButton { min-width: 164px; padding: 10px 11px; font-size: 11px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .envelope, .envelopeFlap, .seal, .actionButton { transition: none !important; }
+  .letter, .isOpen .botanicalLeft .flower, .isOpen .botanicalRight .flower { animation: none !important; }
+}
