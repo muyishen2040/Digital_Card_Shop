@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 
-// Previous mock sender-studio URL now points to the recipient-first card demo.
-export default function OldSunshineStudioRoute() {
+// Preserve an existing prototype URL without exposing a sender-facing editor.
+export default function SunshineCardLegacyRedirect() {
   redirect("/cards/little-sunshine");
 }

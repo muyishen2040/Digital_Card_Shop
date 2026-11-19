@@ -23,7 +23,7 @@ Proposed design directions:
 - **Under the Same Sky:** tap stars to reveal a message
 - **Make a Wish:** birthday candle and confetti interaction
 
-Designs require brainstorming and approval before feature implementation.
+New card concepts require an explicit interaction design and accessibility review before feature implementation.
 
 ## Future integrations
 

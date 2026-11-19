@@ -33,7 +33,7 @@ function SunMark() {
   );
 }
 
-/** Recipient-facing card. All visible words come from sender-provided personalization. */
+/** A recipient-only card with no instructions or storefront elements. */
 export function SunshineCard({ content }: { content: CardPersonalization }) {
   const [opened, setOpened] = useState(false);
   const envelopeRef = useRef<HTMLButtonElement>(null);

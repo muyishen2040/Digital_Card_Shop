@@ -32,8 +32,18 @@ Card designs should be independently editable. Avoid shared global selectors tha
 - Before claiming completion: run `npm run check` and `npm run build`, and report any commands that could not be run.
 - Favor mobile-first, accessible designs; respect reduced-motion preferences.
 - Do not log personal messages, names, recipient addresses, or photos.
-- Public-facing docs, commit messages, PRs, and issues should contain only context useful to their actual readers—no private agent-conversation details or hidden reasoning.
+- Follow [docs/COMMUNICATION_STANDARDS.md](docs/COMMUNICATION_STANDARDS.md) for all docs, comments, PRs, issue updates and commit messages. They must stand alone for a reviewer who has not read the agent conversation.
 - Never commit secrets or real users' data.
+
+## Audience-aware communication (required)
+
+Before publishing a document, code comment, ticket, or PR, identify the audience and the decision or behavior they need to understand. Provide necessary product/technical context **inside the artifact** or via stable repository links; do not refer to chats, assistant instructions, hidden deliberation, or unnamed prior discussions.
+
+- Describe the **current design and rationale**, not the sequence of conversational revisions. Explain trade-offs only when they matter to maintainers.
+- Avoid statements such as "as discussed," "per your feedback," "we changed this," "the latest version," or "previously requested" unless the artifact itself identifies and explains a relevant historical event.
+- PR descriptions should say what/why, important behavior, verification with evidence, and scope limits. Comments explain non-obvious engineering intent; do not narrate edits.
+- Dates should be used for meaningful time-sensitive milestones, migrations, or historical records—not automatically in titles or living design documents.
+- Self-review as if a new engineer will read this in six months without chat access.
 
 ## Card design quality (required for visual features)
 

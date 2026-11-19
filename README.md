@@ -2,7 +2,7 @@
 
 A mobile-first, interactive digital greeting-card experiment.
 
-**Status:** Phase 1 recipient-experience prototype. `A Little Sunshine` is interactive in PR #2; the homepage is a lightweight card launcher. Checkout, delivery, and persistence are **not** implemented.
+**Status:** Recipient-experience prototype. The homepage launches a working interactive A Little Sunshine demo and two unimplemented card concepts. Checkout, delivery, and persistence are not implemented.
 
 ## Product idea
 
@@ -41,7 +41,7 @@ Use [Superpowers](https://github.com/obra/superpowers) in your coding agent. Ins
 - **Codex App:** Plugins → Coding → Superpowers
 - **Cursor Agent:** `/add-plugin superpowers`
 
-Then start with: "Read AGENTS.md and docs/PRODUCT_BRIEF.md. Use Superpowers brainstorming to design the first interactive e-card before writing feature code."
+Then start with: "Read AGENTS.md and docs/PRODUCT_BRIEF.md. Use Superpowers brainstorming to develop an independently testable recipient-card experience before implementing it."
 
 The workflow is: brainstorm → approve design → create isolated worktree → write implementation plan → test-driven implementation → review → PR.
 
@@ -55,7 +55,7 @@ For visual work, also use the compact [e-card anti-slop design guide](docs/CARD_
 - `src/lib/cards/` — Catalog metadata and pure helpers
 - `src/types/` — Reusable card interfaces
 - `src/components/cards/` — Independent interactive card implementations
-- `docs/` — Product context, architecture, plans, and decisions
+- `docs/` — Product context, architecture, feature designs, plans, and [writing standards](docs/COMMUNICATION_STANDARDS.md)
 
 ## Vercel
 
@@ -70,3 +70,7 @@ Do not put personal messages, addresses, or image uploads in public URL paramete
 ## Recipient-first design rule
 
 The scene itself is the interface on `/cards/[slug]`. The envelope, star, or candle should invite a tap or click directly, without visible instructions. Keep replay subtle but accessible. Do not show development labels, purchase actions, or marketing copy around a received card. See [CARD_DESIGN_QUALITY.md](docs/CARD_DESIGN_QUALITY.md).
+
+## Project communication
+
+Designs, implementation plans, PRs, issues, commit messages, and code comments must stand on their own for readers without access to development chats. See [docs/COMMUNICATION_STANDARDS.md](docs/COMMUNICATION_STANDARDS.md). Use descriptive filenames for living design specifications; reserve dates for records where chronology is meaningful.
