@@ -2,25 +2,23 @@
 
 ## Scope
 
-Implement an independent recipient-facing constellation card and expose it through the existing launcher. Use the shared typed `CardPersonalization` contract. This work does not create persistent card instances, delivery, email, a mock sender editor, or checkout.
+Build a standalone **fold-open celestial greeting card** on `/cards/same-sky`. Its recipient-facing interface uses existing `CardPersonalization` props and public sample data; persistence, checkout and delivery remain out of scope.
 
 ## Modules
 
-1. `src/lib/cards/constellation.ts`: pure selection helper that adds valid star indices in input order, rejects duplicates/out-of-range indices, and reports completion. Write unit tests for order, immutability, repeated actions and four-star completion.
-2. `src/lib/cards/sky-demo.ts`: fixed, public personalization for the prototype.
-3. `src/components/cards/sky/SkyCard.tsx`: client-side star selection and optional moon reset; keyboard-focus management, progress announcements, and accessible labels.
-4. `src/components/cards/sky/SkyCard.module.css`: full-bleed midnight blue artwork, a deliberately sparse constellation, a moon, restrained typography and a message that fades into view. Isolate styles from other cards and disable nonessential motion for reduced-motion users.
-5. `src/app/cards/[slug]/page.tsx`: select the sky component for the matching slug while preserving other card routes.
-6. `src/app/page.tsx`: mark the new card as interactive in the launcher.
-7. `src/app/layout.tsx`: register sky-specific font variables without altering Sunshine typography.
+1. `src/lib/cards/fold.ts`: pure transition state helpers. Tests verify blocked double activation, reversible paper turns, transition completion, and reduced motion.
+2. `src/lib/cards/sky-demo.ts`: fixed demo personalization.
+3. `src/components/cards/sky/SkyCard.tsx`: client component with a cover button, a separate corner close button, a readable message pane, and focus handling.
+4. `src/components/cards/sky/SkyCard.module.css`: a full-bleed night environment and 3D cover flip around the physical spine, with a responsive mobile mode that retains a full-width message rather than compressing two columns.
+5. `src/components/cards/sky/SkyCard.test.tsx`: verifies native button names, readable sender content, and the absence of the old constellation-selection controls.
+6. `src/app/cards/[slug]/page.tsx` and launcher continue to render the card at the existing `same-sky` slug. The birthday and sunshine implementations remain independent.
+
+Delete obsolete constellation-selection logic and tests.
 
 ## Verification
 
-- Run `npm run check` and `npm run build` using the GitHub CI workflow.
-- Verify launcher and sky route on the Vercel PR preview.
-- In a real browser, test selection in multiple orders, duplicate taps, all four stars, the moon reset, a long letter, keyboard-only controls, a 320px phone and reduced-motion preferences.
-- Do not mistake deployment readiness for visual animation review; request feedback before merging.
-
-## Architecture
-
-This card is a reusable scene. An authenticated creation API and private expiring link system can later supply its personalization props without any changes to the recipient interactions.
+- GitHub Actions runs `npm run check` and `npm run build`.
+- Confirm `/` and `/cards/same-sky` on the Vercel preview.
+- Review closed → hover/focus → click/tap/keyboard open → full message → fold back via cover and corner → closed again.
+- Test 320px phone, 1440px desktop, long names and 600-character messages, keyboard focus and reduced-motion preferences.
+- A ready preview and passing tests do not substitute for judging the actual 3D page-turn animation in a browser.
