@@ -35,6 +35,12 @@ Card designs should be independently editable. Avoid shared global selectors tha
 - Public-facing docs, commit messages, PRs, and issues should contain only context useful to their actual readers—no private agent-conversation details or hidden reasoning.
 - Never commit secrets or real users' data.
 
+## Card design quality (required for visual features)
+
+Before designing or reviewing any interactive e-card, read [docs/CARD_DESIGN_QUALITY.md](docs/CARD_DESIGN_QUALITY.md), our concise card-specific adaptation of [unslop](https://github.com/heydamir/unslop). Distinguish the quiet editor/storefront UI from the expressive recipient-facing card.
+
+For each design: define feeling, character, world, reveal moment, and signature detail; get direction approved through Superpowers brainstorming; then validate the rendered experience before claiming visual quality. Check mobile, long personalized messages, keyboard access, and reduced motion. Do not treat the guide as an absolute ban on expressive card artwork.
+
 ## Design direction
 
 Explore three distinct experiences, not merely color variants:
