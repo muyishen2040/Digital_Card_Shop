@@ -1,0 +1,114 @@
+.page {
+  min-height: 100svh;
+  background: #fbfaf7;
+  color: #3c3531;
+}
+.shell { width: min(100% - 48px, 1120px); margin: 0 auto; padding-bottom: 94px; }
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 94px;
+  border-bottom: 1px solid #e9e4df;
+  gap: 20px;
+}
+.wordmark { font: bold 26px/1 Georgia, "Times New Roman", serif; letter-spacing: -.04em; }
+.wordmark em { font-weight: 400; color: #b07d6f; }
+.headerMeta { color: #938781; font: 12px Arial, sans-serif; }
+.intro { padding: clamp(68px, 9vw, 120px) 0 44px; }
+.eyebrow { font: 11px Arial, sans-serif; color: #9c8174; letter-spacing: .12em; }
+.intro h1 {
+  margin: 17px 0 0;
+  font: normal clamp(38px, 5.3vw, 65px)/1.12 Georgia, "Times New Roman", serif;
+  letter-spacing: -.055em;
+}
+.grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 23px; }
+.tile { display: block; min-width: 0; }
+.art {
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 4 / 5;
+  border-radius: 5px;
+  transition: box-shadow .22s ease;
+}
+.tile:hover .art { box-shadow: 0 10px 32px rgba(52, 41, 32, .08); }
+.tile:focus-visible { outline: 3px solid #906d5a; outline-offset: 7px; }
+.sunshine { background: #f6e6d8; }
+.night-sky { background: #252d4b; }
+.birthday { background: #e9dcd8; }
+.index { position: absolute; top: 20px; left: 20px; font: 12px Georgia, serif; opacity: .75; }
+.night-sky .index { color: #efe7d4; }
+.paperEnvelope {
+  position: relative;
+  width: 62%;
+  aspect-ratio: 1.5;
+  background: #dab098;
+  box-shadow: 0 14px 18px rgba(108, 67, 47, .11);
+  transform: rotate(-5deg);
+  transition: transform .35s cubic-bezier(.22, 1, .36, 1);
+}
+.paperEnvelope::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #ebc9b1;
+  clip-path: polygon(0 0, 100% 0, 50% 62%);
+}
+.paperEnvelope::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg, #edcdb7, #dba88a);
+  clip-path: polygon(0 33%, 50% 73%, 100% 33%, 100% 100%, 0 100%);
+}
+.paperSeal {
+  position: absolute;
+  z-index: 2;
+  top: 40%; left: 50%;
+  width: 32px; height: 32px;
+  border: 2px solid #f1d9c9;
+  border-radius: 50%;
+  background: #b67a69;
+  transform: translate(-50%, -50%);
+}
+.tile:hover .paperEnvelope { transform: translateY(-6px) rotate(-3deg); }
+.nightScene { position: relative; width: 100%; height: 100%; background: radial-gradient(ellipse at 52% 35%, #485070, #252d4b 72%); }
+.nightScene span { position: absolute; width: 4px; height: 4px; background: #f4e6be; transform: rotate(45deg); }
+.nightScene span:nth-child(1) { left: 24%; top: 28%; }
+.nightScene span:nth-child(2) { left: 54%; top: 21%; width: 7px; height: 7px; }
+.nightScene span:nth-child(3) { left: 71%; top: 51%; width: 5px; height: 5px; }
+.nightScene span:nth-child(4) { left: 38%; top: 68%; }
+.nightScene span:nth-child(5) { left: 63%; top: 79%; }
+.cakeScene {
+  position: relative;
+  width: 47%; height: 30%;
+  margin-top: 18%;
+  border-radius: 8px 8px 15px 15px;
+  background: linear-gradient(#f5e6c8 0 19%, #d3a79b 20% 100%);
+  box-shadow: 0 13px 18px rgba(85, 61, 70, .1);
+}
+.cakeScene::before { content: ""; position: absolute; top: -7%; left: 0; width: 100%; height: 23%; border-radius: 50%; background: #fff2e2; }
+.candle { position: absolute; width: 9px; height: 42px; left: calc(50% - 4px); top: -45px; background: #e8af88; }
+.candle::after { content: ""; position: absolute; width: 10px; height: 18px; top: -23px; left: -1px; border-radius: 80% 5% 75% 50%; transform: rotate(14deg); background: #e6ac61; }
+.tileMeta { display: flex; justify-content: space-between; align-items: center; padding: 21px 2px 0; gap: 14px; }
+.tileMeta h2 { margin: 0 0 6px; font: normal 25px Georgia, serif; letter-spacing: -.025em; }
+.tileMeta span { color: #89807a; font: 12px Arial, sans-serif; }
+.action { font-size: 22px !important; line-height: 1; color: #8f6c5e !important; }
+.status { font: 11px Arial, sans-serif; color: #a18d81; margin: 13px 2px 0; }
+@media (max-width: 830px) {
+  .grid { grid-template-columns: repeat(2, minmax(0,1fr)); gap: 24px; }
+}
+@media (max-width: 560px) {
+  .shell { width: min(100% - 36px, 1120px); }
+  .header { min-height: 76px; }
+  .wordmark { font-size: 23px; }
+  .intro { padding: 70px 0 35px; }
+  .intro h1 { font-size: 40px; }
+  .grid { grid-template-columns: 1fr; gap: 38px; }
+  .art { aspect-ratio: 5 / 4; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .art, .paperEnvelope { transition: none; }
+}
