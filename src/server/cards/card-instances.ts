@@ -27,14 +27,13 @@ function storageConfig(): { url: URL; secret: string } {
 }
 
 async function requestRows(url: URL, secret: string, init: RequestInit): Promise<CardRow[]> {
+  const headers = new Headers(init.headers);
+  headers.set("apikey", secret);
+  headers.set("Content-Type", "application/json");
   const response = await fetch(url, {
     ...init,
     cache: "no-store",
-    headers: {
-      "apikey": secret,
-      "Content-Type": "application/json",
-      ...init.headers,
-    },
+    headers,
   });
   // Never log the raw response: error bodies may contain sensitive row fields.
   if (!response.ok) throw new Error("Card storage request failed.");
