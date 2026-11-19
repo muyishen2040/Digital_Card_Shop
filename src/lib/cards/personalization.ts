@@ -1,5 +1,7 @@
 import type { CardPersonalization } from "@/types/card";
 
+// Defensive bounds for the public demonstration renderer. Persisted card instances
+// use stricter per-template limits in content-policy.ts and must pass layout QA.
 export const MAX_NAME_LENGTH = 40;
 export const MAX_MESSAGE_LENGTH = 600;
 
