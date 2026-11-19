@@ -2,13 +2,13 @@
 
 A mobile-first, interactive digital greeting-card experiment.
 
-**Status:** Phase 1 scaffold. The gallery lists three creative directions, but interactive card designs, checkout, delivery, and persistence have **not** been implemented yet.
+**Status:** Phase 1 recipient-experience prototype. `A Little Sunshine` is interactive in PR #2; the homepage is a lightweight card launcher. Checkout, delivery, and persistence are **not** implemented.
 
 ## Product idea
 
 Send someone a tiny, personalized experience—not just an image. Eventually, buyers will choose a card template, personalize it with a message and optional photo, select a delivery time, and send a private link to a temporary (1–3 day) interactive page.
 
-**Current goal:** Validate the design and recipient experience with a few working prototypes before building the shop.
+**Current goal:** Prioritize the **recipient's experience**. A card route is its own immersive scene. Use a minimal card launcher to switch between concepts, not a mock shop or sender-customization interface.
 
 ## Technology
 
@@ -51,18 +51,22 @@ For visual work, also use the compact [e-card anti-slop design guide](docs/CARD_
 
 ## Project structure
 
-- `src/app/` — Routes and gallery
+- `src/app/` — Minimal launcher and recipient card routes
 - `src/lib/cards/` — Catalog metadata and pure helpers
 - `src/types/` — Reusable card interfaces
-- `src/components/cards/` — Independent interactive implementations (added next)
+- `src/components/cards/` — Independent interactive card implementations
 - `docs/` — Product context, architecture, plans, and decisions
 
 ## Vercel
 
-Once the scaffold PR is merged, import this repository into a **new** Vercel project. Framework preset: Next.js. Root Directory: repository root. Pushes to `main` can deploy to production; PRs generate previews.
+This repo is linked to the separate [digital-card-shop Vercel project](https://vercel.com/muyishen4020-2251/digital-card-shop). Pushes to `main` deploy to production; PRs generate previews.
 
 No database, external API credentials, checkout, or email provider is required for Phase 1.
 
 ## Privacy and safety
 
 Do not put personal messages, addresses, or image uploads in public URL parameters, the Git repository, client-side logs, analytics events, or example data. Recipient email does not imply marketing consent. Public sending and file uploads will require spam controls and retention limits before launch.
+
+## Recipient-first design rule
+
+The scene itself is the interface on `/cards/[slug]`. The envelope, star, or candle should invite a tap or click directly, without visible instructions. Keep replay subtle but accessible. Do not show development labels, purchase actions, or marketing copy around a received card. See [CARD_DESIGN_QUALITY.md](docs/CARD_DESIGN_QUALITY.md).

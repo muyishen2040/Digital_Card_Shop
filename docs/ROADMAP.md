@@ -4,13 +4,16 @@
 
 - [x] Create public GitHub repository and initial application scaffold
 - [x] Establish agent guidance for obra/superpowers
-- [x] Add product context, catalog metadata, tests, and basic gallery
+- [x] Add product context, catalog metadata, tests, and lightweight experience launcher
 - [ ] Install Superpowers in the chosen local coding agent
-- [ ] Brainstorm and approve the first card's interaction design
+- [x] Brainstorm and approve the first card's interaction direction
 - [ ] Implement first card using test-driven development
 - [ ] Add two *distinct* card experiences
 - [ ] Review mobile layout, accessibility, and reduced-motion behavior
-- [ ] Import the repository to Vercel and collect prototype feedback
+- [x] Import the repository to Vercel
+- [ ] Review the Sunshine recipient interaction on phone and desktop
+
+**Phase 1 is recipient-first.** The launcher opens immersive card experiences. Sender forms and store features are deferred until they support a real API or purchase flow.
 
 ## Phase 2 — Shareable temporary card instances
 

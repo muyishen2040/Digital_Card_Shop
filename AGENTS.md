@@ -15,7 +15,7 @@ This project deliberately uses https://github.com/obra/superpowers as its develo
 
 ## Project boundaries
 
-Phase 1 is **visual prototyping only**. Do not silently introduce accounts, persistence, paid checkout, database credentials, email delivery, WooCommerce, Klaviyo, or hard-coded inventory limits.
+Phase 1 is **recipient-first visual prototyping only**. The homepage is a small launcher for card experiences, not a storefront. Do not build a mock checkout or sender studio at this stage. Do not silently introduce accounts, persistence, paid checkout, database credentials, email delivery, WooCommerce, Klaviyo, or hard-coded inventory limits.
 
 Concepts that should remain separate:
 1. **Card template:** Reusable interactive UI and customizable fields.
@@ -37,7 +37,7 @@ Card designs should be independently editable. Avoid shared global selectors tha
 
 ## Card design quality (required for visual features)
 
-Before designing or reviewing any interactive e-card, read [docs/CARD_DESIGN_QUALITY.md](docs/CARD_DESIGN_QUALITY.md), our concise card-specific adaptation of [unslop](https://github.com/heydamir/unslop). Distinguish the quiet editor/storefront UI from the expressive recipient-facing card.
+Before designing or reviewing any interactive e-card, read [docs/CARD_DESIGN_QUALITY.md](docs/CARD_DESIGN_QUALITY.md), our concise card-specific adaptation of [unslop](https://github.com/heydamir/unslop). Distinguish the quiet launcher UI from the expressive recipient-facing card. Remove banners, guidance, status badges, and detached action buttons from recipient routes; the art object itself should be the accessible control. Keep replay discreet.
 
 For each design: define feeling, character, world, reveal moment, and signature detail; get direction approved through Superpowers brainstorming; then validate the rendered experience before claiming visual quality. Check mobile, long personalized messages, keyboard access, and reduced motion. Do not treat the guide as an absolute ban on expressive card artwork.
 
