@@ -8,7 +8,9 @@
 - [ ] Install Superpowers in the chosen local coding agent
 - [x] Brainstorm and approve the first card's interaction direction
 - [x] Implement first interactive card and personalization unit tests
-- [ ] Add two *distinct* card experiences
+- [ ] Complete the remaining distinct card experiences
+  - [x] Under the Same Sky — fold-open celestial friendship card
+  - [ ] Make a Wish — candle-based birthday card
 - [ ] Review mobile layout, accessibility, and reduced-motion behavior
 - [x] Import the repository to Vercel
 - [ ] Review the Sunshine recipient interaction on phone and desktop

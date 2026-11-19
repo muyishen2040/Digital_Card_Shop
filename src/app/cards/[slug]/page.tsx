@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { SunshineCard } from "@/components/cards/sunshine/SunshineCard";
+import { SkyCard } from "@/components/cards/sky/SkyCard";
+import { SKY_DEMO } from "@/lib/cards/sky-demo";
 import { SUNSHINE_DEMO } from "@/lib/cards/personalization";
 import { cardTemplates, getCardTemplate } from "@/lib/cards/catalog";
 
@@ -20,6 +22,9 @@ export default async function CardConceptPage({
   // Recipient experience: no store, banners, instructional text, or demo chrome.
   if (slug === "little-sunshine") {
     return <SunshineCard content={SUNSHINE_DEMO} />;
+  }
+  if (slug === "same-sky") {
+    return <SkyCard content={SKY_DEMO} />;
   }
 
   return (

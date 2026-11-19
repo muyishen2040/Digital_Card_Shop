@@ -51,7 +51,7 @@ Build an intentional arc: **anticipation → recipient action → reveal → cal
 | Concept | Art direction | Signature interaction | What to avoid |
 | --- | --- | --- | --- |
 | **A Little Sunshine** | Warm folded paper, sunlight, botanical detail | Envelope opens; a small bloom frames the note | Random hearts and flowers everywhere |
-| **Under the Same Sky** | Deep ink-blue night, sparse stars, quiet typography | Recipient connects/taps stars to reveal the note | Generic neon galaxy/glowing UI chrome |
+| **Under the Same Sky** | Midnight-blue folded card, celestial cover, moonlit interior | The cover folds outward to reveal the message, then folds back | Hidden star-selection puzzles and unreadably narrow mobile spreads |
 | **Make a Wish** | Tactile little cake, soft candlelight, playful paper accents | Blow/tap to extinguish candle; one celebratory reveal | Endless confetti and cartoonish overload |
 
 The table illustrates distinct design directions. Each implemented card must satisfy its own experience specification; see [A Little Sunshine design](plans/sunshine-experience-design.md).

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Lora } from "next/font/google";
+import { Cormorant_Garamond, DM_Sans, Italiana, Lora } from "next/font/google";
 import "./globals.css";
 
 const sunshineDisplay = Cormorant_Garamond({
@@ -16,6 +16,19 @@ const sunshineReading = Lora({
   display: "swap",
 });
 
+const skyDisplay = Italiana({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-sky-display",
+  display: "swap",
+});
+
+const skyBody = DM_Sans({
+  subsets: ["latin"],
+  variable: "--font-sky-body",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "little moments — interactive greeting cards",
   description: "An evolving collection of thoughtful, interactive greeting cards.",
@@ -24,7 +37,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className={`${sunshineDisplay.variable} ${sunshineReading.variable}`}>
+      <body className={`${sunshineDisplay.variable} ${sunshineReading.variable} ${skyDisplay.variable} ${skyBody.variable}`}>
         {children}
       </body>
     </html>

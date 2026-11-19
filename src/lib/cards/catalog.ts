@@ -12,7 +12,7 @@ export const cardTemplates: readonly CardTemplate[] = [
     slug: "same-sky",
     title: "Under the Same Sky",
     category: "Friendship",
-    description: "A night sky whose stars reveal a heartfelt note.",
+    description: "A folded night-sky greeting opens to a moonlit personal message.",
     theme: "night-sky",
   },
   {
