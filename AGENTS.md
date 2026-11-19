@@ -15,7 +15,7 @@ This project deliberately uses https://github.com/obra/superpowers as its develo
 
 ## Project boundaries
 
-Phase 1 is **visual prototyping only**. Do not silently introduce accounts, persistence, paid checkout, database credentials, email delivery, WooCommerce, Klaviyo, or hard-coded inventory limits.
+Phase 1 is **recipient-first visual prototyping only**. The homepage is a small launcher for card experiences, not a storefront. Do not build a mock checkout or sender studio at this stage. Do not silently introduce accounts, persistence, paid checkout, database credentials, email delivery, WooCommerce, Klaviyo, or hard-coded inventory limits.
 
 Concepts that should remain separate:
 1. **Card template:** Reusable interactive UI and customizable fields.
@@ -32,12 +32,22 @@ Card designs should be independently editable. Avoid shared global selectors tha
 - Before claiming completion: run `npm run check` and `npm run build`, and report any commands that could not be run.
 - Favor mobile-first, accessible designs; respect reduced-motion preferences.
 - Do not log personal messages, names, recipient addresses, or photos.
-- Public-facing docs, commit messages, PRs, and issues should contain only context useful to their actual readers—no private agent-conversation details or hidden reasoning.
+- Follow [docs/COMMUNICATION_STANDARDS.md](docs/COMMUNICATION_STANDARDS.md) for all docs, comments, PRs, issue updates and commit messages. They must stand alone for a reviewer who has not read the agent conversation.
 - Never commit secrets or real users' data.
+
+## Audience-aware communication (required)
+
+Before publishing a document, code comment, ticket, or PR, identify the audience and the decision or behavior they need to understand. Provide necessary product/technical context **inside the artifact** or via stable repository links; do not refer to chats, assistant instructions, hidden deliberation, or unnamed prior discussions.
+
+- Describe the **current design and rationale**, not the sequence of conversational revisions. Explain trade-offs only when they matter to maintainers.
+- Avoid statements such as "as discussed," "per your feedback," "we changed this," "the latest version," or "previously requested" unless the artifact itself identifies and explains a relevant historical event.
+- PR descriptions should say what/why, important behavior, verification with evidence, and scope limits. Comments explain non-obvious engineering intent; do not narrate edits.
+- Dates should be used for meaningful time-sensitive milestones, migrations, or historical records—not automatically in titles or living design documents.
+- Self-review as if a new engineer will read this in six months without chat access.
 
 ## Card design quality (required for visual features)
 
-Before designing or reviewing any interactive e-card, read [docs/CARD_DESIGN_QUALITY.md](docs/CARD_DESIGN_QUALITY.md), our concise card-specific adaptation of [unslop](https://github.com/heydamir/unslop). Distinguish the quiet editor/storefront UI from the expressive recipient-facing card.
+Before designing or reviewing any interactive e-card, read [docs/CARD_DESIGN_QUALITY.md](docs/CARD_DESIGN_QUALITY.md), our concise card-specific adaptation of [unslop](https://github.com/heydamir/unslop). Distinguish the quiet launcher UI from the expressive recipient-facing card. Remove banners, guidance, status badges, and detached action buttons from recipient routes; the art object itself should be the accessible control. Keep replay discreet.
 
 For each design: define feeling, character, world, reveal moment, and signature detail; get direction approved through Superpowers brainstorming; then validate the rendered experience before claiming visual quality. Check mobile, long personalized messages, keyboard access, and reduced motion. Do not treat the guide as an absolute ban on expressive card artwork.
 

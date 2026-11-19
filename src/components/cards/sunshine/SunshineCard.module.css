@@ -1,0 +1,238 @@
+.card {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  place-items: center;
+  min-height: 100svh;
+  width: 100%;
+  overflow: hidden;
+  background: #f9f4eb;
+  color: #53483c;
+}
+.card *, .card *::before, .card *::after { box-sizing: border-box; }
+.stage {
+  position: relative;
+  width: min(100%, 870px);
+  height: clamp(540px, 88svh, 830px);
+  isolation: isolate;
+}
+.sunlight {
+  position: absolute;
+  inset: -10%;
+  z-index: -1;
+  background: radial-gradient(ellipse at 74% 24%, rgba(243, 211, 154, .38), transparent 57%);
+  pointer-events: none;
+}
+.sprigLeft, .sprigRight {
+  position: absolute;
+  width: clamp(120px, 23%, 190px);
+  height: auto;
+  pointer-events: none;
+  transform-origin: 45% 100%;
+  opacity: .74;
+}
+.sprigLeft { bottom: 4%; left: 6%; transform: rotate(-16deg); }
+.sprigRight { right: 5%; top: 3%; transform: scaleX(-1) rotate(-13deg); opacity: .55; }
+.bloom { transform-origin: 114px 31px; }
+.open .sprigLeft .bloom, .open .sprigRight .bloom {
+  animation: unfold .85s cubic-bezier(.22, 1, .36, 1) both;
+}
+.envelope {
+  position: absolute;
+  left: 50%;
+  top: 49%;
+  z-index: 4;
+  display: block;
+  width: min(69%, 425px);
+  aspect-ratio: 1.48;
+  border: 0;
+  border-radius: 3px;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+  perspective: 850px;
+  transform: translate(-50%, -46%);
+  filter: drop-shadow(0 18px 13px rgba(99, 70, 49, .15));
+  transition: transform .75s cubic-bezier(.22, 1, .36, 1), opacity .4s ease .48s, filter .5s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.envelope:disabled { cursor: default; }
+.envelope:focus-visible {
+  outline: 3px solid #6b8066;
+  outline-offset: 12px;
+}
+.envelopeBack, .letterEdge, .envelopeFront, .envelopeFlap { position: absolute; inset: 0; border-radius: 2px; }
+.envelopeBack { background: #ce9e82; box-shadow: inset 0 0 0 1px rgba(119, 78, 55, .15); }
+.letterEdge {
+  top: 10%; left: 9%; width: 82%; height: 69%;
+  border: 1px solid #e5dacd;
+  background: #fffbf3;
+  transform: rotate(-3deg);
+}
+.envelopeFront {
+  z-index: 2;
+  background: linear-gradient(152deg, #f2d5bb 0%, #dcae90 91%);
+  clip-path: polygon(0 30%, 50% 72%, 100% 30%, 100% 100%, 0 100%);
+}
+.envelopeFlap {
+  z-index: 3;
+  background: #efd0b7;
+  clip-path: polygon(0 0, 100% 0, 50% 60%);
+  transform-origin: 50% 0;
+  backface-visibility: hidden;
+  transition: transform .67s cubic-bezier(.22, 1, .36, 1);
+}
+.seal {
+  position: absolute;
+  z-index: 4;
+  top: 43%; left: 50%;
+  display: grid;
+  place-items: center;
+  width: 62px; height: 62px;
+  border: 3px solid rgba(255, 245, 233, .75);
+  border-radius: 50%;
+  background: #b77565;
+  color: #fff0e0;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 3px 6px rgba(75, 45, 38, .19), inset 0 0 0 1px rgba(119, 53, 45, .28);
+  transition: transform .35s ease, opacity .25s ease;
+}
+.seal svg { width: 36px; height: 36px; }
+.address {
+  position: absolute;
+  z-index: 3;
+  left: 8%; right: 8%;
+  bottom: 12%;
+  color: #875c4b;
+  font: italic clamp(17px, 2.7vw, 24px)/1.3 Georgia, "Times New Roman", serif;
+  overflow-wrap: anywhere;
+  text-align: center;
+}
+@media (hover: hover) and (pointer: fine) {
+  .envelope:not(:disabled):hover {
+    transform: translate(-50%, -51%) rotate(-1deg);
+    filter: drop-shadow(0 24px 17px rgba(99, 70, 49, .17));
+  }
+  .envelope:not(:disabled):hover .seal { transform: translate(-50%, -55%) rotate(9deg); }
+}
+.envelope:not(:disabled):active { transform: translate(-50%, -46%) scale(.985); }
+.open .envelope, .open .envelope:disabled {
+  transform: translate(-50%, 8%) scale(.82) rotate(-4deg);
+  opacity: 0;
+  pointer-events: none;
+}
+.open .envelopeFlap { transform: rotateX(180deg); }
+.open .seal { opacity: 0; }
+.letter {
+  position: absolute;
+  z-index: 5;
+  left: 50%; top: 50%;
+  width: min(calc(100% - 60px), 500px);
+  max-height: calc(100% - 58px);
+  min-height: min(510px, calc(100% - 58px));
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: clamp(42px, 6.8%, 60px) clamp(35px, 6%, 55px);
+  border: 1px solid #e7dace;
+  background: #fffdf8;
+  box-shadow: 0 15px 42px rgba(93, 64, 43, .14);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translate(-50%, -23%) scale(.73);
+  transform-origin: center;
+  transition: transform .95s cubic-bezier(.22, 1, .36, 1) .18s, opacity .58s ease .23s, visibility 0s linear .95s;
+  scrollbar-width: thin;
+  scrollbar-color: #cfb69f transparent;
+}
+.letter:focus { outline: none; }
+.letter:focus-visible { outline: 3px solid #6b8066; outline-offset: 2px; }
+.letter::before {
+  content: "";
+  position: absolute;
+  inset: 13px;
+  border: 1px solid rgba(175, 144, 117, .23);
+  pointer-events: none;
+}
+.open .letter {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translate(-50%, -50%) scale(1);
+  transition: transform .95s cubic-bezier(.22, 1, .36, 1) .18s, opacity .6s ease .23s, visibility 0s;
+}
+.letterContent { position: relative; z-index: 2; }
+.salutation {
+  margin: 8px 0 31px;
+  font: normal clamp(28px, 4.5vw, 39px)/1.15 Georgia, "Times New Roman", serif;
+  letter-spacing: -.04em;
+  overflow-wrap: anywhere;
+}
+.message {
+  margin: 0;
+  font: 17px/1.83 Georgia, "Times New Roman", serif;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.signature {
+  margin: 32px 0 0;
+  font: italic 19px/1.45 Georgia, "Times New Roman", serif;
+  color: #96735d;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+.letterSprig {
+  position: absolute;
+  right: -8px; bottom: -37px;
+  width: 109px; height: auto;
+  transform: rotate(5deg);
+  opacity: .48;
+  pointer-events: none;
+}
+.replay {
+  position: absolute;
+  top: 17px; right: 18px;
+  z-index: 7;
+  display: grid;
+  place-items: center;
+  width: 38px; height: 38px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: #9c8071;
+  opacity: .58;
+  cursor: pointer;
+  transition: background-color .18s ease, opacity .18s ease, transform .18s ease;
+}
+.replay svg { width: 20px; height: 20px; }
+.replay:hover { background: #f5ebe0; opacity: 1; }
+.replay:active { transform: rotate(-20deg); }
+.replay:focus-visible { outline: 2px solid #6b8066; outline-offset: 2px; opacity: 1; }
+.srOnly { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+@keyframes unfold { from { transform: scale(.38); opacity: .15; } to { transform: scale(1); opacity: 1; } }
+@media (max-width: 600px) {
+  .stage { height: clamp(500px, 100svh, 750px); }
+  .envelope { width: min(79%, 390px); }
+  .sprigLeft { left: -11%; bottom: 8%; width: 137px; }
+  .sprigRight { right: -9%; top: 3%; width: 128px; }
+  .seal { width: 54px; height: 54px; }
+  .seal svg { width: 31px; height: 31px; }
+  .address { font-size: 20px; }
+  .letter {
+    width: calc(100% - 36px);
+    min-height: min(440px, calc(100% - 50px));
+    max-height: calc(100% - 50px);
+    padding: 44px 31px 40px;
+  }
+  .salutation { font-size: 31px; margin: 5px 0 25px; }
+  .message { font-size: 16px; line-height: 1.72; }
+  .signature { font-size: 17px; }
+}
+@media (max-width: 360px) {
+  .letter { width: calc(100% - 22px); padding: 42px 26px 38px; }
+  .salutation { font-size: 28px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .envelope, .envelopeFlap, .seal, .letter, .replay { transition: none !important; }
+  .open .sprigLeft .bloom, .open .sprigRight .bloom { animation: none !important; }
+}

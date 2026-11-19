@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Digital Card Shop — tiny moments, beautifully sent",
-  description: "An experiment in interactive, personalized digital greeting cards.",
+  title: "little moments — interactive greeting cards",
+  description: "An evolving collection of thoughtful, interactive greeting cards.",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

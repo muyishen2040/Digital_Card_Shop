@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { SunshineCard } from "@/components/cards/sunshine/SunshineCard";
+import { SUNSHINE_DEMO } from "@/lib/cards/personalization";
 import { cardTemplates, getCardTemplate } from "@/lib/cards/catalog";
 
 export function generateStaticParams() {
@@ -13,26 +15,25 @@ export default async function CardConceptPage({
 }) {
   const { slug } = await params;
   const template = getCardTemplate(slug);
-
   if (!template) notFound();
+
+  // Recipient experience: no store, banners, instructional text, or demo chrome.
+  if (slug === "little-sunshine") {
+    return <SunshineCard content={SUNSHINE_DEMO} />;
+  }
 
   return (
     <main className="concept-page">
       <div className="concept-page-inner">
-        <Link className="back-link" href="/#gallery">← All concepts</Link>
+        <Link className="back-link" href="/">← Experiences</Link>
         <div className={"concept-art concept-art--" + template.theme}>
           <span className="concept-glyph" aria-hidden="true">
-            {template.theme === "sunshine" ? "✉" : template.theme === "night-sky" ? "✦" : "✿"}
+            {template.theme === "night-sky" ? "✦" : "✿"}
           </span>
-          <span className="concept-status">Interactive prototype coming next</span>
+          <span className="concept-status">In development</span>
         </div>
-        <span className="section-kicker">{template.category.toUpperCase()}</span>
         <h1>{template.title}</h1>
         <p>{template.description}</p>
-        <p className="concept-note">
-          This is a placeholder route, not a sendable e-card. We&apos;ll design the interactions
-          using Superpowers brainstorming before implementing them.
-        </p>
       </div>
     </main>
   );

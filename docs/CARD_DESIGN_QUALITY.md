@@ -4,6 +4,16 @@
 
 A compact, card-specific adaptation of [unslop](https://github.com/heydamir/unslop). Use it **alongside** the [Superpowers](https://github.com/obra/superpowers) brainstorm → approved design → build → review workflow. This is a design checklist, **not** a replacement for either upstream skill.
 
+## Recipient-first experience: interaction without explanation
+
+- **The card is the whole screen.** A received card needs no demo banner, preview disclaimer, shop navigation, instructional text, or CTA footer. Let the visual and the sender's words speak.
+- **Make the object the control.** Tap the envelope, a star, or the candle itself. Use a native button with an accessible name, not a detached "Open envelope" button.
+- **Hover invites; touch acts.** Subtle hover/focus feedback may hint at an interaction, but opening must work by click, touch, keyboard, and reduced-motion settings without hover.
+- **Stage one uninterrupted reveal.** Let the object visibly cause the transition to the message. Avoid abrupt modal jumps and multiple unrelated entrance effects. The final reading state stays put.
+- **Hide the guidance, not accessibility.** Replay may be a quiet icon with an accessible label. Screen-reader guidance and focus states should be available without visually competing with the message.
+- **Launcher is not a shop.** During prototyping, one lightweight index can open different card routes. Do not invest in mock checkout, customization, merchandising, or instruction-heavy preview panels.
+- **Review the actual interaction.** Inspect closed → hover/focus → click/tap → reveal → reading → replay on mobile and desktop, including reduced motion and long messages.
+
 ## Before designing: define five things
 
 Write one line for each in the design spec:
@@ -18,7 +28,7 @@ If you cannot describe the card's identity without naming colors, the concept ne
 
 ## Craft rules
 
-- **Separate the frame from the artwork.** Keep gallery, editor, buttons, navigation and labels restrained: consistent spacing, clear hierarchy, a quiet palette and one accent. Inside the actual card, illustration, expressive type, gradients, glowing stars, confetti or sound *may* be appropriate when they serve the story.
+- **Separate the frame from the artwork.** Keep launcher, buttons, navigation and labels restrained: consistent spacing, clear hierarchy, a quiet palette and one accent. Inside the actual card, illustration, expressive type, gradients, glowing stars, confetti or sound *may* be appropriate when they serve the story.
 - **One hero, not decorative noise.** Center each design on one recognizable object/scene. Remove random floating blobs, generic sparkles, stock-looking 3D, glass panels, gratuitous borders, and effects added just to fill space. A star can glow because it is a star; a button does not need to glow.
 - **Make it materially convincing.** Folded paper should have plausible edges and depth; candlelight should feel warm; night sky should have deliberate composition. Match typography, illustration style, color, lighting, and details to the *same world*.
 - **Typography carries emotion and readability.** Use 1–2 complementary font families; reserve decorative/handwritten lettering for short featured phrases. Keep personalized messages comfortably readable, with clear contrast and enough room for unexpectedly long text. Avoid huge bold headings, generic inspirational filler, decorative all-caps labels, and gradients on text.
@@ -44,7 +54,7 @@ Build an intentional arc: **anticipation → recipient action → reveal → cal
 | **Under the Same Sky** | Deep ink-blue night, sparse stars, quiet typography | Recipient connects/taps stars to reveal the note | Generic neon galaxy/glowing UI chrome |
 | **Make a Wish** | Tactile little cake, soft candlelight, playful paper accents | Blow/tap to extinguish candle; one celebratory reveal | Endless confetti and cartoonish overload |
 
-These are *direction examples*, not approved final designs.
+The table illustrates distinct design directions. Each implemented card must satisfy its own experience specification; see [A Little Sunshine design](plans/sunshine-experience-design.md).
 
 ## Review a rendered card (mobile first)
 
