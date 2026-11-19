@@ -1,0 +1,33 @@
+name: Checks
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      # npm 10 can crash while resolving modern peer dependency graphs.
+      - name: Use npm 11
+        run: npm install --global npm@11
+      # Until a generated lockfile is committed, use npm install.
+      # Then switch to npm ci and enable the npm cache.
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+      - name: Lint, typecheck and test
+        run: npm run check
+      - name: Production build
+        run: npm run build
