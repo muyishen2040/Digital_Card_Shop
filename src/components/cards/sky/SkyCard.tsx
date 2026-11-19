@@ -3,118 +3,142 @@
 import { useEffect, useRef, useState } from "react";
 import type { CardPersonalization } from "@/types/card";
 import { toPreviewContent } from "@/lib/cards/personalization";
-import { isConstellationComplete, lightStar } from "@/lib/cards/constellation";
+import { finishFold, toggleFold } from "@/lib/cards/fold";
+import type { FoldPhase } from "@/lib/cards/fold";
 import styles from "./SkyCard.module.css";
 
-const STARS = [
-  { name: "western", x: 23, y: 33 },
-  { name: "northern", x: 43, y: 19 },
-  { name: "eastern", x: 68, y: 28 },
-  { name: "horizon", x: 78, y: 43 },
+const SMALL_STARS = [
+  [11, 14], [21, 29], [33, 11], [42, 56], [58, 18], [72, 31],
+  [85, 15], [92, 56], [13, 73], [26, 87], [53, 79], [77, 82],
 ] as const;
 
-// These tiny background stars are decorative; only the four large stars are interactive.
-const SKY_DUST = [
-  [11, 14], [18, 57], [30, 12], [35, 42], [48, 8],
-  [53, 45], [58, 14], [84, 14], [90, 39], [12, 43],
-  [8, 71], [24, 77], [78, 67], [92, 79], [62, 69],
-  [45, 75], [72, 8], [37, 63], [56, 87],
-] as const;
+function Crescent({ className = "" }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 88 88" fill="none" aria-hidden="true" focusable="false">
+      <path
+        d="M64 12a35 35 0 1 0 11 61 34 34 0 0 1-11-61Z"
+        fill="#F1E3BF"
+        stroke="#F6ECD4"
+        strokeWidth="1.3"
+      />
+      <path d="M25 68c7 7 17 10 25 10" stroke="#E8CF9D" strokeWidth="1.1" strokeLinecap="round" opacity=".55" />
+    </svg>
+  );
+}
+
+function CelestialArt({ inside = false }: { inside?: boolean }) {
+  return (
+    <div className={inside ? styles.insideArt : styles.coverArt} aria-hidden="true">
+      <Crescent className={styles.moon} />
+      <svg className={styles.constellation} viewBox="0 0 300 310" fill="none" focusable="false">
+        <path d="M49 170L114 102L181 143L255 60" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeDasharray="2 5" />
+        {[[49,170],[114,102],[181,143],[255,60]].map(([x,y]) => (
+          <g key={`${x}-${y}`}>
+            <circle cx={x} cy={y} r="3.3" fill="currentColor"/>
+            <path d={`M${x} ${y - 11}v22M${x-11} ${y}h22`} stroke="currentColor" strokeWidth=".8" opacity=".72" />
+          </g>
+        ))}
+      </svg>
+    </div>
+  );
+}
 
 export function SkyCard({ content }: { content: CardPersonalization }) {
-  const [selected, setSelected] = useState<number[]>([]);
-  const firstStarRef = useRef<HTMLButtonElement>(null);
-  const noteRef = useRef<HTMLElement>(null);
-  const shouldRestoreFocus = useRef(false);
+  const [phase, setPhase] = useState<FoldPhase>("closed");
+  const coverRef = useRef<HTMLButtonElement>(null);
+  const messageRef = useRef<HTMLElement>(null);
+  const restoreCoverFocus = useRef(false);
   const note = toPreviewContent(content);
-  const complete = isConstellationComplete(selected);
+  const unfolded = phase === "opening" || phase === "open";
 
   useEffect(() => {
-    if (complete) {
-      noteRef.current?.focus();
-    } else if (shouldRestoreFocus.current) {
-      firstStarRef.current?.focus();
-      shouldRestoreFocus.current = false;
+    if (phase === "open") {
+      messageRef.current?.focus();
+    } else if (phase === "closed" && restoreCoverFocus.current) {
+      restoreCoverFocus.current = false;
+      coverRef.current?.focus();
     }
-  }, [complete]);
+  }, [phase]);
 
-  function resetSky() {
-    if (!complete) return;
-    shouldRestoreFocus.current = true;
-    setSelected([]);
+  // A fallback restores controls if a CSS transition is interrupted or never fires.
+  useEffect(() => {
+    if (phase !== "opening" && phase !== "closing") return;
+    const timeout = window.setTimeout(() => {
+      setPhase((current) => finishFold(current));
+    }, 1200);
+    return () => window.clearTimeout(timeout);
+  }, [phase]);
+
+  function activateFold() {
+    if (phase === "open") restoreCoverFocus.current = true;
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    setPhase((current) => toggleFold(current, reducedMotion));
+  }
+
+  function settleFold(event: React.TransitionEvent<HTMLButtonElement>) {
+    if (event.target !== event.currentTarget || event.propertyName !== "transform") return;
+    setPhase((current) => finishFold(current));
   }
 
   return (
     <main className={styles.sky} aria-label="Under the Same Sky greeting card">
-      <div className={styles.horizon} aria-hidden="true" />
+      <div className={styles.atmosphere} aria-hidden="true">
+        {SMALL_STARS.map(([x, y]) => (
+          <span key={`${x}-${y}`} className={styles.ambientStar} style={{ left: `${x}%`, top: `${y}%` }} />
+        ))}
+      </div>
       <div className={styles.scene}>
-        <div className={styles.dust} aria-hidden="true">
-          {SKY_DUST.map(([x, y]) => (
-            <span key={`${x}-${y}`} className={styles.dustPoint} style={{ left: `${x}%`, top: `${y}%` }} />
-          ))}
+        <div className={`${styles.book} ${unfolded ? styles.unfolded : ""}`}>
+          <section
+            className={styles.rightPage}
+            aria-hidden={phase !== "open"}
+            inert={phase !== "open"}
+          >
+            <article
+              className={styles.messagePage}
+              ref={messageRef}
+              tabIndex={-1}
+              aria-label={`Message for ${note.recipientName}`}
+            >
+              <span className={styles.insideSun} aria-hidden="true">✧</span>
+              <h1>For {note.recipientName}</h1>
+              <p className={styles.message}>{note.message}</p>
+              <p className={styles.signature}>— {note.senderName}</p>
+            </article>
+            <button
+              type="button"
+              className={styles.foldCorner}
+              aria-label="Fold the night-sky card closed"
+              onClick={activateFold}
+              disabled={phase !== "open"}
+            >
+              <span className={styles.cornerShape} aria-hidden="true" />
+            </button>
+          </section>
+          <button
+            ref={coverRef}
+            type="button"
+            className={styles.cover}
+            aria-label={unfolded ? "Fold the night-sky card closed" : "Unfold the night-sky card"}
+            aria-expanded={unfolded}
+            disabled={phase === "opening" || phase === "closing"}
+            onClick={activateFold}
+            onTransitionEnd={settleFold}
+          >
+            <span className={`${styles.face} ${styles.front}`}>
+              <span className={styles.coverBorder} aria-hidden="true" />
+              <CelestialArt />
+              <span className={styles.coverTitle}>under the same sky</span>
+              <span className={styles.coverBottom} aria-hidden="true">✦</span>
+            </span>
+            <span className={`${styles.face} ${styles.inside}`}>
+              <CelestialArt inside />
+            </span>
+          </button>
         </div>
-
-        <button
-          className={styles.moon}
-          type="button"
-          disabled={!complete}
-          onClick={resetSky}
-          aria-label="Dim the constellation and return to the stars"
-          title={complete ? "Return to the stars" : undefined}
-        >
-          <span className={styles.crescent} aria-hidden="true" />
-        </button>
-
-        <div className={styles.constellation}>
-          <svg className={styles.connections} viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-            {selected.slice(1).map((index, position) => {
-              const previous = STARS[selected[position]];
-              const current = STARS[index];
-              return (
-                <line
-                  pathLength="1"
-                  key={`${selected[position]}-${index}`}
-                  x1={previous.x}
-                  y1={previous.y}
-                  x2={current.x}
-                  y2={current.y}
-                />
-              );
-            })}
-          </svg>
-          {STARS.map((star, index) => {
-            const lit = selected.includes(index);
-            return (
-              <button
-                key={star.name}
-                ref={index === 0 ? firstStarRef : undefined}
-                type="button"
-                className={`${styles.star} ${lit ? styles.lit : ""}`}
-                style={{ left: `${star.x}%`, top: `${star.y}%` }}
-                aria-label={`${lit ? "Illuminated" : "Illuminate"} ${star.name} star`}
-                aria-pressed={lit}
-                disabled={complete}
-                onClick={() => setSelected((current) => lightStar(current, index))}
-              >
-                <svg viewBox="0 0 48 48" fill="none" aria-hidden="true" focusable="false">
-                  <path d="M24 3C25.9 17.1 30.9 22.1 45 24C30.9 25.9 25.9 30.9 24 45C22.1 30.9 17.1 25.9 3 24C17.1 22.1 22.1 17.1 24 3Z" fill="currentColor" />
-                  <circle cx="24" cy="24" r="3" fill="#fff8da" />
-                </svg>
-              </button>
-            );
-          })}
-        </div>
-
-        <section className={`${styles.note} ${complete ? styles.revealed : ""}`} aria-hidden={!complete} inert={!complete}>
-          <article className={styles.reading} ref={noteRef} tabIndex={-1} aria-label={`Message for ${note.recipientName}`}>
-            <h1>For {note.recipientName}</h1>
-            <p className={styles.message}>{note.message}</p>
-            <p className={styles.signature}>— {note.senderName}</p>
-          </article>
-        </section>
       </div>
       <span className={styles.srOnly} role="status">
-        {complete ? "Constellation complete. Your message is ready." : `${selected.length} of ${STARS.length} stars illuminated.`}
+        {phase === "open" ? "Card unfolded. Personal message ready." : ""}
       </span>
     </main>
   );
