@@ -2,7 +2,7 @@
 
 ## Status
 
-The SQL in [schema/card_instances.sql](schema/card_instances.sql) is a reviewed **schema proposal**, not an applied migration. No database was changed by this PR. The connected Supabase project named `christian-content-feed-staging` is unrelated to this application and **must not be used** for Digital Card Shop card instances.
+The SQL in [schema/card_instances.sql](schema/card_instances.sql) is a reviewed **schema proposal**, not an applied migration. No database was changed by this PR. No dedicated Digital Card Shop Supabase project is configured for this repository. **Do not apply this schema to an unrelated application database.**
 
 ## Setup after the dedicated project is ready
 

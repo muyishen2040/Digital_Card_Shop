@@ -20,7 +20,7 @@ The retired `/create/little-sunshine` address redirects to the recipient demo to
 
 ## Card-instance storage foundation (staged, not connected)
 
-The repository contains the **internal storage contract** (`src/lib/cards/instance-model.ts`), a **server-only Supabase REST repository** (`src/server/cards/card-instances.ts`), and a proposed restricted database schema (`db/schema/card_instances.sql`). These are build-tested foundations, not live services. The available Supabase connection currently points to an unrelated application, so no schema has been applied and no environment secrets have been installed.
+The repository contains the **internal storage contract** (`src/lib/cards/instance-model.ts`), a **server-only Supabase REST repository** (`src/server/cards/card-instances.ts`), and a proposed restricted database schema (`db/schema/card_instances.sql`). These are build-tested foundations, not live services. The schema must be applied only to a dedicated Digital Card Shop Supabase project; this repository does not configure or apply it automatically.
 
 The storage model binds a reusable template to a private message, a SHA-256 token digest, and explicit availability/expiration times. Supabase RLS is enabled with no public grants or policies. Internal server functions use a secret key, which may **never** be sent to the browser.
 
