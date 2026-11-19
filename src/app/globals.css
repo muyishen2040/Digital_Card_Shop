@@ -79,3 +79,24 @@ h1, h2, h3, p { margin-top: 0; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
 }
+
+/* Recipient-facing demo shell and gallery-to-studio link. */
+.concept-primary-link { display: block; }
+.concept-customize { display: inline-flex; align-items: center; gap: 10px; margin: 15px 4px 0; font-size: 13px; font-weight: 600; color: #986b5b; border-bottom: 1px solid #d3b7ab; padding-bottom: 5px; }
+.concept-customize:hover { color: #684739; }
+.concept-customize:focus-visible { outline: 3px solid #b46e65; outline-offset: 5px; }
+.recipient-page { background: #fbfaf6; min-height: 100vh; padding: 32px 22px 60px; }
+.recipient-shell { width: min(100%, 575px); margin: 0 auto; }
+.recipient-header { display: flex; align-items: baseline; justify-content: space-between; gap: 14px; margin-bottom: 18px; }
+.recipient-header .back-link { margin: 0; }
+.recipient-header span { color: #978c80; font-size: 9px; letter-spacing: .12em; }
+.recipient-under { display: flex; justify-content: space-between; align-items: center; gap: 20px; margin-top: 22px; }
+.recipient-under p { margin: 0; font-size: 12px; line-height: 1.55; color: #847970; max-width: 300px; }
+.recipient-under a { color: #976657; font-size: 13px; border-bottom: 1px solid #caa997; padding-bottom: 4px; white-space: nowrap; }
+.recipient-under a:hover { color: #6a4338; }
+@media (max-width: 520px) {
+  .recipient-page { padding: 20px 12px 55px; }
+  .recipient-header { padding: 0 3px; }
+  .recipient-under { flex-direction: column; align-items: flex-start; gap: 12px; padding: 0 4px; }
+  .recipient-under p { max-width: 100%; }
+}

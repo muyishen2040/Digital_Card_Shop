@@ -34,27 +34,40 @@ export default function Home() {
               <span className="section-kicker">EARLY CONCEPTS · PHASE ONE</span>
               <h2 id="gallery-heading">Three little worlds</h2>
             </div>
-            <p>The concepts are ready to explore. Their interactive designs come next.</p>
+            <p>The Sunshine card is ready to try. Two more experiences are on the drawing board.</p>
           </div>
           <div className="card-grid">
             {cardTemplates.map((template, index) => (
-              <Link className="concept" key={template.slug} href={"/cards/" + template.slug}>
-                <div className={"concept-art concept-art--" + template.theme}>
-                  <span className="concept-index">0{index + 1}</span>
-                  <span className="concept-glyph" aria-hidden="true">{illustration[template.theme]}</span>
-                  <span className="concept-status">Design in progress</span>
-                </div>
-                <div className="concept-info">
-                  <span className="category">{template.category}</span>
-                  <h3>{template.title}</h3>
-                  <p>{template.description}</p>
-                  <span className="concept-action">View the concept <span aria-hidden="true">↗</span></span>
-                </div>
-              </Link>
+              <div className="concept" key={template.slug}>
+                <Link className="concept-primary-link" href={"/cards/" + template.slug}>
+                  <div className={"concept-art concept-art--" + template.theme}>
+                    <span className="concept-index">0{index + 1}</span>
+                    <span className="concept-glyph" aria-hidden="true">{illustration[template.theme]}</span>
+                    <span className="concept-status">
+                      {template.slug === "little-sunshine" ? "Try the interactive card" : "Design in progress"}
+                    </span>
+                  </div>
+                  <div className="concept-info">
+                    <span className="category">{template.category}</span>
+                    <h3>{template.title}</h3>
+                    <p>{template.description}</p>
+                    <span className="concept-action">
+                      {template.slug === "little-sunshine" ? "Open the card" : "View the concept"} <span aria-hidden="true">↗</span>
+                    </span>
+                  </div>
+                </Link>
+                {template.slug === "little-sunshine" && (
+                  <Link className="concept-customize" href="/create/little-sunshine">
+                    Personalize this card <span aria-hidden="true">↗</span>
+                  </Link>
+                )}
+              </div>
             ))}
           </div>
         </section>
-        <footer className="site-footer">Made for the moments that matter. <span>Prototype · No purchases or emails yet</span></footer>
+        <footer className="site-footer">
+          Made for the moments that matter. <span>Prototype · No purchases or emails yet</span>
+        </footer>
       </div>
     </main>
   );
