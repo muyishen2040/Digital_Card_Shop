@@ -72,6 +72,7 @@ export function SkyCard({ content }: { content: CardPersonalization }) {
               const current = STARS[index];
               return (
                 <line
+                  pathLength="1"
                   key={`${selected[position]}-${index}`}
                   x1={previous.x}
                   y1={previous.y}

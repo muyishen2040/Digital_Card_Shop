@@ -102,9 +102,9 @@
 .connections { width: 100%; height: 100%; overflow: visible; pointer-events: none; }
 .connections line {
   stroke: #e2d5ba;
-  stroke-width: .12;
+  stroke-width: 1.4px;
   opacity: .62;
-  stroke-dasharray: 130;
+  stroke-dasharray: 1;
   stroke-dashoffset: 0;
   vector-effect: non-scaling-stroke;
   animation: draw-line .8s cubic-bezier(.2, .7, .2, 1) both;
@@ -214,7 +214,7 @@
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
 }
-@keyframes draw-line { from { stroke-dashoffset: 130; opacity: 0; } to { stroke-dashoffset: 0; opacity: .62; } }
+@keyframes draw-line { from { stroke-dashoffset: 1; opacity: 0; } to { stroke-dashoffset: 0; opacity: .62; } }
 @media (max-width: 600px) {
   .scene { height: 100svh; min-height: 540px; }
   .moon { top: 9%; right: 7%; width: 58px; height: 58px; }
