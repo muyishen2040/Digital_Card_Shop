@@ -95,7 +95,8 @@ export function WishCard({ content }: { content: CardPersonalization }) {
         </div>
 
         <section className={styles.wishPoster} aria-hidden={!celebrated} inert={!celebrated}>
-          <article className={styles.posterContent} ref={messageRef} tabIndex={-1} aria-label={`Birthday message for ${note.recipientName}`}>
+          <article className={styles.posterContent}
+            data-card-text-region ref={messageRef} tabIndex={-1} aria-label={`Birthday message for ${note.recipientName}`}>
             <h1>To {note.recipientName},</h1>
             <p className={styles.message}>{note.message}</p>
             <p className={styles.signature}>— {note.senderName}</p>

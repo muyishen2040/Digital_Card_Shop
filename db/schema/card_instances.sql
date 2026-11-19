@@ -10,11 +10,23 @@ create table public.card_instances (
   template_slug text not null
     check (template_slug in ('little-sunshine', 'same-sky', 'make-a-wish')),
   recipient_name text not null
-    check (char_length(btrim(recipient_name)) between 1 and 40),
+    check (char_length(btrim(recipient_name)) between 1 and 32),
   sender_name text not null
-    check (char_length(btrim(sender_name)) between 1 and 40),
+    check (char_length(btrim(sender_name)) between 1 and 32),
   message text not null
-    check (char_length(btrim(message)) between 1 and 600),
+    check (char_length(btrim(message)) between 1 and 240),
+  -- Per-design ceilings are stricter than the shared safety bounds above.
+  constraint card_content_by_design check (
+    (template_slug = 'little-sunshine'
+      and char_length(recipient_name) <= 32 and char_length(sender_name) <= 32
+      and char_length(message) <= 240)
+    or (template_slug = 'same-sky'
+      and char_length(recipient_name) <= 24 and char_length(sender_name) <= 24
+      and char_length(message) <= 140)
+    or (template_slug = 'make-a-wish'
+      and char_length(recipient_name) <= 24 and char_length(sender_name) <= 24
+      and char_length(message) <= 100)
+  ),
   -- Store only SHA-256(token), never the bearer token itself.
   access_token_hash text not null unique
     check (access_token_hash ~ '^[0-9a-f]{64}$'),

@@ -1,5 +1,4 @@
-import { getCardTemplate } from "@/lib/cards/catalog";
-import { MAX_MESSAGE_LENGTH, MAX_NAME_LENGTH } from "@/lib/cards/personalization";
+import { getCardContentPolicy, characterCount } from "@/lib/cards/content-policy";
 
 export const DEFAULT_TTL_HOURS = 48;
 export const ALLOWED_TTL_HOURS = [24, 48, 72] as const;
@@ -36,26 +35,26 @@ export interface CreatedCardInstance {
   expiresAt: string;
 }
 
-function requiredName(value: unknown, label: string): string {
+function requiredName(value: unknown, label: string, maxLength: number): string {
   if (typeof value !== "string") throw new Error(`${label} is required.`);
   const name = value.trim().replace(/\s+/g, " ");
-  if (!name || name.length > MAX_NAME_LENGTH) {
-    throw new Error(`${label} must be between 1 and ${MAX_NAME_LENGTH} characters.`);
+  if (!name || characterCount(name) > maxLength) {
+    throw new Error(`${label} must be between 1 and ${maxLength} characters.`);
   }
   return name;
 }
 
 /** Persisted messages are validated, never silently truncated or replaced with demo text. */
 export function validateCardDraft(value: CreateCardDraft): ValidatedCardDraft {
-  if (!value || !getCardTemplate(value.templateSlug)) {
-    throw new Error("Choose a valid card design.");
-  }
-  const recipientName = requiredName(value.recipientName, "Recipient name");
-  const senderName = requiredName(value.senderName, "Sender name");
+  const policy = value && getCardContentPolicy(value.templateSlug);
+  if (!policy) throw new Error("Choose a valid card design.");
+
+  const recipientName = requiredName(value.recipientName, "Recipient name", policy.nameCharacters);
+  const senderName = requiredName(value.senderName, "Sender name", policy.nameCharacters);
   if (typeof value.message !== "string") throw new Error("A message is required.");
   const message = value.message.replace(/\r\n?/g, "\n").trim();
-  if (!message || message.length > MAX_MESSAGE_LENGTH) {
-    throw new Error(`Message must be between 1 and ${MAX_MESSAGE_LENGTH} characters.`);
+  if (!message || characterCount(message) > policy.messageCharacters) {
+    throw new Error(`Message must be between 1 and ${policy.messageCharacters} characters for this design.`);
   }
   const ttlHours = value.ttlHours ?? DEFAULT_TTL_HOURS;
   if (!(ALLOWED_TTL_HOURS as readonly number[]).includes(ttlHours)) {

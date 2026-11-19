@@ -71,3 +71,9 @@ The table illustrates distinct design directions. Each implemented card must sat
 ---
 
 **Attribution:** Adapted from *unslop* by **Damir Sokolovsky** ([@heydamir](https://github.com/heydamir)), [source repository](https://github.com/heydamir/unslop), licensed [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). This condensed e-card-specific guide is our adaptation, not an official upstream skill.
+
+## Personalization text fit
+
+Character count is not geometric fit: name length, language, line breaks, viewport size and loaded fonts all affect whether a note can be read without scrolling. Every card's reading area exposes `data-card-text-region` so the sender preview can call `measureCardTextFit` after fonts are ready and whenever content/layout changes. The preview should block publishing a note that overflows the narrowest supported mobile layout, instead of clipping text or silently shrinking fonts.
+
+The per-design storage limits (Sunshine 240, Sky 140, Wish 100 message characters) are **starting ceilings**, not guarantees. Keep internal scrolling available in recipient cards for browser zoom, accessibility font scaling, unexpected layout conditions and existing content. Do not cut off or ellipsize someone’s message.

@@ -20,7 +20,7 @@ Never expose the secret through `NEXT_PUBLIC_`, commit it, or place it in a clie
 
 ## Contract
 
-The `public.card_instances` table contains a `template_slug`, sender/recipient names, message, hashed bearer token, and availability/expiration times. The original token is returned only once by the internal `createCardInstance` server function and is never stored.
+The `public.card_instances` table contains a `template_slug`, sender/recipient names, message, hashed bearer token, and availability/expiration times. Its template-specific upper bounds are Sunshine (32-character names, 240-character message), Same Sky (24/140), and Make a Wish (24/100). These are not visual-fit guarantees; live previews also need to measure actual rendered text. The original token is returned only once by the internal `createCardInstance` server function and is never stored.
 
 The internal `findActiveCardByToken` checks both availability and expiry, even if no cleanup job has deleted expired rows. Expiration is **not** implemented by hiding a page in the browser.
 
