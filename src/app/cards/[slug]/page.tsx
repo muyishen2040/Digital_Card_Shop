@@ -2,6 +2,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { SunshineCard } from "@/components/cards/sunshine/SunshineCard";
 import { SkyCard } from "@/components/cards/sky/SkyCard";
+import { WishCard } from "@/components/cards/wish/WishCard";
+import { WISH_DEMO } from "@/lib/cards/wish-demo";
 import { SKY_DEMO } from "@/lib/cards/sky-demo";
 import { SUNSHINE_DEMO } from "@/lib/cards/personalization";
 import { cardTemplates, getCardTemplate } from "@/lib/cards/catalog";
@@ -25,6 +27,9 @@ export default async function CardConceptPage({
   }
   if (slug === "same-sky") {
     return <SkyCard content={SKY_DEMO} />;
+  }
+  if (slug === "make-a-wish") {
+    return <WishCard content={WISH_DEMO} />;
   }
 
   return (
