@@ -10,7 +10,7 @@ A compact, card-specific adaptation of [unslop](https://github.com/heydamir/unsl
 - **Make the object the control.** Tap the envelope, a star, or the candle itself. Use a native button with an accessible name, not a detached "Open envelope" button.
 - **Hover invites; touch acts.** Subtle hover/focus feedback may hint at an interaction, but opening must work by click, touch, keyboard, and reduced-motion settings without hover.
 - **Stage one uninterrupted reveal.** Let the object visibly cause the transition to the message. Avoid abrupt modal jumps and multiple unrelated entrance effects. The final reading state stays put.
-- **Hide the guidance, not accessibility.** Replay may be a quiet icon with an accessible label. Screen-reader guidance and focus states should be available without visually competing with the message.
+- **Hide the guidance, not accessibility.** Prefer a meaningful physical affordance (such as a folded paper corner that closes the letter) over generic replay icons when it fits the card's world. Screen-reader labels and focus states must remain available without visually competing with the message. Do not make long, scrollable message surfaces accidental close targets.
 - **Launcher is not a shop.** During prototyping, one lightweight index can open different card routes. Do not invest in mock checkout, customization, merchandising, or instruction-heavy preview panels.
 - **Review the actual interaction.** Inspect closed → hover/focus → click/tap → reveal → reading → replay on mobile and desktop, including reduced motion and long messages.
 

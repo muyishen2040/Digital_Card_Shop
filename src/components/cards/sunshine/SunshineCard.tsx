@@ -35,22 +35,61 @@ function SunMark() {
 
 /** A recipient-only card with no instructions or storefront elements. */
 export function SunshineCard({ content }: { content: CardPersonalization }) {
-  const [opened, setOpened] = useState(false);
+  type Phase = "closed" | "opening" | "open" | "closing";
+  const [phase, setPhase] = useState<Phase>("closed");
   const envelopeRef = useRef<HTMLButtonElement>(null);
   const letterRef = useRef<HTMLElement>(null);
+  const hasInteracted = useRef(false);
   const note = toPreviewContent(content);
+  const revealed = phase === "opening" || phase === "open";
 
   useEffect(() => {
-    if (opened) letterRef.current?.focus();
-  }, [opened]);
+    if (phase === "open") {
+      letterRef.current?.focus();
+    } else if (phase === "closed" && hasInteracted.current) {
+      envelopeRef.current?.focus();
+    }
+  }, [phase]);
 
-  function replay() {
-    setOpened(false);
-    requestAnimationFrame(() => envelopeRef.current?.focus());
+  // Transition events drive the state; this fallback also handles interrupted animations.
+  useEffect(() => {
+    if (phase !== "opening" && phase !== "closing") return;
+    const timeout = window.setTimeout(() => {
+      setPhase(phase === "opening" ? "open" : "closed");
+    }, 1600);
+    return () => window.clearTimeout(timeout);
+  }, [phase]);
+
+  function prefersReducedMotion() {
+    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  }
+
+  function openEnvelope() {
+    if (phase !== "closed") return;
+    hasInteracted.current = true;
+    setPhase(prefersReducedMotion() ? "open" : "opening");
+  }
+
+  function foldLetter() {
+    if (phase !== "open") return;
+    setPhase(prefersReducedMotion() ? "closed" : "closing");
+  }
+
+  function onLetterTransitionEnd(event: React.TransitionEvent<HTMLDivElement>) {
+    if (event.target !== event.currentTarget || event.propertyName !== "transform") return;
+    if (phase === "opening") setPhase("open");
+  }
+
+  function onFlapTransitionEnd(event: React.TransitionEvent<HTMLSpanElement>) {
+    if (event.target !== event.currentTarget || event.propertyName !== "transform") return;
+    if (phase === "closing") setPhase("closed");
   }
 
   return (
-    <main className={`${styles.card} ${opened ? styles.open : ""}`} aria-label="A Little Sunshine greeting card">
+    <main
+      className={`${styles.card} ${revealed ? styles.open : ""} ${phase === "closing" ? styles.closing : ""}`}
+      aria-label="A Little Sunshine greeting card"
+    >
       <div className={styles.sunlight} aria-hidden="true" />
       <div className={styles.stage}>
         <BotanicalSprig className={styles.sprigLeft} />
@@ -61,47 +100,55 @@ export function SunshineCard({ content }: { content: CardPersonalization }) {
           className={styles.envelope}
           type="button"
           aria-label={`Open the envelope for ${note.recipientName}`}
-          aria-expanded={opened}
-          onClick={() => setOpened(true)}
-          disabled={opened}
+          aria-expanded={revealed}
+          onClick={openEnvelope}
+          disabled={phase !== "closed"}
         >
           <span className={styles.envelopeBack} />
           <span className={styles.letterEdge} />
           <span className={styles.envelopeFront} />
-          <span className={styles.envelopeFlap} />
+          <span className={styles.envelopeFlap} onTransitionEnd={onFlapTransitionEnd} />
           <span className={styles.seal}><SunMark /></span>
           <span className={styles.address}>For {note.recipientName}</span>
         </button>
 
-        <article
-          ref={letterRef}
+        <div
           className={styles.letter}
-          tabIndex={-1}
-          aria-label={`Letter to ${note.recipientName}`}
-          aria-hidden={!opened}
-          inert={!opened}
+          aria-hidden={!revealed}
+          inert={!revealed}
+          onTransitionEnd={onLetterTransitionEnd}
         >
-          <div className={styles.letterContent}>
+          <article
+            ref={letterRef}
+            className={styles.letterContent}
+            tabIndex={-1}
+            aria-label={`Letter to ${note.recipientName}`}
+          >
             <p className={styles.salutation}>Dear {note.recipientName},</p>
             <p className={styles.message}>{note.message}</p>
             <p className={styles.signature}>— {note.senderName}</p>
-          </div>
+          </article>
           <BotanicalSprig className={styles.letterSprig} />
           <button
-            className={styles.replay}
+            className={styles.foldCorner}
             type="button"
-            onClick={replay}
-            aria-label="Close the letter and replay the opening"
-            title="Replay"
-            tabIndex={opened ? 0 : -1}
+            onClick={foldLetter}
+            disabled={phase !== "open"}
+            aria-label="Fold the letter back into the envelope"
+            title="Fold letter"
           >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <path d="M3 10a9 9 0 1 1 2.6 6.4M3 4v6h6" />
+            <svg viewBox="0 0 56 56" fill="none" aria-hidden="true" focusable="false">
+              <path d="M7 2H54V49L7 2Z" fill="#ead6c3" />
+              <path d="M7 2L54 49" stroke="#c9ae95" strokeWidth="1.4" />
+              <path d="M10 3L53 46" stroke="#fff9ef" strokeOpacity=".85" strokeWidth="1.2" />
+              <path d="M54 49L39 37L52 50Z" fill="#d5bba5" fillOpacity=".35" />
             </svg>
           </button>
-        </article>
+        </div>
       </div>
-      <span className={styles.srOnly} role="status">{opened ? "Letter opened" : ""}</span>
+      <span className={styles.srOnly} role="status">
+        {phase === "open" ? "Letter opened" : phase === "closed" && hasInteracted.current ? "Letter folded away" : ""}
+      </span>
     </main>
   );
 }

@@ -22,8 +22,10 @@ The design contract is [sunshine-experience-design.md](sunshine-experience-desig
 - Render a native button styled as a physical envelope; the envelope is the activation target.
 - On click/tap/keyboard activation, open the flap, move the envelope aside and reveal the letter.
 - Show only the recipient salutation, message and sender signature in the open state.
-- Offer an unobtrusive replay control; handle focus handoff for keyboard and screen-reader users.
-- Ensure long content can scroll, reduced motion works, and the card adapts to narrow phones.
+- Implement a physical folded-corner button on the opened letter. It triggers reverse motion: the note retreats into the envelope and the flap closes, without adding a separate replay/close icon or making the message body clickable.
+- Keep the corner stationary while the message content scrolls. Use native control semantics, accessible labels, focus handoff, and explicit transition phases so activation cannot race with opening/closing animations.
+- Support an immediate reduced-motion state change; use a transition-completion fallback when transitions are interrupted.
+- Ensure long content can scroll and the card adapts to narrow phones.
 
 ## 3. Standalone routes
 
@@ -38,7 +40,7 @@ The design contract is [sunshine-experience-design.md](sunshine-experience-desig
 
 - Run `npm run check` (ESLint, TypeScript, Vitest) and `npm run build` through CI.
 - Check `/`, `/cards/little-sunshine`, and other concept routes on the Vercel preview.
-- In a real browser, review closed → hover/focus → tap/click/keyboard open → reading → replay.
+- In a real browser, review closed → hover/focus → tap/click/keyboard open → reading → fold corner → letter retreat → flap close → reopen.
 - Test phone widths down to 320px, a 600-character message, reduced motion and keyboard-only interaction.
 - Keep the PR open for visual review; CI and HTTP checks alone do not establish visual polish.
 
