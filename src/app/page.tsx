@@ -30,7 +30,10 @@ export default function ExperienceLibrary() {
                 )}
                 {card.theme === "night-sky" && (
                   <div className={styles.nightScene} aria-hidden="true">
-                    <span /><span /><span /><span /><span />
+                    <span className={styles.nightBook}>
+                      <span className={styles.nightMoon} />
+                      <span className={styles.nightSpark}>✦</span>
+                    </span>
                   </div>
                 )}
                 {card.theme === "birthday" && (
