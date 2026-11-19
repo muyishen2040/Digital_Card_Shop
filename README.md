@@ -47,6 +47,8 @@ The workflow is: brainstorm → approve design → create isolated worktree → 
 
 See [AGENTS.md](AGENTS.md) for repository-specific guardrails and [docs/ROADMAP.md](docs/ROADMAP.md) for scope.
 
+For visual work, also use the compact [e-card anti-slop design guide](docs/CARD_DESIGN_QUALITY.md) (adapted from heydamir/unslop). It keeps the app shell restrained while allowing expressive, purposeful card art and animations.
+
 ## Project structure
 
 - `src/app/` — Routes and gallery
