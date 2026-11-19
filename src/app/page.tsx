@@ -20,7 +20,7 @@ export default function ExperienceLibrary() {
               key={card.slug}
               href={`/cards/${card.slug}`}
               className={styles.tile}
-              aria-label={`${card.title} — ${card.slug === "little-sunshine" ? "open interactive card" : "view concept"}`}
+              aria-label={`${card.title} — ${card.slug !== "make-a-wish" ? "open interactive card" : "view concept"}`}
             >
               <div className={`${styles.art} ${styles[card.theme]}`}>
                 {card.theme === "sunshine" && (
@@ -50,7 +50,7 @@ export default function ExperienceLibrary() {
                 </span>
               </div>
               <p className={styles.status}>
-                {card.slug === "little-sunshine" ? "Interactive" : "Concept"}
+                {card.slug !== "make-a-wish" ? "Interactive" : "Concept"}
               </p>
             </Link>
           ))}
