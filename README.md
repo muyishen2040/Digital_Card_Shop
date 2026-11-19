@@ -30,7 +30,7 @@ Requirements: Node.js 22 or newer and npm.
 
 Run `npm run check` to execute lint, type checking, and unit tests; `npm run build` to verify the production build.
 
-**Dependency lockfile:** This initial GitHub-only scaffold does not yet include a generated `package-lock.json`. Generate it with `npm install` and commit it before relying on reproducible CI or production deployments.
+**Dependency lockfile:** The repository does not yet contain `package-lock.json`. Run `npm install` with the project’s intended Node/npm versions and commit the generated lockfile before relying on reproducible production installs; switch CI to `npm ci` once the lockfile is present.
 
 ## Agent workflow: obra/superpowers
 

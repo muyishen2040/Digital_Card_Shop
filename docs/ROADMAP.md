@@ -1,13 +1,13 @@
 # Roadmap
 
-## Phase 1 — Visual validation (now)
+## Phase 1 — Recipient experience validation
 
 - [x] Create public GitHub repository and initial application scaffold
 - [x] Establish agent guidance for obra/superpowers
 - [x] Add product context, catalog metadata, tests, and lightweight experience launcher
 - [ ] Install Superpowers in the chosen local coding agent
 - [x] Brainstorm and approve the first card's interaction direction
-- [ ] Implement first card using test-driven development
+- [x] Implement first interactive card and personalization unit tests
 - [ ] Add two *distinct* card experiences
 - [ ] Review mobile layout, accessibility, and reduced-motion behavior
 - [x] Import the repository to Vercel
@@ -40,4 +40,4 @@
 - [ ] Buyer/customer events and optional marketing consent
 - [ ] Recommendation and retention experiments
 
-Future phases are deliberately not part of the initial scaffold.
+Phases 2–5 describe planned capabilities and are not part of the recipient-experience prototype.

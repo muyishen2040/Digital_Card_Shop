@@ -54,7 +54,7 @@ Build an intentional arc: **anticipation → recipient action → reveal → cal
 | **Under the Same Sky** | Deep ink-blue night, sparse stars, quiet typography | Recipient connects/taps stars to reveal the note | Generic neon galaxy/glowing UI chrome |
 | **Make a Wish** | Tactile little cake, soft candlelight, playful paper accents | Blow/tap to extinguish candle; one celebratory reveal | Endless confetti and cartoonish overload |
 
-These are *direction examples*, not approved final designs.
+The table illustrates distinct design directions. Each implemented card must satisfy its own experience specification; see [A Little Sunshine design](plans/sunshine-experience-design.md).
 
 ## Review a rendered card (mobile first)
 
