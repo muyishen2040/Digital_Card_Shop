@@ -51,8 +51,8 @@ export function SunshineCard({ content }: { content: CardPersonalization }) {
 
   return (
     <main className={`${styles.card} ${opened ? styles.open : ""}`} aria-label="A Little Sunshine greeting card">
+      <div className={styles.sunlight} aria-hidden="true" />
       <div className={styles.stage}>
-        <div className={styles.sunlight} aria-hidden="true" />
         <BotanicalSprig className={styles.sprigLeft} />
         <BotanicalSprig className={styles.sprigRight} />
 
