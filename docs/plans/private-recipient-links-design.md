@@ -41,4 +41,4 @@ The future sender preview should report when the actual rendered message overflo
 
 Only internal trusted code can create card instances. There is no public creation endpoint, no anonymous writes, and no public service key. Abuse prevention for recipient-link brute-force traffic, signed webhook creation, deletion/retention automation, observability and delivery are next-stage work. High-entropy tokens prevent enumeration but do not replace rate limiting when production traffic begins.
 
-The proposed SQL must be migrated only to a dedicated project. Until database configuration is in place, the private route fails closed with the same generic unavailable screen.
+The dedicated Digital Card Shop Supabase project `zrgnwwrfrchhgmznbblb` has the private schema installed via migration `20261120050919_create_private_card_instances`. Its security checks passed and the expected informational no-public-RLS-policy notice remains. Configure the server-only secret key and perform end-to-end recipient-link tests before public launch. Until backend configuration is in place, the private route fails closed with the same generic unavailable screen.

@@ -20,7 +20,7 @@
 ## Phase 2 — Shareable temporary card instances
 
 - [x] Define private instance IDs, token hashing, stored personalization and data-retention boundaries (schema proposal and server repository)
-- [ ] Provision a dedicated Supabase project, apply the schema as a migration, and verify RLS/grants
+- [x] Provision a dedicated Supabase project, apply the schema as a migration, and verify RLS/grants
 - [x] Implement the server-only private recipient route and uniform invalid/expired-link page (pending live database deployment and integration checks)
 - [ ] Validate a real personalized link and server-enforced expiry against the dedicated Supabase project
 - [ ] Add authorized, abuse-protected sender creation and share flow; warn on layout overflow and support intentional scrolling
