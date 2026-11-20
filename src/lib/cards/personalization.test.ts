@@ -41,6 +41,15 @@ describe("Sunshine preview personalization", () => {
     expect(data.message).toHaveLength(1000);
   });
 
+  it("keeps Unicode code points intact for valid messages and names", () => {
+    const result = toPreviewContent({
+      recipientName: "🎈".repeat(40), senderName: "Ava",
+      message: "🙂".repeat(600),
+    });
+    expect(result.recipientName).toBe("🎈".repeat(40));
+    expect(result.message).toBe("🙂".repeat(600));
+  });
+
   it("supplies a usable demo that is shorter than the limits", () => {
     const result = toPreviewContent(SUNSHINE_DEMO);
     expect(result.recipientName.length).toBeGreaterThan(0);

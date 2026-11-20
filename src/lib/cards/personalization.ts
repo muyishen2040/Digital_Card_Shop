@@ -1,7 +1,7 @@
 import type { CardPersonalization } from "@/types/card";
 
-// Defensive bounds for the public demonstration renderer. Persisted card instances
-// use stricter per-template limits in content-policy.ts and must pass layout QA.
+// Display bounds use Unicode code points, consistent with database storage.
+// Recipient components never split an emoji from an otherwise valid message.
 export const MAX_NAME_LENGTH = 40;
 export const MAX_MESSAGE_LENGTH = 600;
 
@@ -13,20 +13,16 @@ export const SUNSHINE_DEMO: Readonly<CardPersonalization> = {
 };
 
 function normalizeName(value: string, fallback: string): string {
-  return (
-    value.trim().replace(/\s+/g, " ").slice(0, MAX_NAME_LENGTH).trim() ||
-    fallback
-  );
+  return Array.from(value.trim().replace(/\s+/g, " "))
+    .slice(0, MAX_NAME_LENGTH).join("").trim() || fallback;
 }
 
 /** Display-only normalization; never stores or sends the personal note. */
 export function toPreviewContent(
   draft: CardPersonalization,
 ): CardPersonalization {
-  const message = draft.message
-    .replace(/\r\n?/g, "\n")
-    .trim()
-    .slice(0, MAX_MESSAGE_LENGTH);
+  const message = Array.from(draft.message.replace(/\r\n?/g, "\n").trim())
+    .slice(0, MAX_MESSAGE_LENGTH).join("");
 
   return {
     recipientName: normalizeName(draft.recipientName, "friend"),

@@ -246,37 +246,65 @@
 }
 .foldCorner:not(:disabled):active .cornerShape { transform: translate(-1px, 1px) scale(.97); }
 .srOnly { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; border: 0; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; }
+/* A full two-page spread remains visible on a narrow phone. The recipient can
+   enlarge the right page to read instead of losing the left leaf off-screen. */
+.readingToggle { display: none; }
 @media (max-width: 700px) {
   .scene { padding: 18px; perspective: 1300px; }
   .book {
     width: min(calc(100vw - 36px), 510px);
     height: clamp(415px, 76svh, 660px);
-    transform: none;
+    transform: translateX(-25%);
   }
   .book.unfolded { transform: none; }
   .rightPage {
-    left: 0;
-    width: 100%;
-    padding: 77px clamp(28px, 7vw, 52px) 38px;
+    left: 50%;
+    width: 50%;
+    padding: 57px 14px 30px;
+    border-radius: 0 5px 5px 0;
+    transition: left .32s ease, width .32s ease, padding .32s ease;
+  }
+  .rightPage::after { inset: 13px; }
+  .cover { left: 50%; width: 50%; }
+  .unfolded .cover { transform: rotateY(-180deg); }
+  .coverTitle { font-size: clamp(24px, 6.8vw, 34px); }
+  .messagePage h1 { font-size: clamp(22px, 5.7vw, 30px); margin-bottom: 16px; }
+  .insideSun { font-size: 23px; margin-bottom: 15px; }
+  .message { font-size: 13.5px; line-height: 1.65; }
+  .signature { font-size: 11px; margin-top: 16px; letter-spacing: .02em; }
+  .moon { width: 57px; height: 57px; }
+  .insideArt .moon { width: 53px; height: 53px; }
+  .coverBorder { inset: 9px; }
+  .coverBottom { bottom: 5%; }
+  .readingToggle {
+    display: block; position: absolute; z-index: 7;
+    top: 12px; left: 14px;
+    padding: 6px 5px; border: 0; border-bottom: 1px solid #bcb1c8;
+    background: transparent; color: #5a5376;
+    font: 600 11px/1.2 var(--font-sky-body), Arial, sans-serif;
+    cursor: pointer;
+  }
+  .readingToggle:disabled { visibility: hidden; }
+  .readingToggle:focus-visible { outline: 2px solid #74769d; outline-offset: 2px; }
+  .readingExpanded {
+    z-index: 6; left: 0; width: 100%;
+    padding: 62px clamp(25px, 6vw, 45px) 34px;
     border-radius: 5px;
   }
-  .rightPage::after { inset: 18px; }
-  .cover { left: 0; width: 100%; }
-  .unfolded .cover { transform: rotateY(-112deg); }
-  .coverTitle { font-size: clamp(44px, 10vw, 65px); }
-  .messagePage h1 { font-size: clamp(38px, 8.7vw, 52px); }
-  .message { font-size: 15px; line-height: 1.8; }
-  .moon { width: 83px; height: 83px; }
-  .insideArt { opacity: .45; }
+  .readingExpanded .messagePage h1 { font-size: clamp(35px, 7vw, 46px); }
+  .readingExpanded .message { font-size: 15px; line-height: 1.8; }
+  .readingExpanded .signature { font-size: 13px; letter-spacing: .07em; }
 }
 @media (max-width: 370px) {
   .scene { padding: 11px; }
   .book { width: calc(100vw - 22px); height: clamp(400px, 79svh, 580px); }
-  .rightPage { padding: 73px 26px 29px; }
-  .messagePage h1 { font-size: 37px; }
-  .message { font-size: 14.5px; line-height: 1.72; }
-  .coverTitle { font-size: 42px; }
+  .rightPage { padding: 52px 11px 25px; }
+  .rightPage::after { inset: 9px; }
+  .messagePage h1 { font-size: 21px; }
+  .message { font-size: 13px; line-height: 1.6; }
+  .coverTitle { font-size: 23px; }
+  .readingExpanded { padding: 62px 24px 27px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .book, .cover, .cornerShape { transition: none !important; }
+  .book, .cover, .cornerShape, .rightPage { transition: none !important; }
 }

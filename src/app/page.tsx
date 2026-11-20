@@ -8,7 +8,10 @@ export default function ExperienceLibrary() {
       <div className={styles.shell}>
         <header className={styles.header}>
           <span className={styles.wordmark}>little <em>moments</em></span>
-          <span className={styles.headerMeta}>Interactive cards</span>
+          <nav className={styles.headerLinks} aria-label="Collection navigation">
+            <span className={styles.headerMeta}>Interactive cards</span>
+            <Link href="/create" className={styles.createLink}>Create a card</Link>
+          </nav>
         </header>
         <div className={styles.intro}>
           <span className={styles.eyebrow}>THE COLLECTION</span>
