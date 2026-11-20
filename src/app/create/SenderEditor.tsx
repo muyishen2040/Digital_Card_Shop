@@ -9,6 +9,7 @@ import type { CardTtlHours } from "@/lib/cards/instance-model";
 import type { CardTextFitResult } from "@/lib/cards/content-fit";
 import styles from "./SenderEditor.module.css";
 import { TurnstileChallenge } from "./TurnstileChallenge";
+import { recipientCardUrl } from "@/lib/cards/recipient-link";
 
 const PUBLIC_CREATION = process.env.NEXT_PUBLIC_CARD_PUBLIC_CREATION_ENABLED === "true";
 const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? "";
@@ -133,7 +134,7 @@ export function SenderEditor() {
       if (!data.path || !/^\/c\/[A-Za-z0-9_-]{43}$/.test(data.path) || !data.expiresAt) {
         throw new Error("Unexpected link returned.");
       }
-      setUrl(window.location.origin + data.path);
+      setUrl(recipientCardUrl(data.path));
       setExpiration(data.expiresAt);
       setAccessCode("");
     } catch (cause) {

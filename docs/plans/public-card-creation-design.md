@@ -15,11 +15,14 @@ This branch is deliberately **inactive by default**. Deploying code must not aut
 7. Existing unguessable hashed recipient token, 24/48/72-hour expiration, RLS, and nightly expired-card deletion remain intact.
 
 ## Deployment steps
-1. Review and apply the new `supabase/migrations/20261120194500_public_card_creation_quota.sql` to the dedicated project. Verify only service_role can execute `reserve_public_card_slot`, and that anon/authenticated roles have no access to the counters.
+1. Review and apply the new `supabase/migrations/20261120220816_public_card_creation_quota.sql` to the dedicated project. Verify only service_role can execute `reserve_public_card_slot`, and that anon/authenticated roles have no access to the counters.
 2. Register a Cloudflare Turnstile widget with the actual production hostname. Configure `NEXT_PUBLIC_TURNSTILE_SITE_KEY` (public), `TURNSTILE_SECRET_KEY` (server-only Sensitive), and `CARD_RATE_LIMIT_SECRET` (server-only Sensitive).
 3. Deploy and test in Preview **without enabling the flag**. Test on a controlled Preview hostname if enabling the feature for a preview; allow that hostname in Turnstile.
 4. After tests, set `CARD_PUBLIC_CREATION_ENABLED=true` and `NEXT_PUBLIC_CARD_PUBLIC_CREATION_ENABLED=true` in Production, then redeploy. Both are required for the user-facing editor.
 5. Verify: successful publish, invalid/missing CAPTCHA rejection, rejected cross-origin request, 429 quota limits, no Supabase public access, and failure-closed behavior during downtime.
+
+## Public receiver links from protected Preview editors
+The sender/editor and creation API run on their current Vercel Preview host, which remains protected by Vercel Authentication. On successful creation, the UI turns the validated relative `/c/{token}` path into an absolute recipient URL on `https://digital-card-shop.vercel.app` (not the Preview hostname). This public production recipient route reads the same Supabase database, so recipients need only the unguessable link, not a Vercel account. Both the pilot and public-creation editor flows use this canonical origin, including native share/copy/open actions in PR #12. Keep token paths unmodified and do not include secrets in logs or analytics. Existing links previously copied with a Preview hostname remain protected; re-create them or switch their hostname manually.
 
 ## Threat model and scope
 This is a low-volume public beta, not a proven spam-free system. Turnstile can be bypassed by determined attackers; per-IP quotas can be circumvented by distributed sources and shared IPs can cause false positives. Monitor aggregate failures and costs, and shut off the flag if traffic is suspicious. Do not email arbitrary recipients from this endpoint. If the project grows, add account/order validation, abuse reporting, WAF-level rate limits, and an operational alert on excessive quota use.
