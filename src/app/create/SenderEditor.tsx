@@ -9,6 +9,7 @@ import type { CardTtlHours } from "@/lib/cards/instance-model";
 import type { CardTextFitResult } from "@/lib/cards/content-fit";
 import styles from "./SenderEditor.module.css";
 import { TurnstileChallenge } from "./TurnstileChallenge";
+import { cardShareData } from "@/lib/cards/sharing";
 
 const PUBLIC_CREATION = process.env.NEXT_PUBLIC_CARD_PUBLIC_CREATION_ENABLED === "true";
 const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? "";
@@ -38,6 +39,8 @@ export function SenderEditor() {
   const [url, setUrl] = useState("");
   const [expiration, setExpiration] = useState("");
   const [copied, setCopied] = useState(false);
+  const [shareStatus, setShareStatus] = useState("");
+  const linkInput = useRef<HTMLInputElement>(null);
   const iframe = useRef<HTMLIFrameElement>(null);
   const previewStage = useRef<HTMLDivElement>(null);
   const [previewAvailableWidth, setPreviewAvailableWidth] = useState<number | null>(null);
@@ -68,6 +71,7 @@ export function SenderEditor() {
     setExpiration("");
     setError("");
     setCopied(false);
+    setShareStatus("");
   }
 
   useEffect(() => {
@@ -109,6 +113,16 @@ export function SenderEditor() {
   }, [frameReady, slug, to, from, message, viewport]);
 
   const authorizedToPublish = PUBLIC_CREATION ? !!TURNSTILE_SITE_KEY && !!turnstileToken : accessCode.length > 0;
+  // Only compute availability once a card link exists; avoid effect-driven state.
+  const nativeShareAvailable = (() => {
+    if (!url || typeof navigator === "undefined" || typeof navigator.share !== "function") return false;
+    try {
+      return typeof navigator.canShare !== "function" || navigator.canShare(cardShareData(url));
+    } catch {
+      return false;
+    }
+  })();
+
   const canPublish = !invalid && !creating && authorizedToPublish &&
     fit !== "checking" && (fit === "fits" || confirmScroll);
 
@@ -148,11 +162,27 @@ export function SenderEditor() {
   }
 
   async function copyLink() {
+    if (!url) return;
     try {
       await navigator.clipboard.writeText(url);
       setCopied(true);
+      setShareStatus("Private link copied. Share it only with your intended recipient.");
     } catch {
-      document.getElementById("result-link")?.focus();
+      linkInput.current?.focus();
+      linkInput.current?.select();
+      setShareStatus("Clipboard access is unavailable. The link is selected for manual copying.");
+    }
+  }
+
+  async function shareLink() {
+    if (!url || !nativeShareAvailable) return;
+    try {
+      await navigator.share(cardShareData(url));
+      setShareStatus("Your share sheet has closed.");
+    } catch (cause) {
+      // Dismissing a share sheet is a normal action, not an error.
+      if (cause instanceof Error && cause.name === "AbortError") return;
+      setShareStatus("Sharing is unavailable. Copy the private link instead.");
     }
   }
 
@@ -233,11 +263,15 @@ export function SenderEditor() {
           <h2>Send a little moment.</h2>
           <p>Only someone with this link can open your card until it expires. Share privately.</p>
           <label htmlFor="result-link">Recipient link</label>
-          <input id="result-link" type="text" readOnly value={url} onFocus={(e) => e.target.select()} />
+          <input id="result-link" ref={linkInput} type="text" readOnly value={url}
+            onFocus={(e) => e.target.select()} aria-describedby="link-privacy-note" />
           <div className={styles.resultActions}>
-            <button type="button" onClick={copyLink}>{copied ? "Copied!" : "Copy link"}</button>
+            {nativeShareAvailable && <button type="button" onClick={shareLink} className={styles.sharePrimary}>Share card</button>}
+            <button type="button" onClick={copyLink}>{copied ? "Copy again" : "Copy link"}</button>
             <a href={url} rel="noopener noreferrer" target="_blank">Open card</a>
           </div>
+          <p id="link-privacy-note" className={styles.privacyNote}>Anyone who has this private link can view your card until it expires. Share thoughtfully.</p>
+          <p className={styles.shareStatus} role="status" aria-live="polite">{shareStatus}</p>
           <small>Expires {new Date(expiration).toLocaleString()}</small>
         </section>}
       </section>
