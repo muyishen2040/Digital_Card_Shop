@@ -2,29 +2,28 @@
 
 ## Status
 
-The SQL in [schema/card_instances.sql](schema/card_instances.sql) is a reviewed **schema proposal**, not an applied migration. No database was changed by this PR. No dedicated Digital Card Shop Supabase project is configured for this repository. **Do not apply this schema to an unrelated application database.**
+The dedicated Supabase project is **`digital-card-shop`** (reference `zrgnwwrfrchhgmznbblb`, `us-east-1`). The `card_instances` table was deployed from [schema/card_instances.sql](schema/card_instances.sql) via the Supabase migration API, which recorded migration `20261120050919_create_private_card_instances`. The exact applied SQL is tracked at [supabase/migrations/20261120050919_create_private_card_instances.sql](../supabase/migrations/20261120050919_create_private_card_instances.sql). No other project's database was modified.
 
-## Setup after the dedicated project is ready
+## Verified database setup and remaining app configuration
 
-1. Create or select a dedicated Digital Card Shop Supabase project and verify it is healthy.
-2. Install the current Supabase CLI and check its commands with `supabase --help`, `supabase migration --help`, and `supabase migration new --help`.
-3. Create a real timestamped migration using `supabase migration new create_card_instances`; copy the SQL from `schema/card_instances.sql` into the generated file.
-4. Apply it to the intended project through the normal migration workflow, **after** confirming the target project and reviewing the diff. This repo deliberately does not contain a migration timestamp invented without the CLI.
-5. Verify the table constraints, RLS and grants in the destination with [security-check.sql](security-check.sql), then run Supabase security advisors. Correct any findings before allowing real card creation.
-6. Configure the server environment only after the project is ready:
+1. Supabase project `digital-card-shop` was created at the quoted $0/month project cost and reports `ACTIVE_HEALTHY`. This quote does not guarantee that optional paid features or future usage are free.
+2. Migration `20261120050919_create_private_card_instances` is applied to that project. The table exists and is initially empty.
+3. [security-check.sql](security-check.sql) completed successfully, verifying RLS, denied `anon`/`authenticated` table privileges and expected `service_role` access.
+4. Supabase security advisors show only informational `rls_enabled_no_policy` for this table. **This is intentional:** no browser role is allowed to read private cards.
+5. Before sending real cards, configure the server environment in Vercel:
 
-   - `SUPABASE_URL` — dedicated project's HTTPS URL
-   - `SUPABASE_SECRET_KEY` — its `sb_secret_...` server-only key
+   - `SUPABASE_URL` — `https://zrgnwwrfrchhgmznbblb.supabase.co`
+   - `SUPABASE_SECRET_KEY` — the project's `sb_secret_...` server-only key (retrieve and paste it **directly in Vercel**, never in a message or repository)
 
 Never expose the secret through `NEXT_PUBLIC_`, commit it, or place it in a client component.
 
 ## Contract
 
-The `public.card_instances` table contains a `template_slug`, sender/recipient names, message, hashed bearer token, and availability/expiration times. Its template-specific upper bounds are Sunshine (32-character names, 240-character message), Same Sky (24/140), and Make a Wish (24/100). These are not visual-fit guarantees; live previews also need to measure actual rendered text. The original token is returned only once by the internal `createCardInstance` server function and is never stored.
+The `public.card_instances` table contains a `template_slug`, sender/recipient names, message, hashed bearer token, and availability/expiration times. The shared storage limits are 40 Unicode code points per name and 600 per message for all three templates. Design-specific writing recommendations (240 / 140 / 100) are guidance, not restrictions. Browser previews should measure actual layout and notify the sender about scrolling. The original token is returned only once by the internal `createCardInstance` server function and is never stored.
 
 The internal `findActiveCardByToken` checks both availability and expiry, even if no cleanup job has deleted expired rows. Expiration is **not** implemented by hiding a page in the browser.
 
-Only trusted server code uses these functions. **There is no public creation endpoint or live recipient token route in this PR.** Those require authorization, abuse prevention, and UX review in later PRs.
+Only trusted server code uses these functions. **There is no public creation endpoint.** A dynamic `/c/[token]` recipient route is defined. The database schema is deployed, but live private-link rendering still needs `SUPABASE_SECRET_KEY` configured in Vercel and a real valid/expired-token integration test. Sender creation still requires authorization and abuse prevention.
 
 ## Privacy and retention
 
@@ -37,4 +36,4 @@ Only trusted server code uses these functions. **There is no public creation end
 
 ## Verification boundary
 
-TypeScript/Vitest tests in this PR cover strict input validation, access windows, and token generation. Live RLS, database constraints, and service-key requests **cannot be tested until a dedicated project is provisioned**.
+TypeScript/Vitest tests cover input validation, access windows, and token generation. The live table, RLS and role grants have been verified against the dedicated database. Live service-key REST operations and personalized recipient-link expiration **remain unverified** until the backend secret is configured and integration tests can run.

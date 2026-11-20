@@ -1,0 +1,35 @@
+.page {
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  padding: 28px;
+  background: radial-gradient(ellipse at 50% 15%, #fffaf3, #f4e9e3 90%);
+  color: #514541;
+}
+.note {
+  text-align: center;
+  max-width: 440px;
+  padding: 55px 20px;
+}
+.ornament {
+  display: block;
+  margin-bottom: 28px;
+  font: 30px Georgia, serif;
+  color: #a07b9d;
+}
+.note h1 {
+  margin: 0 0 19px;
+  font: normal clamp(30px, 6vw, 44px)/1.17 Georgia, serif;
+  letter-spacing: -.035em;
+}
+.note p {
+  margin: 0 0 31px;
+  font: 15px/1.75 Arial, sans-serif;
+  color: #81746f;
+}
+.note a {
+  display: inline-block;
+  padding: 8px 0;
+  border-bottom: 1px solid #9d7770;
+  font: 14px/1.4 Arial, sans-serif;
+}

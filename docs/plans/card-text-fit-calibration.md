@@ -18,19 +18,17 @@ Exploratory measurements recreated the relevant reading-area CSS in headless Chr
 
 A second run with names of about twenty characters reduced the multiple-paragraph capacities to roughly **140 / 90 / 70**. Changing fonts, screen size or names changes these values. Exact production limits cannot be inferred solely from these simulations.
 
-## Initial server-side ceilings
+## Storage ceiling and editorial recommendations
 
-The following are **upper bounds**, not promises that all permitted messages fit every viewport:
+All three templates share a **hard storage maximum** of 40 Unicode code points per name and 600 per message.
 
-| Card | Maximum recipient/sender name | Maximum message |
+| Card | Suggested message length | Enforced message maximum |
 |---|---:|---:|
-| A Little Sunshine | 32 Unicode code points each | 240 |
-| Under the Same Sky | 24 Unicode code points each | 140 |
-| Make a Wish | 24 Unicode code points each | 100 |
+| A Little Sunshine | ~240 | 600 |
+| Under the Same Sky | ~140 | 600 |
+| Make a Wish | ~100 | 600 |
 
-The more spacious Sunshine letter gets a higher budget; the decorated birthday poster gets the lowest. The bounds prevent unreasonable input before rendering, and they are enforced both in the application and in the proposed database schema.
-
-A message shorter than the ceiling **may still fail to fit**. For example, 100 Chinese characters or several paragraphs can overflow the Wish poster on a compact phone. Conversely, the same card may accommodate a longer note on a larger device. Do not market these limits as fit guarantees.
+Suggested lengths encourage an entire greeting to be visible at once, not a prohibition on longer heartfelt notes. Character count does not guarantee a geometric fit. The sender preview should warn when a message requires internal scrolling but **allow the sender to choose a longer message intentionally**. Never silently truncate or shrink type to meet the recommendations.
 
 ## Required sender-editor behavior
 
@@ -40,8 +38,8 @@ When the sender editor is implemented:
 2. Await `document.fonts.ready` and at least one browser layout frame. The message regions are marked with `data-card-text-region`.
 3. Call `measureCardTextFit(cardRoot)`; `overflows` means the reading region's `scrollHeight` or `scrollWidth` exceeds the visible dimensions. `unmeasurable` is not a successful fit.
 4. Re-measure after each content edit, viewport resize, font load, or relevant layout change (a `ResizeObserver` can help, with protection against observing the same element's own layout feedback).
-5. Validate a narrow supported phone layout before enabling creation. Warn clearly and ask the sender to shorten the message or names if it fails; never silently truncate them. A normal desktop-only preview is insufficient.
-6. Server-side validation must independently enforce the per-template upper bounds, even though only the browser can perform exact font/layout checks.
+5. Preview a narrow supported phone layout before creation. Warn clearly when the full note does not fit, and offer shortening it or explicitly keeping a scrollable note; never silently truncate. A desktop-only preview is insufficient.
+6. Server-side validation independently enforces the shared 40/600 bounds; only the browser can perform exact font/layout checks.
 7. Keep scrollable recipient regions as the final fallback for unusual browser zoom, enlarged text, or previously created messages.
 
 ## Visual QA matrix

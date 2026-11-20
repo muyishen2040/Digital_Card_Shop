@@ -9,8 +9,8 @@ This foundation PR defines the data contract, restricted Supabase table, token m
 ## Model
 
 - `template_slug`: an existing card template (Sunshine, Same Sky, Make a Wish)
-- `recipient_name`, `sender_name`: required, with per-design ceilings (Sunshine 32, Sky 24, Wish 24 Unicode code points)
-- `message`: nonempty with preserved line breaks; initial per-design ceilings are Sunshine 240, Sky 140, Wish 100 Unicode code points. These caps are defensive only: fit also depends on wrapping, names, paragraphs, fonts, device width and browser zoom.
+- `recipient_name`, `sender_name`: required, with a shared 40-Unicode-code-point maximum
+- `message`: nonempty with preserved line breaks, up to 600 Unicode code points for every design. Suggested lengths (Sunshine 240, Sky 140, Wish 100) are editorial guidance only; visual fit depends on wrapping, fonts, names, paragraphs, device width and browser zoom.
 - `access_token_hash`: unique SHA-256 hash of a 256-bit randomly generated capability token
 - `available_at`, `expires_at`: an explicit 24/48/72-hour access window
 - `id`, `created_at`: internal UUID and timestamps
@@ -37,14 +37,14 @@ There are intentionally no public API handlers invoking these functions yet. The
 
 ## Follow-on work
 
-- **PR #8:** Implement `/c/[token]` with server-side retrieval, cache and referrer protections, anonymous-link abuse controls and uniform unavailable pages.
+- **Private recipient links:** Implement `/c/[token]` with server-side retrieval, cache/referrer protections, and uniform unavailable pages. Traffic-level abuse controls remain a production-hardening requirement.
 - **PR #9:** Implement an authenticated or abuse-protected sender creation path plus a form for personalization and share.
 - **Delivery phase:** Add scheduled activation and email integration with retention/cleanup coordination.
 - **Pre-production:** Apply the SQL through a CLI-generated migration in the dedicated Supabase project and verify RLS/grants with the security script and advisors.
 
 ## Acceptance criteria
 
-- Model enforces valid template IDs, per-design size limits and expiration without silently truncating personal content.
+- Model enforces valid template IDs, shared storage limits (40-character names and 600-character message) and expiration without silently truncating personal content. Design-specific length hints are not hard limits.
 - Every recipient reading region has `data-card-text-region` for post-font-loading, real-layout overflow checks when the sender preview is built. Scrolling remains an accessibility fallback until an editor can block ill-fitting drafts.
 - A unique unguessable token is generated; only its digest enters the database payload.
 - Database blueprint enables RLS and denies all direct client read/write access.
