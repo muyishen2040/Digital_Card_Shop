@@ -25,7 +25,7 @@
 - [ ] Validate a real personalized link and server-enforced expiry against the dedicated Supabase project
 - [x] Implement an editor, live interactive preview, and restricted pilot creation flow (requires pilot access code for deployment)
 - [ ] Introduce verified buyer/account authorization, shared rate limits, quotas and abuse controls before public creation
-- [ ] Implement expired-data cleanup and observability without storing sensitive values in logs
+- [x] Implement scheduled expiry cleanup and privacy-safe aggregate operational logs (pending production secret and first scheduled run)
 - [ ] Optional image uploads with validation/limits
 
 ## Phase 3 — Delivery
