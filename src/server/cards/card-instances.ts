@@ -3,6 +3,7 @@ import "server-only";
 import { expirationFor, isCardAccessible, validateCardDraft } from "@/lib/cards/instance-model";
 import type { CreateCardDraft, CreatedCardInstance, StoredCardInstance } from "@/lib/cards/instance-model";
 import { hashCardToken, issueCardToken } from "./card-token";
+import { storageConfig } from "./storage-config";
 
 type CardRow = {
   id: string;
@@ -15,16 +16,6 @@ type CardRow = {
 };
 
 /** Privileged access is allowed only within trusted server functions, never client components. */
-function storageConfig(): { url: URL; secret: string } {
-  const base = process.env.SUPABASE_URL;
-  const secret = process.env.SUPABASE_SECRET_KEY;
-  if (!base || !secret || !secret.startsWith("sb_secret_")) {
-    throw new Error("Card storage is not configured with a Supabase secret key.");
-  }
-  const url = new URL(base);
-  if (url.protocol !== "https:") throw new Error("Card storage requires HTTPS.");
-  return { url, secret };
-}
 
 async function requestRows(url: URL, secret: string, init: RequestInit): Promise<CardRow[]> {
   const headers = new Headers(init.headers);
