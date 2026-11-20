@@ -38,3 +38,10 @@
 .resultActions a{font:13px Arial,sans-serif;border-bottom:1px solid #9e7160}.result small{color:#9b8174}
 @media(max-width:1000px){.grid{grid-template-columns:1fr;max-width:630px;gap:52px}}
 @media(max-width:500px){.grid{width:min(100% - 30px,630px)}.names{grid-template-columns:1fr;gap:0}.options{gap:5px}.options button{padding:11px 7px}.options strong{font-size:14px}.previewHeader{flex-direction:column;align-items:start}.previewStage{padding:15px 0}}
+
+.resultActions{flex-wrap:wrap;gap:12px}
+.resultActions .sharePrimary{background:#805f50}
+.resultActions .sharePrimary:hover,.resultActions button:hover{background:#6a4b3c}
+.resultActions button:focus-visible,.resultActions a:focus-visible{outline:2px solid #805f50;outline-offset:3px}
+.result .privacyNote{font-size:12px;line-height:1.6;margin:0 0 8px}
+.result .shareStatus{font-size:12px;line-height:1.6;min-height:1.5em;margin:0 0 8px;color:#6a4b3c}
