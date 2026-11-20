@@ -1,0 +1,79 @@
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+const mocks = vi.hoisted(() => ({
+  createCardInstance: vi.fn(), publicCreationConfigured: vi.fn(),
+  getClientIp: vi.fn(), verifyTurnstile: vi.fn(), reservePublicCardSlot: vi.fn(),
+}));
+vi.mock("@/server/cards/card-instances", () => ({ createCardInstance: mocks.createCardInstance }));
+vi.mock("@/server/cards/public-creation", () => ({
+  publicCreationConfigured: mocks.publicCreationConfigured,
+  getClientIp: mocks.getClientIp,
+  verifyTurnstile: mocks.verifyTurnstile,
+  reservePublicCardSlot: mocks.reservePublicCardSlot,
+}));
+vi.mock("server-only", () => ({}));
+import { POST } from "./route";
+
+const draft = { templateSlug: "same-sky", recipientName: "Jamie", senderName: "Taylor", message: "Hello!", ttlHours: 24, turnstileToken: "valid-token" };
+const request = (data: object = draft, origin = "https://cards.test") => new Request("https://cards.test/api/public/cards", {
+  method: "POST",
+  headers: { origin, "content-type": "application/json", "x-forwarded-for": "192.0.2.1" },
+  body: JSON.stringify(data),
+});
+beforeEach(() => {
+  Object.values(mocks).forEach((mock) => mock.mockReset());
+  mocks.publicCreationConfigured.mockReturnValue(true);
+  mocks.getClientIp.mockReturnValue("192.0.2.1");
+  mocks.verifyTurnstile.mockResolvedValue(true);
+  mocks.reservePublicCardSlot.mockResolvedValue(true);
+  mocks.createCardInstance.mockResolvedValue({ accessToken: "A".repeat(43), expiresAt: "2026-11-21T00:00:00Z" });
+});
+afterEach(() => vi.restoreAllMocks());
+
+describe("public card creation", () => {
+  it("is disabled until all safeguards are provisioned", async () => {
+    mocks.publicCreationConfigured.mockReturnValue(false);
+    expect((await POST(request())).status).toBe(503);
+    expect(mocks.verifyTurnstile).not.toHaveBeenCalled();
+  });
+  it("rejects cross-origin requests without calling services", async () => {
+    expect((await POST(request(draft, "https://evil.test"))).status).toBe(403);
+    expect(mocks.verifyTurnstile).not.toHaveBeenCalled();
+  });
+  it("rejects invalid drafts before paid verification or storage", async () => {
+    expect((await POST(request({ ...draft, message: "X".repeat(601) }))).status).toBe(400);
+    expect(mocks.verifyTurnstile).not.toHaveBeenCalled();
+  });
+  it("rejects missing captcha and missing verified client address", async () => {
+    expect((await POST(request({ ...draft, turnstileToken: "" }))).status).toBe(400);
+    mocks.getClientIp.mockReturnValue(null);
+    expect((await POST(request())).status).toBe(403);
+    expect(mocks.createCardInstance).not.toHaveBeenCalled();
+  });
+  it("checks human verification before reserving a slot", async () => {
+    mocks.verifyTurnstile.mockResolvedValue(false);
+    expect((await POST(request())).status).toBe(403);
+    expect(mocks.reservePublicCardSlot).not.toHaveBeenCalled();
+    expect(mocks.createCardInstance).not.toHaveBeenCalled();
+  });
+  it("returns 429 if the atomic quota is exhausted", async () => {
+    mocks.reservePublicCardSlot.mockResolvedValue(false);
+    const result = await POST(request());
+    expect(result.status).toBe(429);
+    expect(result.headers.get("Retry-After")).toBe("3600");
+    expect(mocks.createCardInstance).not.toHaveBeenCalled();
+  });
+  it("returns a private relative URL after verification and quota reservation", async () => {
+    const result = await POST(request());
+    expect(result.status).toBe(201);
+    expect(result.headers.get("cache-control")).toContain("no-store");
+    expect(await result.json()).toEqual({ path: "/c/" + "A".repeat(43), expiresAt: "2026-11-21T00:00:00Z" });
+    expect(mocks.verifyTurnstile).toHaveBeenCalledWith("valid-token", "cards.test", "192.0.2.1");
+    expect(mocks.reservePublicCardSlot).toHaveBeenCalledWith("192.0.2.1");
+    expect(mocks.createCardInstance).toHaveBeenCalledOnce();
+  });
+  it("fails closed if verification or quota storage is unavailable", async () => {
+    mocks.reservePublicCardSlot.mockRejectedValue(new Error("database down"));
+    expect((await POST(request())).status).toBe(503);
+    expect(mocks.createCardInstance).not.toHaveBeenCalled();
+  });
+});
