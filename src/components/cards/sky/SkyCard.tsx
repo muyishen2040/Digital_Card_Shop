@@ -96,6 +96,7 @@ export function SkyCard({ content }: { content: CardPersonalization }) {
           >
             <article
               className={styles.messagePage}
+            data-card-text-region
               ref={messageRef}
               tabIndex={-1}
               aria-label={`Message for ${note.recipientName}`}

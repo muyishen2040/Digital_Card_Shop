@@ -19,10 +19,12 @@
 
 ## Phase 2 — Shareable temporary card instances
 
-- [ ] Private IDs/token design, stored personalization, data retention plan
-- [ ] Server-enforced card expiration (1–3 days)
+- [x] Define private instance IDs, token hashing, stored personalization and data-retention boundaries (schema proposal and server repository)
+- [ ] Provision a dedicated Supabase project, apply the schema as a migration, and verify RLS/grants
+- [ ] Add private recipient links with server-enforced expiration (1–3 days) and a generic unavailable page
+- [ ] Add authorized, abuse-protected sender creation and share flow, with layout-aware message fitting at mobile and desktop sizes
+- [ ] Implement expired-data cleanup and observability without storing sensitive values in logs
 - [ ] Optional image uploads with validation/limits
-- [ ] Abuse prevention and observability
 
 ## Phase 3 — Delivery
 

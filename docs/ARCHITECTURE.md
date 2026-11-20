@@ -14,9 +14,17 @@ src/types/                 Shared card data contracts
 docs/plans/                Feature designs and implementation plans
 ```
 
-The launcher lists three card concepts from `src/lib/cards/catalog.ts`. `/cards/little-sunshine` renders the implemented interactive envelope, using sample personalization. Two other card routes are concept placeholders. Card components accept typed personalization props and own their state, animations and scoped CSS.
+The launcher lists three working recipient experiences from `src/lib/cards/catalog.ts`: the Sunshine envelope, the fold-open Same Sky card, and the Make a Wish birthday candle. Each card uses public sample personalization and owns its interaction state, animations and scoped CSS.
 
-The retired `/create/little-sunshine` address redirects to the recipient demo to preserve existing prototype links. No personalized card instance, API, database, or real delivery pipeline exists.
+The retired `/create/little-sunshine` address redirects to the recipient demo to preserve existing prototype links. No personalized card instance, API, database, or real delivery pipeline is deployed yet.
+
+## Card-instance storage foundation (staged, not connected)
+
+The repository contains the **internal storage contract** (`src/lib/cards/instance-model.ts`), a **server-only Supabase REST repository** (`src/server/cards/card-instances.ts`), and a proposed restricted database schema (`db/schema/card_instances.sql`). These are build-tested foundations, not live services. The schema must be applied only to a dedicated Digital Card Shop Supabase project; this repository does not configure or apply it automatically.
+
+The storage model binds a reusable template to a private message, a SHA-256 token digest, and explicit availability/expiration times. Supabase RLS is enabled with no public grants or policies. Internal server functions use a secret key, which may **never** be sent to the browser.
+
+See [card instance storage design](plans/card-instance-storage-design.md) and [database setup](../db/README.md).
 
 ## Planned backend service boundary
 

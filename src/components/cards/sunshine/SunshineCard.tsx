@@ -121,6 +121,7 @@ export function SunshineCard({ content }: { content: CardPersonalization }) {
           <article
             ref={letterRef}
             className={styles.letterContent}
+            data-card-text-region
             tabIndex={-1}
             aria-label={`Letter to ${note.recipientName}`}
           >

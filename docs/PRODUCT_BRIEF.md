@@ -16,11 +16,11 @@ A free-to-use (initially), mobile-first digital card shop for meaningful tiny su
 
 ## Current experiment
 
-First build a **minimal launcher for independent recipient card experiences** and three distinct immersive prototypes, suitable for reviewing on a phone. A received card should show the interaction and sender-provided content, not shopper UI, instruction copy, or extra framing. **Do not implement a mock sender shop, email, orders, expiring links, uploads, or stock yet.**
+The minimal launcher now offers three distinct interactive recipient card prototypes, suitable for reviewing on a phone. A received card shows the interaction and sender-provided content, not shopper UI, instruction copy, or extra framing. Phase 2 adds private card-instance foundations before a real sharing flow. **Do not implement mock checkout, order processing, emails or inventory merely to demonstrate the prototypes.**
 
 Proposed design directions:
 - **A Little Sunshine:** envelope opening and floral/message reveal
-- **Under the Same Sky:** tap stars to reveal a message
+- **Under the Same Sky:** fold-open celestial greeting card with a moonlit message
 - **Make a Wish:** birthday candle and confetti interaction
 
 New card concepts require an explicit interaction design and accessibility review before feature implementation.
