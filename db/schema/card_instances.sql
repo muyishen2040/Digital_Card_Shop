@@ -1,33 +1,20 @@
--- Digital Card Shop: private personalized card instances (Phase 2 foundation).
--- Apply ONLY to a dedicated Digital Card Shop Supabase project. This file is
--- intentionally staged as a schema proposal; it has NOT been applied remotely.
+-- Digital Card Shop: server-only personalized card instances.
+-- Apply only to the dedicated Digital Card Shop Supabase project.
+-- This SQL is NOT automatically applied by a GitHub/Vercel deployment.
 --
--- Use a new Supabase CLI migration after a dedicated project is provisioned.
--- Never apply it to unrelated connected Supabase projects.
+-- Use an actual CLI-generated migration after confirming the target project.
 
 create table public.card_instances (
   id uuid primary key default gen_random_uuid(),
   template_slug text not null
     check (template_slug in ('little-sunshine', 'same-sky', 'make-a-wish')),
   recipient_name text not null
-    check (char_length(btrim(recipient_name)) between 1 and 32),
+    check (char_length(btrim(recipient_name)) between 1 and 40),
   sender_name text not null
-    check (char_length(btrim(sender_name)) between 1 and 32),
+    check (char_length(btrim(sender_name)) between 1 and 40),
   message text not null
-    check (char_length(btrim(message)) between 1 and 240),
-  -- Per-design ceilings are stricter than the shared safety bounds above.
-  constraint card_content_by_design check (
-    (template_slug = 'little-sunshine'
-      and char_length(recipient_name) <= 32 and char_length(sender_name) <= 32
-      and char_length(message) <= 240)
-    or (template_slug = 'same-sky'
-      and char_length(recipient_name) <= 24 and char_length(sender_name) <= 24
-      and char_length(message) <= 140)
-    or (template_slug = 'make-a-wish'
-      and char_length(recipient_name) <= 24 and char_length(sender_name) <= 24
-      and char_length(message) <= 100)
-  ),
-  -- Store only SHA-256(token), never the bearer token itself.
+    check (char_length(btrim(message)) between 1 and 600),
+  -- Never persist a raw capability token.
   access_token_hash text not null unique
     check (access_token_hash ~ '^[0-9a-f]{64}$'),
   created_at timestamptz not null default now(),
@@ -41,18 +28,14 @@ create table public.card_instances (
 
 create index card_instances_expiry_idx on public.card_instances (expires_at);
 
--- The table is in the exposed public schema for privileged server-side REST
--- access only. A secret key bypasses RLS, so it must NEVER reach browser code.
+-- Access only through backend code with a server-only secret key.
 alter table public.card_instances enable row level security;
-
--- Supabase legacy projects may grant exposed-table access by default.
 revoke all on table public.card_instances from anon, authenticated, public;
 grant select, insert, update, delete on table public.card_instances to service_role;
 
--- Intentionally no anon/authenticated policies. All card reads/writes must
--- pass through trusted server code that validates identity/capabilities.
+-- Intentionally no anon/authenticated policies.
 comment on table public.card_instances is
-  'Private greeting-card instances; hashed bearer tokens, server-enforced availability and expiration.';
+  'Private per-recipient card instances with SHA-256 bearer token hashes and a server-checked access window.';
 
--- Cleanup (future scheduled job, NOT installed by this PR):
--- delete from public.card_instances where expires_at <= now();
+-- Scheduled deletion is separate from server-enforced expiration.
+-- TODO: Create and test an expired-row retention job before public launch.

@@ -20,11 +20,11 @@ Never expose the secret through `NEXT_PUBLIC_`, commit it, or place it in a clie
 
 ## Contract
 
-The `public.card_instances` table contains a `template_slug`, sender/recipient names, message, hashed bearer token, and availability/expiration times. Its template-specific upper bounds are Sunshine (32-character names, 240-character message), Same Sky (24/140), and Make a Wish (24/100). These are not visual-fit guarantees; live previews also need to measure actual rendered text. The original token is returned only once by the internal `createCardInstance` server function and is never stored.
+The `public.card_instances` table contains a `template_slug`, sender/recipient names, message, hashed bearer token, and availability/expiration times. The shared storage limits are 40 Unicode code points per name and 600 per message for all three templates. Design-specific writing recommendations (240 / 140 / 100) are guidance, not restrictions. Browser previews should measure actual layout and notify the sender about scrolling. The original token is returned only once by the internal `createCardInstance` server function and is never stored.
 
 The internal `findActiveCardByToken` checks both availability and expiry, even if no cleanup job has deleted expired rows. Expiration is **not** implemented by hiding a page in the browser.
 
-Only trusted server code uses these functions. **There is no public creation endpoint or live recipient token route in this PR.** Those require authorization, abuse prevention, and UX review in later PRs.
+Only trusted server code uses these functions. **There is no public creation endpoint.** A dynamic `/c/[token]` recipient route is defined but remains unavailable until the dedicated Supabase project is migrated and its server-only credentials are configured. Sender creation still requires authorization and abuse prevention.
 
 ## Privacy and retention
 

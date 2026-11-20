@@ -21,8 +21,9 @@
 
 - [x] Define private instance IDs, token hashing, stored personalization and data-retention boundaries (schema proposal and server repository)
 - [ ] Provision a dedicated Supabase project, apply the schema as a migration, and verify RLS/grants
-- [ ] Add private recipient links with server-enforced expiration (1–3 days) and a generic unavailable page
-- [ ] Add authorized, abuse-protected sender creation and share flow, with layout-aware message fitting at mobile and desktop sizes
+- [x] Implement the server-only private recipient route and uniform invalid/expired-link page (pending live database deployment and integration checks)
+- [ ] Validate a real personalized link and server-enforced expiry against the dedicated Supabase project
+- [ ] Add authorized, abuse-protected sender creation and share flow; warn on layout overflow and support intentional scrolling
 - [ ] Implement expired-data cleanup and observability without storing sensitive values in logs
 - [ ] Optional image uploads with validation/limits
 

@@ -45,7 +45,7 @@ async function requestRows(url: URL, secret: string, init: RequestInit): Promise
 /**
  * Internal service function. A future authenticated sender/payment workflow
  * must authorize the caller, enforce quotas, and rate-limit before invoking it.
- * No public creation route is exposed in this PR.
+ * No public creation route is exposed.
  */
 export async function createCardInstance(draft: CreateCardDraft): Promise<CreatedCardInstance> {
   const validated = validateCardDraft(draft);
@@ -77,7 +77,7 @@ export async function createCardInstance(draft: CreateCardDraft): Promise<Create
 }
 
 /**
- * Internal token lookup for the future /c/[token] route.
+ * Internal token lookup for the dynamic /c/[token] route.
  * Invalid, unavailable, and expired cards all return null; the caller must
  * return the same generic not-found page without leaking card details.
  */

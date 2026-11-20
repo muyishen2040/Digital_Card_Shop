@@ -1,18 +1,32 @@
 /**
- * Initial per-template authoring ceilings, calibrated against compact layouts.
- * They prevent overly long notes; they do not guarantee geometric fit.
- * The sender preview must also measure the rendered text at mobile sizes.
+ * Per-template *recommendations* are editorial guidance, not publication
+ * restrictions. The real rendered layout is measured in the sender preview.
  */
+export const MAX_CARD_NAME_CHARACTERS = 40;
+export const MAX_CARD_MESSAGE_CHARACTERS = 600;
 export const CARD_CONTENT_POLICIES = {
-  "little-sunshine": { nameCharacters: 32, messageCharacters: 240 },
-  "same-sky": { nameCharacters: 24, messageCharacters: 140 },
-  "make-a-wish": { nameCharacters: 24, messageCharacters: 100 },
+  "little-sunshine": {
+    nameCharacters: MAX_CARD_NAME_CHARACTERS,
+    messageCharacters: MAX_CARD_MESSAGE_CHARACTERS,
+    recommendedMessageCharacters: 240,
+  },
+  "same-sky": {
+    nameCharacters: MAX_CARD_NAME_CHARACTERS,
+    messageCharacters: MAX_CARD_MESSAGE_CHARACTERS,
+    recommendedMessageCharacters: 140,
+  },
+  "make-a-wish": {
+    nameCharacters: MAX_CARD_NAME_CHARACTERS,
+    messageCharacters: MAX_CARD_MESSAGE_CHARACTERS,
+    recommendedMessageCharacters: 100,
+  },
 } as const;
 
 export type CardContentSlug = keyof typeof CARD_CONTENT_POLICIES;
 export type CardContentPolicy = Readonly<{
   nameCharacters: number;
   messageCharacters: number;
+  recommendedMessageCharacters: number;
 }>;
 
 export function getCardContentPolicy(slug: string): CardContentPolicy | null {
