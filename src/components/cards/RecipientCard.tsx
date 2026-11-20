@@ -1,3 +1,4 @@
+import type { ReactElement } from "react";
 import type { CardPersonalization } from "@/types/card";
 import { SunshineCard } from "./sunshine/SunshineCard";
 import { SkyCard } from "./sky/SkyCard";
@@ -7,7 +8,7 @@ import { WishCard } from "./wish/WishCard";
 export function renderRecipientCard(
   templateSlug: string,
   content: CardPersonalization,
-): React.ReactElement | null {
+): ReactElement | null {
   switch (templateSlug) {
     case "little-sunshine":
       return <SunshineCard content={content} />;
