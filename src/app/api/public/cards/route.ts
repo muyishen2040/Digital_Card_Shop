@@ -69,7 +69,7 @@ export async function POST(request: Request): Promise<Response> {
       return reply({ error: "Today's free-card limit has been reached. Please try again later." }, 429, { "Retry-After": "3600" });
     }
     const created = await createCardInstance(draft);
-    return reply({ path: \`/c/\${created.accessToken}\`, expiresAt: created.expiresAt }, 201);
+    return reply({ path: "/c/" + created.accessToken, expiresAt: created.expiresAt }, 201);
   } catch {
     // Do not log user text, IP, verification tokens, or private links.
     return reply({ error: "Unable to create the card right now. Please try again later." }, 503);

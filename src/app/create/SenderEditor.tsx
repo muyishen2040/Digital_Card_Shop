@@ -8,6 +8,10 @@ import { validateCardDraft } from "@/lib/cards/instance-model";
 import type { CardTtlHours } from "@/lib/cards/instance-model";
 import type { CardTextFitResult } from "@/lib/cards/content-fit";
 import styles from "./SenderEditor.module.css";
+import { TurnstileChallenge } from "./TurnstileChallenge";
+
+const PUBLIC_CREATION = process.env.NEXT_PUBLIC_CARD_PUBLIC_CREATION_ENABLED === "true";
+const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? "";
 
 const SIZES = [
   { label: "Small phone", width: 320, height: 568 },
@@ -23,6 +27,8 @@ export function SenderEditor() {
   const [message, setMessage] = useState("");
   const [ttl, setTtl] = useState<CardTtlHours>(48);
   const [accessCode, setAccessCode] = useState("");
+  const [turnstileToken, setTurnstileToken] = useState("");
+  const [challengeRevision, setChallengeRevision] = useState(0);
   const [viewport, setViewport] = useState(0);
   const [fit, setFit] = useState<Fit>("checking");
   const [confirmScroll, setConfirmScroll] = useState(false);
@@ -102,7 +108,8 @@ export function SenderEditor() {
     }, window.location.origin);
   }, [frameReady, slug, to, from, message, viewport]);
 
-  const canPublish = !invalid && !creating && accessCode.length > 0 &&
+  const authorizedToPublish = PUBLIC_CREATION ? !!TURNSTILE_SITE_KEY && !!turnstileToken : accessCode.length > 0;
+  const canPublish = !invalid && !creating && authorizedToPublish &&
     fit !== "checking" && (fit === "fits" || confirmScroll);
 
   async function create(event: React.FormEvent<HTMLFormElement>) {
@@ -111,10 +118,13 @@ export function SenderEditor() {
     setCreating(true);
     setError("");
     try {
-      const response = await fetch("/api/cards", {
+      const response = await fetch(PUBLIC_CREATION ? "/api/public/cards" : "/api/cards", {
         method: "POST", cache: "no-store",
-        headers: { "Content-Type": "application/json", Authorization: `Bearer ${accessCode}` },
-        body: JSON.stringify({ templateSlug: slug, recipientName: to, senderName: from, message, ttlHours: ttl }),
+        headers: PUBLIC_CREATION
+          ? { "Content-Type": "application/json" }
+          : { "Content-Type": "application/json", Authorization: `Bearer ${accessCode}` },
+        body: JSON.stringify({ templateSlug: slug, recipientName: to, senderName: from, message, ttlHours: ttl,
+          ...(PUBLIC_CREATION ? { turnstileToken } : {}) }),
       });
       const result: unknown = await response.json();
       if (!result || typeof result !== "object") throw new Error("Unexpected server response.");
@@ -130,6 +140,10 @@ export function SenderEditor() {
       setError(cause instanceof Error ? cause.message : "Could not create the card.");
     } finally {
       setCreating(false);
+      if (PUBLIC_CREATION) {
+        setTurnstileToken("");
+        setChallengeRevision((n) => n + 1);
+      }
     }
   }
 
@@ -196,12 +210,17 @@ export function SenderEditor() {
             <label className={styles.confirm}><input type="checkbox" checked={confirmScroll}
               onChange={(e) => setConfirmScroll(e.target.checked)} />
               I&apos;ve reviewed the card and want to keep this note.</label>}
-          <div className={styles.access}>
+          {PUBLIC_CREATION ? <div className={styles.access} aria-label="Human verification">
+            <p className={styles.note}>One last check before making your private link. Free cards are limited to prevent abuse.</p>
+            {TURNSTILE_SITE_KEY
+              ? <TurnstileChallenge key={challengeRevision} siteKey={TURNSTILE_SITE_KEY} onToken={setTurnstileToken} />
+              : <p className={styles.warning} role="alert">Card creation is not configured yet.</p>}
+          </div> : <div className={styles.access}>
             <label htmlFor="creator-code">Creator access code</label>
             <input id="creator-code" type="password" autoComplete="off" placeholder="Private pilot access"
               value={accessCode} onChange={(e) => setAccessCode(e.target.value)} />
             <p className={styles.note}>Private pilot only. Your code stays in this page and is not saved.</p>
-          </div>
+          </div>}
           {!!invalid && !!(to || from || message) && <p className={styles.warning} role="alert">{invalid}</p>}
           {!!error && <p className={styles.warning} role="alert">{error}</p>}
           <button type="submit" className={styles.publish} disabled={!canPublish}>
