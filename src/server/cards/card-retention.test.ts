@@ -58,7 +58,7 @@ describe("expired card retention", () => {
   });
 
   it("stops after the maximum batches and warns there might be more", async () => {
-    const fetchMock = vi.fn().mockResolvedValue(
+    const fetchMock = vi.fn().mockImplementation(async () =>
       response(Array.from({ length: RETENTION_BATCH_SIZE }, (_, i) => ({ id: String(i) }))),
     );
     vi.stubGlobal("fetch", fetchMock);

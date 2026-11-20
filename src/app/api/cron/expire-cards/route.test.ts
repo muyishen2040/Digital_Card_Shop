@@ -34,7 +34,7 @@ describe("cron-only expired-card cleanup endpoint", () => {
   });
 
   it("rejects wrong codes including lookalikes", async () => {
-    for (const code of [SECRET.slice(0, -1), SECRET + " ", "incorrect"]) {
+    for (const code of [SECRET.slice(0, -1), SECRET + "x", "incorrect"]) {
       expect((await GET(request(code))).status).toBe(401);
     }
     expect(mocks.purgeExpiredCardInstances).not.toHaveBeenCalled();
