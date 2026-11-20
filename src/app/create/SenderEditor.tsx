@@ -140,12 +140,12 @@ export function SenderEditor() {
           </fieldset>
 
           <div className={styles.names}>
-            <label>To
-              <input required placeholder="Recipient's name" value={to} maxLength={40}
+            <label>To · {characterCount(to)} / 40
+              <input required placeholder="Recipient's name" value={to}
                 onChange={(e) => { setTo(e.target.value); changed(); }} />
             </label>
-            <label>From
-              <input required placeholder="Your name" value={from} maxLength={40}
+            <label>From · {characterCount(from)} / 40
+              <input required placeholder="Your name" value={from}
                 onChange={(e) => { setFrom(e.target.value); changed(); }} />
             </label>
           </div>
