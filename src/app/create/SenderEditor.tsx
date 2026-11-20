@@ -33,10 +33,21 @@ export function SenderEditor() {
   const [expiration, setExpiration] = useState("");
   const [copied, setCopied] = useState(false);
   const iframe = useRef<HTMLIFrameElement>(null);
+  const previewStage = useRef<HTMLDivElement>(null);
+  const [previewAvailableWidth, setPreviewAvailableWidth] = useState<number | null>(null);
   const revision = useRef(0);
   const selected = cardTemplates.find((card) => card.slug === slug)!;
   const hint = getCardContentPolicy(slug)!.recommendedMessageCharacters;
   const count = characterCount(message);
+
+  // Keep the iframe's CSS viewport at exactly 320/390/768px. Only scale the
+  // surrounding rendered display when the editor's preview column is narrower.
+  const selectedViewport = SIZES[viewport];
+  const frameOuterWidth = selectedViewport.width + 8; // 4px preview border on each side.
+  const frameOuterHeight = selectedViewport.height + 8;
+  const previewScale = previewAvailableWidth === null
+    ? 1
+    : Math.min(1, Math.max(0.1, previewAvailableWidth / frameOuterWidth));
   let invalid = "";
   try {
     validateCardDraft({ templateSlug: slug, recipientName: to, senderName: from, message, ttlHours: ttl });
@@ -52,6 +63,22 @@ export function SenderEditor() {
     setError("");
     setCopied(false);
   }
+
+  useEffect(() => {
+    const stage = previewStage.current;
+    if (!stage) return;
+    const measureWidth = () => {
+      const styles = window.getComputedStyle(stage);
+      const usableWidth = stage.clientWidth
+        - parseFloat(styles.paddingLeft)
+        - parseFloat(styles.paddingRight);
+      setPreviewAvailableWidth(Math.max(1, usableWidth));
+    };
+    measureWidth();
+    const observer = new ResizeObserver(measureWidth);
+    observer.observe(stage);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     function receive(event: MessageEvent) {
@@ -206,13 +233,22 @@ export function SenderEditor() {
               onClick={() => { setViewport(index); changed(); }}>{size.width}</button>)}
           </div>
         </div>
-        <div className={styles.previewStage}>
-          <div className={styles.device} style={{ width: SIZES[viewport].width, height: SIZES[viewport].height }}>
-            <iframe title={`${selected.title} live preview`} src="/create/preview"
-              ref={iframe} onLoad={() => setFrameReady((v) => v + 1)} />
+        <div className={styles.previewStage} ref={previewStage}>
+          <div
+            className={styles.previewSizer}
+            style={{ width: frameOuterWidth * previewScale, height: frameOuterHeight * previewScale }}
+          >
+            <div className={styles.device} style={{
+              width: selectedViewport.width,
+              height: selectedViewport.height,
+              transform: `scale(${previewScale})`,
+            }}>
+              <iframe title={`${selected.title} live preview`} src="/create/preview"
+                ref={iframe} onLoad={() => setFrameReady((v) => v + 1)} />
+            </div>
           </div>
         </div>
-        <p className={styles.note}>Measurements use the actual card at the selected width. Review the small-phone view before sharing.</p>
+        <p className={styles.note}>The entire card is scaled to fit the available space when needed; its internal viewport stays at the selected size. Review the small-phone view before sharing.</p>
       </section>
     </div>
   </main>;

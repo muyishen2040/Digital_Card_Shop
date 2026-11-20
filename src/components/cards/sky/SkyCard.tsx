@@ -45,6 +45,7 @@ function CelestialArt({ inside = false }: { inside?: boolean }) {
 
 export function SkyCard({ content }: { content: CardPersonalization }) {
   const [phase, setPhase] = useState<FoldPhase>("closed");
+  const [readingExpanded, setReadingExpanded] = useState(false);
   const coverRef = useRef<HTMLButtonElement>(null);
   const messageRef = useRef<HTMLElement>(null);
   const restoreCoverFocus = useRef(false);
@@ -70,7 +71,10 @@ export function SkyCard({ content }: { content: CardPersonalization }) {
   }, [phase]);
 
   function activateFold() {
-    if (phase === "open") restoreCoverFocus.current = true;
+    if (phase === "open") {
+      restoreCoverFocus.current = true;
+      setReadingExpanded(false);
+    }
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     setPhase((current) => toggleFold(current, reducedMotion));
   }
@@ -90,13 +94,13 @@ export function SkyCard({ content }: { content: CardPersonalization }) {
       <div className={styles.scene}>
         <div className={`${styles.book} ${unfolded ? styles.unfolded : ""}`}>
           <section
-            className={styles.rightPage}
+            className={`${styles.rightPage} ${readingExpanded ? styles.readingExpanded : ""}`}
             aria-hidden={phase !== "open"}
             inert={phase !== "open"}
           >
             <article
               className={styles.messagePage}
-            data-card-text-region
+              data-card-text-region
               ref={messageRef}
               tabIndex={-1}
               aria-label={`Message for ${note.recipientName}`}
@@ -106,6 +110,18 @@ export function SkyCard({ content }: { content: CardPersonalization }) {
               <p className={styles.message}>{note.message}</p>
               <p className={styles.signature}>— {note.senderName}</p>
             </article>
+            <button
+              className={styles.readingToggle}
+              type="button"
+              onClick={() => {
+                setReadingExpanded((wasExpanded) => !wasExpanded);
+                requestAnimationFrame(() => messageRef.current?.focus());
+              }}
+              aria-pressed={readingExpanded}
+              disabled={phase !== "open"}
+            >
+              {readingExpanded ? "Full card" : "Read note"}
+            </button>
             <button
               type="button"
               className={styles.foldCorner}

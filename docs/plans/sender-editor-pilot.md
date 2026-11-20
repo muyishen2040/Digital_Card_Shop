@@ -19,3 +19,9 @@ This is a temporary internal access boundary, **not a public store solution**. B
 - Confirm missing or wrong creator code cannot write, and the service-role key remains backend-only.
 - After adding the real creator code and redeploying, create a temporary card, open its private URL in a fresh session and verify expiration/revocation. Remove all test cards.
 - The sending/email, commerce and user-account paths are out of scope.
+
+## Compact-layout preview and two-leaf card behavior
+
+The preview container **must never crop the left side** when a selected 320/390/768px viewport is wider than its available panel. A `ResizeObserver` measures the panel and uses a CSS transform to fit the entire iframe on screen. An explicit wrapper reserves the scaled size. The iframe's intrinsic CSS viewport remains exactly the selected 320/390/768 pixels, so media queries, font metrics and message overflow checks remain faithful to the actual device size.
+
+Under the Same Sky previously folded the left leaf off the viewport on narrow phones, showing only the right half. On <=700px screens, the opened card now presents both leaves within the screen. Since a two-page spread makes the message region narrower, recipients can use **Read note** to expand the right page at full phone width, then **Full card** to return to the whole spread. This behavior applies to actual recipient cards as well as previews. Verify tap, keyboard, reduced-motion transitions and message scrolling at 320px and 390px.
