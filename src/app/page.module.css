@@ -142,3 +142,7 @@
 @media (prefers-reduced-motion: reduce) {
   .art, .paperEnvelope { transition: none; }
 }
+
+.headerLinks { display:flex; align-items:center; gap:22px; }
+.createLink { font:12px/1.3 Arial,sans-serif; color:#815d51; border-bottom:1px solid #b88b77; padding:7px 0; }
+@media (max-width:560px) { .headerLinks { gap:12px; } .headerMeta { display:none; } }
