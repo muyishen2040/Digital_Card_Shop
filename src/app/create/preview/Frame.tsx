@@ -4,13 +4,14 @@ import { useEffect, useRef, useState } from "react";
 import { renderRecipientCard } from "@/components/cards/RecipientCard";
 import { measureCardTextFit } from "@/lib/cards/content-fit";
 import type { CardPersonalization } from "@/types/card";
+import { DEFAULT_EDITOR_TEXT_SIZE, isCardTextSize } from "@/lib/cards/text-size";
 
 /** Isolated viewport-size renderer: no personalized content in URL or browser storage. */
 export function Frame() {
   const [draft, setDraft] = useState({
     revision: 0,
     slug: "little-sunshine",
-    content: { recipientName: "Alex", senderName: "Sam", message: "A note just for you." } as CardPersonalization,
+    content: { recipientName: "Alex", senderName: "Sam", message: "A note just for you.", textSize: DEFAULT_EDITOR_TEXT_SIZE } as CardPersonalization,
   });
   const root = useRef<HTMLDivElement>(null);
 
@@ -23,7 +24,8 @@ export function Frame() {
       if (value?.kind !== "card:preview:update" || typeof value.revision !== "number" ||
         typeof value.slug !== "string" || !value.content ||
         typeof value.content.recipientName !== "string" ||
-        typeof value.content.senderName !== "string" || typeof value.content.message !== "string") return;
+        typeof value.content.senderName !== "string" || typeof value.content.message !== "string" ||
+        (value.content.textSize !== undefined && !isCardTextSize(value.content.textSize))) return;
       setDraft({ revision: value.revision, slug: value.slug, content: value.content });
     }
     window.addEventListener("message", receive);

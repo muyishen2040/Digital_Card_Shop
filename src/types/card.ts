@@ -24,9 +24,12 @@ export type CardTemplate = CardTemplateMetadata & (
   | { theme: "city-postcard"; postcard: CityPostcardDesign }
 );
 
+export type CardTextSize = "small" | "medium" | "large";
+
 export interface CardPersonalization {
   recipientName: string;
   senderName: string;
   message: string;
   imageUrl?: string;
+  textSize?: CardTextSize;
 }

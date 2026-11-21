@@ -99,7 +99,7 @@
   color: #5d3358;
   font-family: var(--font-wish-display), Georgia, serif;
   font-weight: 650;
-  font-size: clamp(32px, 4.5vw, 52px);
+  font-size: calc(var(--card-text-scale, 1) * clamp(32px, 4.5vw, 52px));
   line-height: 1.13;
   letter-spacing: -.035em;
   overflow-wrap: anywhere;
@@ -107,13 +107,13 @@
 .message {
   margin: 0;
   color: #684b60;
-  font: 500 clamp(14px, 1.6vw, 16px)/1.75 var(--font-sky-body), Arial, sans-serif;
+  font: 500 calc(var(--card-text-scale, 1) * clamp(14px, 1.6vw, 16px))/1.75 var(--font-sky-body), Arial, sans-serif;
   white-space: pre-wrap;
   overflow-wrap: anywhere;
 }
 .signature {
   margin: 21px 0 0;
-  font: 650 clamp(21px, 2.4vw, 26px)/1.2 var(--font-wish-display), Georgia, serif;
+  font: 650 calc(var(--card-text-scale, 1) * clamp(21px, 2.4vw, 26px))/1.2 var(--font-wish-display), Georgia, serif;
   color: #aa6381;
   text-align: right;
   overflow-wrap: anywhere;
@@ -219,15 +219,15 @@
   .rightCutout { right: -34%; bottom: -15%; }
   .wishPoster { top: 7%; width: calc(100% - 32px); max-height: 50%; padding: 27px 27px 25px; border-radius: 42% 42% 9px 9px / 10% 10% 9px 9px; box-shadow: 7px 9px 0 rgba(162, 138, 185, .6); }
   .posterContent { max-height: 39svh; }
-  .posterContent h1 { font-size: clamp(30px, 8.7vw, 42px); margin-bottom: 17px; }
-  .message { font-size: 14px; line-height: 1.68; }
+  .posterContent h1 { font-size: calc(var(--card-text-scale, 1) * clamp(30px, 8.7vw, 42px)); margin-bottom: 17px; }
+  .message { font-size: calc(var(--card-text-scale, 1) * 14px); line-height: 1.68; }
   .cakeScene { width: min(95%, 420px); bottom: 5%; }
   .candle { width: 70px; height: 122px; top: -10%; }
   .paperBit { width: 10px; height: 16px; }
 }
 @media (max-width: 370px) {
   .wishPoster { width: calc(100% - 22px); padding: 26px 22px 22px; }
-  .posterContent h1 { font-size: 30px; }
+  .posterContent h1 { font-size: calc(var(--card-text-scale, 1) * 30px); }
   .cakeScene { bottom: 4%; }
 }
 @media (prefers-reduced-motion: reduce) {

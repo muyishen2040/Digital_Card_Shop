@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { CardPersonalization } from "@/types/card";
 import { toPreviewContent } from "@/lib/cards/personalization";
+import { cardTextStyle } from "@/lib/cards/text-size";
 import { finishFold, toggleFold } from "@/lib/cards/fold";
 import type { FoldPhase } from "@/lib/cards/fold";
 import styles from "./SkyCard.module.css";
@@ -101,6 +102,7 @@ export function SkyCard({ content }: { content: CardPersonalization }) {
             <article
               className={styles.messagePage}
               data-card-text-region
+              style={cardTextStyle(note.textSize)}
               ref={messageRef}
               tabIndex={-1}
               aria-label={`Message for ${note.recipientName}`}

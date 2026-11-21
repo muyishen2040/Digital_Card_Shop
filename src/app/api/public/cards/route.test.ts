@@ -80,6 +80,15 @@ describe("public card creation", () => {
       templateSlug: "city-postcard-hong-kong", message: draft.message,
     }));
   });
+  it("persists the chosen text size through the guarded creation route", async () => {
+    expect((await POST(request({ ...draft, textSize: "small" }))).status).toBe(201);
+    expect(mocks.createCardInstance).toHaveBeenCalledWith(expect.objectContaining({ textSize: "small" }));
+  });
+  it("rejects an invalid text size before verification or quota reservation", async () => {
+    expect((await POST(request({ ...draft, textSize: "huge" }))).status).toBe(400);
+    expect(mocks.verifyTurnstile).not.toHaveBeenCalled();
+    expect(mocks.reservePublicCardSlot).not.toHaveBeenCalled();
+  });
   it("fails closed if verification or quota storage is unavailable", async () => {
     mocks.reservePublicCardSlot.mockRejectedValue(new Error("database down"));
     expect((await POST(request())).status).toBe(503);

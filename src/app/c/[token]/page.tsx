@@ -33,6 +33,7 @@ export default async function PrivateRecipientCardPage({
     recipientName: card.recipientName,
     senderName: card.senderName,
     message: card.message,
+    textSize: card.textSize,
   });
   if (!experience) notFound();
   return experience;

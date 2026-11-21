@@ -4,6 +4,7 @@ import { expirationFor, isCardAccessible, validateCardDraft } from "@/lib/cards/
 import type { CreateCardDraft, CreatedCardInstance, StoredCardInstance } from "@/lib/cards/instance-model";
 import { hashCardToken, issueCardToken } from "./card-token";
 import { storageConfig } from "./storage-config";
+import { resolveCardTextSize } from "@/lib/cards/text-size";
 
 type CardRow = {
   id: string;
@@ -11,6 +12,7 @@ type CardRow = {
   recipient_name: string;
   sender_name: string;
   message: string;
+  text_size: unknown;
   available_at: string;
   expires_at: string;
 };
@@ -56,6 +58,7 @@ export async function createCardInstance(draft: CreateCardDraft): Promise<Create
       recipient_name: validated.recipientName,
       sender_name: validated.senderName,
       message: validated.message,
+      text_size: validated.textSize,
       access_token_hash: hash,
       available_at: issuedAt.toISOString(),
       expires_at: expiresAt,
@@ -78,7 +81,7 @@ export async function findActiveCardByToken(token: string): Promise<StoredCardIn
   const now = new Date();
   const { url: base, secret } = storageConfig();
   const url = new URL("/rest/v1/card_instances", base);
-  url.searchParams.set("select", "id,template_slug,recipient_name,sender_name,message,available_at,expires_at");
+  url.searchParams.set("select", "id,template_slug,recipient_name,sender_name,message,text_size,available_at,expires_at");
   url.searchParams.set("access_token_hash", `eq.${hash}`);
   url.searchParams.set("available_at", `lte.${now.toISOString()}`);
   url.searchParams.set("expires_at", `gt.${now.toISOString()}`);
@@ -93,6 +96,7 @@ export async function findActiveCardByToken(token: string): Promise<StoredCardIn
     recipientName: card.recipient_name,
     senderName: card.sender_name,
     message: card.message,
+    textSize: resolveCardTextSize(card.text_size),
     expiresAt: card.expires_at,
   };
 }

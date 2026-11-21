@@ -45,3 +45,9 @@
 .resultActions button:focus-visible,.resultActions a:focus-visible{outline:2px solid #805f50;outline-offset:3px}
 .result .privacyNote{font-size:12px;line-height:1.6;margin:0 0 8px}
 .result .shareStatus{font-size:12px;line-height:1.6;min-height:1.5em;margin:0 0 8px;color:#6a4b3c}
+
+.previewControls{display:flex;flex-direction:column;align-items:flex-start;gap:10px;flex-shrink:0}
+.textSizes{border:0;padding:0;margin:0;min-width:0}
+.textSizes legend{font:600 12px/1.5 Arial,sans-serif;color:#6b5d56;margin-bottom:5px}
+.viewports button:focus-visible{outline:2px solid #805f50;outline-offset:2px}
+.viewports button:disabled{cursor:not-allowed;opacity:.6}

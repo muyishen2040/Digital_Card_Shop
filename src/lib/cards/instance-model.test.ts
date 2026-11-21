@@ -17,7 +17,17 @@ describe("stored card instances", () => {
       senderName: "Taylor",
       message: "Hello,\n\nSee you soon!",
       ttlHours: 48,
+      textSize: "large",
     });
+  });
+  it("accepts only the three explicit text sizes and preserves omitted legacy sizes", () => {
+    for (const textSize of ["small", "medium", "large"] as const) {
+      expect(validateCardDraft({ ...base, textSize }).textSize).toBe(textSize);
+    }
+    expect(validateCardDraft(base).textSize).toBe("large");
+    for (const textSize of [null, 0.8, "", "huge", "0.6"]) {
+      expect(() => validateCardDraft({ ...base, textSize } as unknown as Parameters<typeof validateCardDraft>[0])).toThrow("valid card text size");
+    }
   });
   it("rejects missing, invalid, oversized and out-of-policy data", () => {
     expect(() => validateCardDraft({ ...base, templateSlug: "unknown" })).toThrow("valid card");

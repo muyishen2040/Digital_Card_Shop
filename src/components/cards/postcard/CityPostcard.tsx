@@ -6,6 +6,7 @@ import type { MouseEvent, PointerEvent, TransitionEvent } from "react";
 import { finishFold, toggleFold } from "@/lib/cards/fold";
 import type { FoldPhase } from "@/lib/cards/fold";
 import { toPreviewContent } from "@/lib/cards/personalization";
+import { cardTextStyle } from "@/lib/cards/text-size";
 import type { CardPersonalization, CityPostcardDesign } from "@/types/card";
 import { isPostcardNoteTap } from "./note-tap";
 import type { NotePointer } from "./note-tap";
@@ -159,6 +160,7 @@ export function CityPostcard({
             <article
               className={styles.note}
               data-card-text-region
+              style={cardTextStyle(note.textSize)}
               ref={readingRef}
               tabIndex={0}
               aria-label={"Message for " + note.recipientName}
