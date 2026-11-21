@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1600" viewBox="0 0 1200 1600">
+  <!-- Layout fixture: geometric marks only, not production artwork. -->
+  <rect width="1200" height="1600" fill="#f7f0df"/>
+  <path d="M0 0H1200V790H0Z" fill="#e1dbcb"/>
+  <circle cx="935" cy="160" r="100" fill="#d7bb9b"/>
+  <path d="M0 690L250 370 460 540 730 250 1200 680V790H0Z" fill="#a2b2af"/>
+  <path d="M0 735L370 530 600 740 950 420 1200 660V790H0Z" fill="#7d9290"/>
+  <path d="M0 755L235 660 490 750 760 630 1200 760V800H0Z" fill="#b5c0b4"/>
+  <g fill="none" stroke="#aa9781" stroke-width="3" opacity=".72">
+    <path d="M225 1260L410 1130 550 1208 728 1056 978 1256"/>
+    <path d="M245 1283Q600 1300 955 1280"/>
+  </g>
+  <path d="M250 1255L407 1140 550 1220 725 1065 960 1257Z" fill="#a5b2ab" opacity=".68"/>
+  <rect x="25" y="25" width="1150" height="1550" rx="8" fill="none" stroke="#aa9884" stroke-width="3"/>
+</svg>
