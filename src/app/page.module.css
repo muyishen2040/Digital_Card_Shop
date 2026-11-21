@@ -38,8 +38,6 @@
 .sunshine { background: #f6e6d8; }
 .night-sky { background: #252d4b; }
 .birthday { background: #e9dcd8; }
-.index { position: absolute; top: 20px; left: 20px; font: 12px Georgia, serif; opacity: .75; }
-.night-sky .index { color: #efe7d4; }
 .paperEnvelope {
   position: relative;
   width: 62%;
@@ -126,7 +124,6 @@
 .tileMeta h3 { margin: 0 0 6px; font: normal 25px Georgia, serif; letter-spacing: -.025em; }
 .tileMeta span { color: #89807a; font: 12px Arial, sans-serif; }
 .action { font-size: 22px !important; line-height: 1; color: #8f6c5e !important; }
-.status { font: 11px Arial, sans-serif; color: #a18d81; margin: 13px 2px 0; }
 @media (max-width: 830px) {
   .grid { grid-template-columns: repeat(2, minmax(0,1fr)); gap: 24px; }
 }

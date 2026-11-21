@@ -6,7 +6,7 @@ Little moments is a free-to-use, mobile-first collection of interactive digital 
 
 ## Current product
 
-A sender can browse three existing designs, personalize recipient and sender names and a message, create a private expiring link after Cloudflare Turnstile verification, and share it. The recipient can open the link without an account. The Next.js application uses Supabase for private card instances and Vercel for deployment. See [the roadmap](ROADMAP.md) for what is verified and what remains to be tested.
+A sender can browse existing designs by collection, personalize recipient and sender names, a message and text size, create a private expiring link after Cloudflare Turnstile verification, and share it. The recipient can open the link without an account. The Next.js application uses Supabase for private card instances and Vercel for deployment. See [the roadmap](ROADMAP.md) for what is verified and what remains to be tested.
 
 The experience is free and does not require a purchase. Email delivery, scheduling, checkout, subscriptions and marketing integrations are not part of the current flow. Do not implement mock commerce to demonstrate new cards.
 
@@ -30,11 +30,11 @@ Build a coherent, collectible series inspired by editorial travel photography an
 
 The series should share a repeatable artwork-production recipe, layout rules, typography and accessible flip interaction. Each city brings its own visual identity through carefully selected landmarks, palette and source images rather than custom animation code.
 
-This is a planned collection; no city postcard is published by this document. Destination selection, source photographs, approved artwork and individual design implementation belong in separate destination-specific PRs.
+The reusable postcard renderer supports destination-specific artwork and shared personalization. Destination selection, source photographs, approved artwork and individual design implementation belong in separate destination-specific PRs.
 
 ### Product and engineering boundaries
 
-- Keep the existing three card experiences and their private links compatible.
+- Keep the existing card experiences and their private links compatible.
 - Reuse the existing sender, private-link, quota and expiration flow. A collection is discovery metadata, not a different storage or fulfillment system.
 - Keep the recipient experience immersive: no storefront chrome, tutorials or unrelated controls on a received card.
 - Within the postcard family, consistency of interaction is intentional. Other collections may use genuinely different mechanics.

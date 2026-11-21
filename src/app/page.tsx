@@ -38,54 +38,54 @@ export default function ExperienceLibrary() {
               </div>
               <div className={styles.grid}>
                 {cards.map((card) => (
-            <Link
-              key={card.slug}
-              href={`/cards/${card.slug}`}
-              className={styles.tile}
-              aria-label={`${card.title} — open interactive card`}
-            >
-              <div className={`${styles.art} ${styles[card.theme]}`}>
-                {card.theme === "sunshine" && (
-                  <div className={styles.paperEnvelope} aria-hidden="true">
-                    <span className={styles.paperSeal} />
-                  </div>
-                )}
-                {card.theme === "night-sky" && (
-                  <div className={styles.nightScene} aria-hidden="true">
-                    <span className={styles.nightBook}>
-                      <span className={styles.nightMoon} />
-                      <span className={styles.nightSpark}>✦</span>
-                    </span>
-                  </div>
-                )}
-                {card.theme === "birthday" && (
-                  <div className={styles.cakeScene} aria-hidden="true">
-                    <span className={styles.candle} />
-                  </div>
-                )}
-                {card.theme === "city-postcard" && (
-                  <Image
-                    className={styles.postcardThumbnail}
-                    src={card.postcard.frontImage}
-                    alt=""
-                    fill
-                    sizes="(max-width: 560px) 90vw, (max-width: 830px) 45vw, 350px"
-                    unoptimized
-                  />
-                )}
+                  <Link
+                    key={card.slug}
+                    href={`/cards/${card.slug}`}
+                    className={styles.tile}
+                    aria-label={`${card.title} — open interactive card`}
+                  >
+                    <div className={`${styles.art} ${styles[card.theme]}`}>
+                      {card.theme === "sunshine" && (
+                        <div className={styles.paperEnvelope} aria-hidden="true">
+                          <span className={styles.paperSeal} />
+                        </div>
+                      )}
+                      {card.theme === "night-sky" && (
+                        <div className={styles.nightScene} aria-hidden="true">
+                          <span className={styles.nightBook}>
+                            <span className={styles.nightMoon} />
+                            <span className={styles.nightSpark}>✦</span>
+                          </span>
+                        </div>
+                      )}
+                      {card.theme === "birthday" && (
+                        <div className={styles.cakeScene} aria-hidden="true">
+                          <span className={styles.candle} />
+                        </div>
+                      )}
+                      {card.theme === "city-postcard" && (
+                        <Image
+                          className={styles.postcardThumbnail}
+                          src={card.postcard.frontImage}
+                          alt=""
+                          fill
+                          sizes="(max-width: 560px) 90vw, (max-width: 830px) 45vw, 350px"
+                          unoptimized
+                        />
+                      )}
 
-              </div>
-              <div className={styles.tileMeta}>
-                <div>
-                  <h3>{card.title}</h3>
-                  <span>{cardBrowseLabel(card)}</span>
-                </div>
-                <span className={styles.action} aria-hidden="true">
-                  {"↗"}
-                </span>
-              </div>
-            </Link>
-          ))}
+                    </div>
+                    <div className={styles.tileMeta}>
+                      <div>
+                        <h3>{card.title}</h3>
+                        <span>{cardBrowseLabel(card)}</span>
+                      </div>
+                      <span className={styles.action} aria-hidden="true">
+                        {"↗"}
+                      </span>
+                    </div>
+                  </Link>
+                ))}
               </div>
             </section>
           ))}
