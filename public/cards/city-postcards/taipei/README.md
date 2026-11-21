@@ -12,7 +12,7 @@ Taipei 101 at sunset on the front, with a complementary painted interpretation o
 
 ## Required approved assets
 
-Both files are 1086 × 1448 px (3:4), WebP quality 92. Commit these exact approved-direction assets before marking the PR ready.
+Both committed files are 1086 × 1448 px (3:4), WebP quality 92. Their Git blob hashes match the prepared asset package.
 
 | File | Bytes | SHA-256 |
 | --- | ---: | --- |
@@ -23,4 +23,4 @@ The checksums are enforced in the artwork regression test. The catalog uses `cit
 
 ## Publication gate
 
-Do not merge before both assets, photo rights documentation, visual review and CI are complete, and the database template allowlist has been expanded through a reviewed forward migration. Use the preview-only route `/preview/city-postcard/taipei`, with `?note=long` and `?note=unicode` for stress tests. Also review the catalog demo, homepage and sender editor.
+The forward [template allowlist migration](../../../../supabase/migrations/20261121235346_allow_taipei_postcard.sql) is applied and verified on the dedicated database. All five template slugs and all three text sizes are permitted; RLS and restricted grants remain intact. Do not merge before photo rights documentation, visual review and CI are complete. Use the preview-only route `/preview/city-postcard/taipei`, with `?note=long` and `?note=unicode` for stress tests. Also review the catalog demo, homepage and sender editor.
