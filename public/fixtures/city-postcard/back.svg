@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1600" viewBox="0 0 1200 1600">
+  <!-- Separate geometric reverse fixture with unobstructed reading area. -->
+  <rect width="1200" height="1600" fill="#f7f0df"/>
+  <rect x="25" y="25" width="1150" height="1550" rx="8" fill="none" stroke="#aa9884" stroke-width="3"/>
+  <g stroke="#a28b78" stroke-width="3">
+    <path d="M230 1415V1265L365 1175 500 1265V1415Z" fill="#d7c1ac"/>
+    <path d="M500 1415V1285L620 1205 740 1285V1415Z" fill="#b7c2b2"/>
+    <path d="M740 1415V1240L850 1175 960 1240V1415Z" fill="#d9c6b7"/>
+    <path d="M200 1420Q600 1436 1000 1420" fill="none"/>
+  </g>
+  <g fill="#f3e9d5">
+    <rect x="340" y="1310" width="50" height="80"/>
+    <rect x="600" y="1325" width="47" height="65"/>
+    <rect x="830" y="1295" width="49" height="95"/>
+  </g>
+</svg>

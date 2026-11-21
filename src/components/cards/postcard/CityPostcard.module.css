@@ -1,0 +1,180 @@
+.stage {
+  width: 100%;
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  padding: 12px;
+  isolation: isolate;
+  background: radial-gradient(ellipse at 50% 35%, #faf7f0, #eae3da 85%);
+  color: #493c45;
+}
+.stage:focus { outline: none; }
+
+.scene {
+  /* Fit the entire 3:4 face on normal phones and short desktop windows.
+     On unusually short viewports, allow page scroll rather than tiny text. */
+  width: min(100%, 560px, max(260px, calc(75svh - 18px)));
+  container-type: inline-size;
+  perspective: 1600px;
+}
+.card {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  transform-style: preserve-3d;
+  transition: transform .72s cubic-bezier(.25, .72, .24, 1);
+}
+.turned { transform: rotateY(180deg); }
+
+.face {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 3px;
+  background: #f7f0e1;
+  box-shadow: 0 18px 42px rgba(64, 48, 36, .19), 0 2px 6px rgba(64, 48, 36, .12);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.front { transform: translateZ(.1px); }
+.back { transform: rotateY(180deg) translateZ(.1px); }
+.face[inert] { pointer-events: none; }
+.art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+}
+
+.title {
+  position: absolute;
+  inset: 51% 8% 34%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2px;
+  text-align: center;
+  font-family: var(--font-sunshine-display, Georgia), Georgia, serif;
+  color: #493c45;
+  pointer-events: none;
+}
+.eyebrow {
+  font-size: clamp(12px, 4cqi, 20px);
+  font-style: italic;
+  line-height: 1.1;
+}
+.city {
+  max-width: 100%;
+  font-size: clamp(19px, 7cqi, 40px);
+  line-height: 1.03;
+  text-transform: uppercase;
+  letter-spacing: .065em;
+  overflow-wrap: anywhere;
+  text-wrap: balance;
+}
+.caption {
+  max-width: 100%;
+  font-size: clamp(10px, 3.1cqi, 15px);
+  font-style: italic;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+}
+.frontControl {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.frontControl:focus-visible {
+  outline: 2px solid #67506b;
+  outline-offset: -5px;
+}
+.note {
+  /* Art direction reserves this single full-width writing area. */
+  position: absolute;
+  inset: 12% 11.5% 32%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: #bcb0b4 transparent;
+  scrollbar-gutter: stable;
+  padding: 2px 5px 5px 2px;
+  color: #493c45;
+  overflow-wrap: anywhere;
+  font-family: var(--font-sunshine-reading, Georgia), Georgia, "Noto Serif CJK SC", serif;
+}
+.note:focus { outline: none; }
+.note:focus-visible { outline: 2px solid #67506b; outline-offset: 2px; }
+.salutation, .signature {
+  font-family: var(--font-postcard-script, "Segoe Script"), "Apple Chancery", Georgia, "Noto Serif CJK SC", serif;
+  font-weight: 400;
+  line-height: 1.25;
+  white-space: pre-wrap;
+}
+.salutation {
+  font-size: clamp(25px, 6.8cqi, 34px);
+  margin: 0 0 12px;
+}
+.message {
+  font-size: clamp(15px, 3.6cqi, 17px);
+  line-height: 1.55;
+  margin: 0;
+  white-space: pre-wrap;
+}
+.signature {
+  font-size: clamp(22px, 5.6cqi, 28px);
+  text-align: right;
+  margin: 16px 0 0;
+}
+.returnCorner {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: start end;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.cornerPaper {
+  width: 25px;
+  height: 25px;
+  clip-path: polygon(0 0, 100% 0, 100% 100%);
+  background: linear-gradient(135deg, #d2c0b6, #f8f2e7);
+  transition: transform .16s ease;
+  transform-origin: top right;
+}
+.returnCorner:focus-visible { outline: 2px solid #67506b; outline-offset: -3px; }
+@media (hover: hover) and (pointer: fine) {
+  .front:has(.frontControl:not(:disabled):hover) {
+    box-shadow: 0 22px 48px rgba(64, 48, 36, .25), 0 3px 7px rgba(64, 48, 36, .14);
+  }
+  .returnCorner:not(:disabled):hover .cornerPaper { transform: scale(1.15); }
+}
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+@media (prefers-reduced-motion: reduce) {
+  .card, .cornerPaper { transition: none !important; }
+}
