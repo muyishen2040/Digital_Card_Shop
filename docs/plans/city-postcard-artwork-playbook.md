@@ -12,21 +12,21 @@ Choose Photo A, an iconic hero scene with a clear composition, and Photo B, a co
 
 Record a small asset brief before generating:
 
-| Field | Example |
+| Field | What to specify |
 | --- | --- |
-| City / region | Hong Kong / Hong Kong |
-| Photo A | Victoria Harbour skyline at blue hour, two ferries, recognizable tall tower and illuminated architecture |
-| Photo B | A different waterfront view with a Star Ferry pier and ferry in the foreground |
-| Main recognizable features | Skyline proportions, mountain contour, pier, ferry, reflections |
-| Palette | Midnight blue, muted lavender, warm lamp gold, natural ivory paper |
-| Front title | Greetings from Hong Kong |
-| Front scene caption | Victoria Harbour at night |
+| City / country or region | [CITY] / [COUNTRY_OR_REGION] |
+| Photo A | [HERO_SCENE]: an iconic city view, with the actual source image attached |
+| Photo B | [SECOND_SCENE]: a distinct landmark, street scene, viewpoint or culturally relevant object, with its source image attached |
+| Main recognizable features | Subject silhouettes, architectural proportions, key objects, spatial relationships and atmosphere from each source |
+| Palette | [PALETTE]: up to four dominant colors drawn from the photos, including natural paper |
+| Front title | Greetings from [CITY] |
+| Front scene caption | [SHORT_ACCURATE_SCENE_CAPTION] (optional) |
 | Reverse text safe zone | 10–90% horizontal; 12–68% vertical |
 | Source provenance | Original file or permitted source URL, creator, license or permission, date accessed where relevant |
 
-The Hong Kong directions are illustrative, not a grant of rights or a claim that a particular image has been approved for production. A street scene featuring a tram can be an alternative Photo B when it is the chosen visual story. Verify real landmarks and avoid combining unrelated landmarks into a misleading photograph.
+Complete this brief in the individual destination PR. Document the actual references and verify their rights; the template itself does not approve any image. Verify real landmarks and avoid combining unrelated landmarks into a misleading photograph.
 
-Select a destination-specific signature motif (e.g. a subtle bauhinia flower for Hong Kong) only if it adds meaningful identity. If an approved pair already exists, include it as a **style reference** for later cities, not as a third content photo to mix into the new scene.
+Select a destination-specific signature motif, such as a locally recognizable botanical, architectural or cultural detail, only if it adds meaningful identity. If an approved pair already exists, include it as a **style reference** for later cities, not as a third content photo to mix into the new scene.
 
 ## 2. Generate front artwork
 
@@ -157,4 +157,4 @@ The card should look like two sides of the same stationery object at identical d
 
 A new city should require: two suitable source photos, a filled asset brief, two generated and reviewed art assets, catalog metadata and existing validation registration. If a new destination requires rewriting the component or bespoke animation, determine whether the visual spec or implementation has drifted before introducing a variant.
 
-Start with Hong Kong, then use a contrasting second city to verify the reusable layout. Do not batch-produce dozens of cards until the first two pass rendered acceptance review.
+Choose the first destination in a separate destination-specific PR, then use a contrasting second city to verify the reusable layout. Do not batch-produce dozens of cards until the first two pass rendered acceptance review.

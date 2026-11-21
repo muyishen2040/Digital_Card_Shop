@@ -6,7 +6,7 @@
 
 City Postcards is a family of collectible, mobile-first cards that let a sender share a memory of a place with someone they care about. Use one repeatable visual grammar and one tactile postcard flip across destinations. Each city should feel recognizable and individually art-directed, not like a generic template with a name swapped.
 
-The first destination is Hong Kong. The [artwork generation playbook](city-postcard-artwork-playbook.md) defines the repeatable two-source-photo process.
+The [artwork generation playbook](city-postcard-artwork-playbook.md) defines the repeatable two-source-photo process. Destination selection, individual art direction, approved assets and implementation belong in separate destination-specific PRs. This specification does not select a first city.
 
 ## Design identity
 
@@ -16,7 +16,7 @@ The first destination is Hong Kong. The [artwork generation playbook](city-postc
 - **Moment:** A single tap turns the physical-feeling postcard over to reveal a personal note.
 - **Signature:** A recognizable city motif on each side; front and reverse tell complementary stories, not the same scene twice.
 
-Shared mechanics within this intentional collection are an exception to the non-postcard rule that new concepts need different interactions. The postcard itself is the interaction; do not add destination-specific games, ferry drag mechanics, confetti or other unrelated animation.
+Shared mechanics within this intentional collection are an exception to the non-postcard rule that new concepts need different interactions. The postcard itself is the interaction; do not add destination-specific games, drag-to-reveal mechanics, confetti or other unrelated animation.
 
 ## Input contract: two photographs, two coordinated designs
 
@@ -35,8 +35,8 @@ Coordinates below describe approximate percentages of the portrait canvas, measu
 
 | Region | Front | Reverse |
 | --- | --- | --- |
-| Top | Photo A dominates approximately the first 48–53%; allow slight natural sky/harbor extension and an organic photo-to-paper transition. Small collection lettering and a tasteful postal motif are optional. | Warm cream textured paper, subtle atmospheric color and fine perimeter frame; optional small city-specific floral motif, no city heading. |
-| Middle | Restrained editorial destination title around 53–63%, e.g. Greetings from / HONG KONG, and optional short accurate scene caption. | One full-width quiet writing area. Keep artwork, heavy paper texture and decoration away from text. Reserve roughly 12–68% height, inset 10–13% from the sides. |
+| Top | Photo A dominates approximately the first 48–53%; allow slight natural sky, water or environmental extension and an organic photo-to-paper transition. Small collection lettering and a tasteful postal motif are optional. | Warm cream textured paper, subtle atmospheric color and fine perimeter frame; optional small city-specific motif, no city heading. |
+| Middle | Restrained editorial destination title around 53–63%, e.g. Greetings from / [CITY], and optional short accurate scene caption. | One full-width quiet writing area. Keep artwork, heavy paper texture and decoration away from text. Reserve roughly 12–68% height, inset 10–13% from the sides. |
 | Bottom | Small handmade interpretation of Photo A around 66–82%, with controlled negative space. Optional fixed short greeting or tiny brand signature; no personalized content. | Smaller, distinct art scene derived from Photo B in the lower quarter (roughly 73–96%), organically integrated into the paper. No pasted rectangular image, detached thumbnail, floating icon or duplicate front illustration. |
 
 The reference pattern is a premium independent art publication cover, not a commercial greeting-card advertisement. A real photographic upper half and a smaller handmade image are the distinguishing contrast on the front. Do not stretch a photo to fit. Reframe or extend only surrounding sky, water or nonessential environment. Keep landmarks and architectural proportions recognizable.
@@ -47,11 +47,11 @@ The reverse is deliberately **a complete newly art-directed background**, rather
 
 - Use a compact four-color illustration palette sampled from the source photos; natural paper counts as a base. Photography may retain its fuller natural palette.
 - Use delicate, slightly imperfect contours, flat acrylic/gouache-like color shapes, restrained watercolor-like washes where they help integrate the existing artwork, fine handmade brush detail and organic edges. Preserve recognition. Avoid cheap vector line drawings, cartoony characters, heavy digital gradients, glossy 3D, crayon texture and busy ornament.
-- Favor warm ivory paper, dark plum/ink lettering and photo-derived accent colors for Hong Kong; future destinations may vary their palette without altering the text layout or typography roles.
+- Favor warm ivory paper, dark ink lettering and photo-derived accent colors. Each destination may adapt its palette without altering the text layout or typography roles; preserve sufficient contrast.
 - Use expressive calligraphic lettering for the recipient greeting and signature. A candidate for the fine handwritten reference is Pinyon Script; assess its actual appearance and legibility before approving it. Use a companion literary serif such as the existing Cormorant Garamond for readable body text, italic where appropriate. Do not pretend generated raster lettering identifies an exact typeface.
 - Self-host approved licensed fonts using the existing Next.js font-loading approach in `src/app/layout.tsx`; use suitable serif/script fallbacks, including support for CJK and other scripts. Do not fetch fonts from third parties at recipient runtime.
 - Keep main message text around 15–17 CSS px at normal phone reading scale; start the salutation around 25–32 px and signature around 22–26 px, rather than oversized display headings. Verify with actual fonts and 320px screens. Never shrink the text automatically to fit long content. Use scrolling.
-- Borders, rules and motifs are part of the artwork, not independent UI boxes. No top-right address square, right-hand To column, redundant Hong Kong heading on the reverse, or extra explanatory copy.
+- Borders, rules and motifs are part of the artwork, not independent UI boxes. No top-right address square, right-hand To column, redundant destination heading on the reverse, or extra explanatory copy.
 
 ## Personalization and text layout
 
@@ -77,7 +77,7 @@ The prototype has no navigation, banner, detached action buttons or visible inst
 
 One `CityPostcard` component under `src/components/cards/postcard/` owns the layout, typography, animation and accessibility. Each destination supplies artwork URLs, scene description and title metadata. A single specification for front/back safe zones applies to every asset pair. Only add layout variants if rendered evidence demonstrates a real need.
 
-Suggested destination fields: stable slug such as `city-postcard-hong-kong`, display title, collection identifier, optional occasion tags, city and country/region, optional scene caption, front/background asset paths, back/background asset paths, accessible artwork descriptions, palette or restrained accent token. Use the simplest typed configuration that works for two actual destinations; avoid a new database or CMS solely for catalog metadata.
+Suggested destination fields: stable slug such as `city-postcard-<city-slug>`, display title, collection identifier, optional occasion tags, city and country/region, optional scene caption, front/background asset paths, back/background asset paths, accessible artwork descriptions, palette or restrained accent token. Use the simplest typed configuration that works for two actual destinations; avoid a new database or CMS solely for catalog metadata.
 
 Integration points to review:
 - `src/types/card.ts` and `src/lib/cards/catalog.ts`: typed collection and destination metadata while retaining existing slugs and category/occasion information.
@@ -87,7 +87,7 @@ Integration points to review:
 - `supabase/migrations/20261120050919_create_private_card_instances.sql`: the existing template-slug CHECK permits three templates. Add a new reviewed forward migration (do not edit the applied migration) before enabling creation of new city templates, preserving all existing slugs, constraints and grants. Keep allowlisting explicit until scale justifies a different safe design.
 - Preserve current Turnstile, quota, private-link, expiry and retention behavior. No new credential or delivery service is required.
 
-Store public design assets in a predictable directory, e.g. `public/cards/city-postcards/hong-kong/front.webp` and `back.webp`. Production assets are immutable when changed incompatibly; avoid breaking existing private cards. No personal photos or messages in these assets.
+Store public design assets in a predictable directory, e.g. `public/cards/city-postcards/<city-slug>/front.webp` and `back.webp`. Production assets are immutable when changed incompatibly; avoid breaking existing private cards. No personal photos or messages in these assets.
 
 ## Acceptance gates
 
