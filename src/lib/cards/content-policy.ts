@@ -15,6 +15,11 @@ export const CARD_CONTENT_POLICIES = {
     messageCharacters: MAX_CARD_MESSAGE_CHARACTERS,
     recommendedMessageCharacters: 140,
   },
+  "city-postcard-hong-kong": {
+    nameCharacters: MAX_CARD_NAME_CHARACTERS,
+    messageCharacters: MAX_CARD_MESSAGE_CHARACTERS,
+    recommendedMessageCharacters: 180,
+  },
   "make-a-wish": {
     nameCharacters: MAX_CARD_NAME_CHARACTERS,
     messageCharacters: MAX_CARD_MESSAGE_CHARACTERS,

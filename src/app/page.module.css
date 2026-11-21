@@ -146,3 +146,7 @@
 .headerLinks { display:flex; align-items:center; gap:22px; }
 .createLink { font:12px/1.3 Arial,sans-serif; color:#815d51; border-bottom:1px solid #b88b77; padding:7px 0; }
 @media (max-width:560px) { .headerLinks { gap:12px; } .headerMeta { display:none; } }
+
+/* A postcard thumbnail shows the complete approved artwork, not a crop. */
+.city-postcard { background: #f3eae0; }
+.postcardThumbnail { object-fit: contain; padding: 16px; }

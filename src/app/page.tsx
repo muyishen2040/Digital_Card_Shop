@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { cardTemplates } from "@/lib/cards/catalog";
 import styles from "./page.module.css";
 
@@ -44,7 +45,17 @@ export default function ExperienceLibrary() {
                     <span className={styles.candle} />
                   </div>
                 )}
-                <span className={styles.index}>0{index + 1}</span>
+                {card.theme === "city-postcard" && (
+                  <Image
+                    className={styles.postcardThumbnail}
+                    src={card.postcard.frontImage}
+                    alt=""
+                    fill
+                    sizes="(max-width: 560px) 90vw, (max-width: 830px) 45vw, 350px"
+                    unoptimized
+                  />
+                )}
+                {card.theme !== "city-postcard" && <span className={styles.index}>0{index + 1}</span>}
               </div>
               <div className={styles.tileMeta}>
                 <div>
