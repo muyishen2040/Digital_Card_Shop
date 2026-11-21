@@ -11,6 +11,8 @@ import styles from "./SenderEditor.module.css";
 import { TurnstileChallenge } from "./TurnstileChallenge";
 import { recipientCardUrl } from "@/lib/cards/recipient-link";
 import { cardShareData } from "@/lib/cards/sharing";
+import { CARD_TEXT_SIZES, DEFAULT_EDITOR_TEXT_SIZE } from "@/lib/cards/text-size";
+import type { CardTextSize } from "@/types/card";
 
 const PUBLIC_CREATION = process.env.NEXT_PUBLIC_CARD_PUBLIC_CREATION_ENABLED === "true";
 const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? "";
@@ -27,6 +29,7 @@ export function SenderEditor() {
   const [to, setTo] = useState("");
   const [from, setFrom] = useState("");
   const [message, setMessage] = useState("");
+  const [textSize, setTextSize] = useState<CardTextSize>(DEFAULT_EDITOR_TEXT_SIZE);
   const [ttl, setTtl] = useState<CardTtlHours>(48);
   const [accessCode, setAccessCode] = useState("");
   const [turnstileToken, setTurnstileToken] = useState("");
@@ -60,12 +63,14 @@ export function SenderEditor() {
     : Math.min(1, Math.max(0.1, previewAvailableWidth / frameOuterWidth));
   let invalid = "";
   try {
-    validateCardDraft({ templateSlug: slug, recipientName: to, senderName: from, message, ttlHours: ttl });
+    validateCardDraft({ templateSlug: slug, recipientName: to, senderName: from, message, textSize, ttlHours: ttl });
   } catch (cause) {
     invalid = cause instanceof Error ? cause.message : "Please check your card.";
   }
 
   function changed() {
+    // Invalidate any in-flight fit result before the next draft is posted.
+    revision.current += 1;
     setFit("checking");
     setConfirmScroll(false);
     setUrl("");
@@ -109,9 +114,9 @@ export function SenderEditor() {
     revision.current += 1;
     iframe.current?.contentWindow?.postMessage({
       kind: "card:preview:update", revision: revision.current, slug,
-      content: { recipientName: to, senderName: from, message },
+      content: { recipientName: to, senderName: from, message, textSize },
     }, window.location.origin);
-  }, [frameReady, slug, to, from, message, viewport]);
+  }, [frameReady, slug, to, from, message, textSize, viewport, ttl]);
 
   const authorizedToPublish = PUBLIC_CREATION ? !!TURNSTILE_SITE_KEY && !!turnstileToken : accessCode.length > 0;
   // Only compute availability once a card link exists; avoid effect-driven state.
@@ -138,7 +143,7 @@ export function SenderEditor() {
         headers: PUBLIC_CREATION
           ? { "Content-Type": "application/json" }
           : { "Content-Type": "application/json", Authorization: `Bearer ${accessCode}` },
-        body: JSON.stringify({ templateSlug: slug, recipientName: to, senderName: from, message, ttlHours: ttl,
+        body: JSON.stringify({ templateSlug: slug, recipientName: to, senderName: from, message, textSize, ttlHours: ttl,
           ...(PUBLIC_CREATION ? { turnstileToken } : {}) }),
       });
       const result: unknown = await response.json();
@@ -281,10 +286,23 @@ export function SenderEditor() {
         <div className={styles.previewHeader}>
           <div><span className={styles.eyebrow}>02 / INTERACTIVE PREVIEW</span>
             <h2>See their moment.</h2><p>Try opening the card to reveal your note.</p></div>
+          <div className={styles.previewControls}>
           <div className={styles.viewports} role="group" aria-label="Preview size">
             {SIZES.map((size, index) => <button type="button" key={size.width} title={size.label}
               aria-pressed={viewport === index} className={viewport === index ? styles.active : ""}
               onClick={() => { setViewport(index); changed(); }}>{size.width}</button>)}
+          </div>
+          <fieldset className={styles.textSizes}>
+            <legend>Text size</legend>
+            <div className={styles.viewports} role="group" aria-label="Card text size">
+              {CARD_TEXT_SIZES.map((size) => <button type="button" key={size}
+                aria-pressed={textSize === size} className={textSize === size ? styles.active : ""}
+                disabled={creating}
+                onClick={() => { if (textSize !== size) { setTextSize(size); changed(); } }}>
+                {size.charAt(0).toUpperCase() + size.slice(1)}
+              </button>)}
+            </div>
+          </fieldset>
           </div>
         </div>
         <div className={styles.previewStage} ref={previewStage}>
@@ -302,7 +320,7 @@ export function SenderEditor() {
             </div>
           </div>
         </div>
-        <p className={styles.note}>The entire card is scaled to fit the available space when needed; its internal viewport stays at the selected size. Review the small-phone view before sharing.</p>
+        <p className={styles.note}>The entire card is scaled to fit the available space when needed; its internal viewport stays at the selected size. Text size is saved with your card. Review the small-phone view before sharing, especially when using Small.</p>
       </section>
     </div>
   </main>;

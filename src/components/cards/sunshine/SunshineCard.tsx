@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { CardPersonalization } from "@/types/card";
 import { toPreviewContent } from "@/lib/cards/personalization";
+import { cardTextStyle } from "@/lib/cards/text-size";
 import styles from "./SunshineCard.module.css";
 
 function BotanicalSprig({ className = "" }: { className?: string }) {
@@ -122,6 +123,7 @@ export function SunshineCard({ content }: { content: CardPersonalization }) {
             ref={letterRef}
             className={styles.letterContent}
             data-card-text-region
+              style={cardTextStyle(note.textSize)}
             tabIndex={-1}
             aria-label={`Letter to ${note.recipientName}`}
           >

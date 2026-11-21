@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import type { CSSProperties } from "react";
 import type { CardPersonalization } from "@/types/card";
 import { toPreviewContent } from "@/lib/cards/personalization";
+import { cardTextStyle } from "@/lib/cards/text-size";
 import styles from "./WishCard.module.css";
 
 const PAPER_BITS = [
@@ -96,7 +97,8 @@ export function WishCard({ content }: { content: CardPersonalization }) {
 
         <section className={styles.wishPoster} aria-hidden={!celebrated} inert={!celebrated}>
           <article className={styles.posterContent}
-            data-card-text-region ref={messageRef} tabIndex={-1} aria-label={`Birthday message for ${note.recipientName}`}>
+            data-card-text-region
+              style={cardTextStyle(note.textSize)} ref={messageRef} tabIndex={-1} aria-label={`Birthday message for ${note.recipientName}`}>
             <h1>To {note.recipientName},</h1>
             <p className={styles.message}>{note.message}</p>
             <p className={styles.signature}>— {note.senderName}</p>

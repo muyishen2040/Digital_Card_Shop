@@ -193,7 +193,7 @@
 .salutation {
   margin: 8px 0 30px;
   font-family: var(--font-sunshine-display), "Baskerville", Georgia, serif;
-  font-size: clamp(38px, 4.5vw, 48px);
+  font-size: calc(var(--card-text-scale, 1) * clamp(38px, 4.5vw, 48px));
   font-weight: 500;
   line-height: 1.08;
   letter-spacing: -.025em;
@@ -202,7 +202,7 @@
 .message {
   margin: 0;
   font-family: var(--font-sunshine-reading), "Palatino Linotype", Georgia, serif;
-  font-size: 16px;
+  font-size: calc(var(--card-text-scale, 1) * 16px);
   line-height: 1.85;
   letter-spacing: .003em;
   white-space: pre-wrap;
@@ -211,7 +211,7 @@
 .signature {
   margin: 34px 0 0;
   font-family: var(--font-sunshine-display), "Baskerville", Georgia, serif;
-  font-size: 28px;
+  font-size: calc(var(--card-text-scale, 1) * 28px);
   font-weight: 500;
   font-style: italic;
   line-height: 1.2;
@@ -274,13 +274,13 @@
     max-height: calc(100% - 50px);
     padding: 44px 28px 40px;
   }
-  .salutation { font-size: 39px; margin: 5px 0 25px; }
-  .message { font-size: 15.5px; line-height: 1.8; }
-  .signature { font-size: 26px; }
+  .salutation { font-size: calc(var(--card-text-scale, 1) * 39px); margin: 5px 0 25px; }
+  .message { font-size: calc(var(--card-text-scale, 1) * 15.5px); line-height: 1.8; }
+  .signature { font-size: calc(var(--card-text-scale, 1) * 26px); }
 }
 @media (max-width: 360px) {
   .letter { width: calc(100% - 18px); padding: 42px 24px 38px; }
-  .salutation { font-size: 36px; }
+  .salutation { font-size: calc(var(--card-text-scale, 1) * 36px); }
 }
 @media (prefers-reduced-motion: reduce) {
   .envelope, .envelopeFlap, .seal, .letter, .foldCorner svg { transition: none !important; }

@@ -35,6 +35,18 @@ describe("private recipient card rendering", () => {
     expect(html).toContain("— Sender");
   });
 
+  it.each(["little-sunshine", "same-sky", "make-a-wish", "city-postcard-hong-kong"])(
+    "applies each text size to the reading region of %s",
+    (slug) => {
+      for (const [textSize, scale] of [["small", 0.6], ["medium", 0.8], ["large", 1]] as const) {
+        const html = renderToStaticMarkup(renderRecipientCard(slug, { ...content, textSize })!);
+        expect(html).toContain('style="--card-text-scale:' + scale + '"');
+      }
+      const legacy = renderToStaticMarkup(renderRecipientCard(slug, content)!);
+      expect(legacy).toContain('style="--card-text-scale:1"');
+    },
+  );
+
   it("does not render unknown or removed card templates", () => {
     expect(renderRecipientCard("unknown-template", content)).toBeNull();
   });
