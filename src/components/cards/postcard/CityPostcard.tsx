@@ -6,22 +6,12 @@ import type { MouseEvent, PointerEvent, TransitionEvent } from "react";
 import { finishFold, toggleFold } from "@/lib/cards/fold";
 import type { FoldPhase } from "@/lib/cards/fold";
 import { toPreviewContent } from "@/lib/cards/personalization";
-import type { CardPersonalization } from "@/types/card";
+import type { CardPersonalization, CityPostcardDesign } from "@/types/card";
 import { isPostcardNoteTap } from "./note-tap";
 import type { NotePointer } from "./note-tap";
 import styles from "./CityPostcard.module.css";
 
-/** Trusted catalog artwork, never sender-provided image URLs or HTML. */
-export interface CityPostcardDesign {
-  readonly city: string;
-  readonly frontImage: string;
-  readonly backImage: string;
-  readonly frontAlt: string;
-  readonly backAlt: string;
-  readonly sceneCaption?: string;
-  /** Opt out of the DOM title only when the approved front already includes fixed destination lettering. */
-  readonly frontTitleInArtwork?: boolean;
-}
+export type { CityPostcardDesign } from "@/types/card";
 
 export function CityPostcard({
   design,

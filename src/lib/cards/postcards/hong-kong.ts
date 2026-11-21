@@ -1,5 +1,4 @@
-import type { CityPostcardDesign } from "@/components/cards/postcard/CityPostcard";
-import type { CardPersonalization } from "@/types/card";
+import type { CardPersonalization, CityPostcardDesign } from "@/types/card";
 
 export const HONG_KONG_POSTCARD_SLUG = "city-postcard-hong-kong";
 

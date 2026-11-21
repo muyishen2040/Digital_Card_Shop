@@ -1,4 +1,5 @@
 import type { CardTemplate } from "@/types/card";
+import { HONG_KONG_POSTCARD_SLUG, hongKongPostcardDesign } from "./postcards/hong-kong";
 
 export const cardTemplates: readonly CardTemplate[] = [
   {
@@ -21,6 +22,14 @@ export const cardTemplates: readonly CardTemplate[] = [
     category: "Birthday",
     description: "A candle, a wish, and a burst of joyful confetti.",
     theme: "birthday",
+  },
+  {
+    slug: HONG_KONG_POSTCARD_SLUG,
+    title: "Greetings from Hong Kong",
+    category: "City Postcards",
+    description: "Victoria Harbour at night, with a handwritten note on the illustrated reverse.",
+    theme: "city-postcard",
+    postcard: hongKongPostcardDesign,
   },
 ];
 

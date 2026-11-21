@@ -71,6 +71,15 @@ describe("public card creation", () => {
     expect(mocks.reservePublicCardSlot).toHaveBeenCalledWith("192.0.2.1");
     expect(mocks.createCardInstance).toHaveBeenCalledOnce();
   });
+  it("creates the Hong Kong template through the same verification and quota flow", async () => {
+    const result = await POST(request({ ...draft, templateSlug: "city-postcard-hong-kong" }));
+    expect(result.status).toBe(201);
+    expect(mocks.verifyTurnstile).toHaveBeenCalledOnce();
+    expect(mocks.reservePublicCardSlot).toHaveBeenCalledOnce();
+    expect(mocks.createCardInstance).toHaveBeenCalledWith(expect.objectContaining({
+      templateSlug: "city-postcard-hong-kong", message: draft.message,
+    }));
+  });
   it("fails closed if verification or quota storage is unavailable", async () => {
     mocks.reservePublicCardSlot.mockRejectedValue(new Error("database down"));
     expect((await POST(request())).status).toBe(503);

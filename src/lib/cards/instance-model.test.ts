@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { cardTemplates } from "./catalog";
 import { expirationFor, isCardAccessible, validateCardDraft } from "./instance-model";
 
 const base = {
@@ -26,8 +27,8 @@ describe("stored card instances", () => {
     expect(() => validateCardDraft({ ...base, message: "a".repeat(601) })).toThrow("600");
     expect(() => validateCardDraft({ ...base, ttlHours: 999 as 48 })).toThrow("24, 48, or 72");
   });
-  it("permits longer scrolling messages equally for all three templates", () => {
-    for (const slug of ["little-sunshine", "same-sky", "make-a-wish"]) {
+  it("permits longer scrolling messages equally for every published template", () => {
+    for (const { slug } of cardTemplates) {
       expect(validateCardDraft({ ...base, templateSlug: slug, message: "x".repeat(600) }).message)
         .toHaveLength(600);
       expect(validateCardDraft({ ...base, templateSlug: slug, senderName: "s".repeat(40) }).senderName)

@@ -1,12 +1,28 @@
-export type CardTheme = "sunshine" | "night-sky" | "birthday";
+export type CardTheme = "sunshine" | "night-sky" | "birthday" | "city-postcard";
 
-export interface CardTemplate {
+/** Trusted catalog artwork, never sender-provided image URLs or HTML. */
+export interface CityPostcardDesign {
+  readonly city: string;
+  readonly frontImage: string;
+  readonly backImage: string;
+  readonly frontAlt: string;
+  readonly backAlt: string;
+  readonly sceneCaption?: string;
+  /** Opt out of the DOM title only when the approved front already includes fixed destination lettering. */
+  readonly frontTitleInArtwork?: boolean;
+}
+
+interface CardTemplateMetadata {
   slug: string;
   title: string;
   category: string;
   description: string;
-  theme: CardTheme;
 }
+
+export type CardTemplate = CardTemplateMetadata & (
+  | { theme: Exclude<CardTheme, "city-postcard">; postcard?: never }
+  | { theme: "city-postcard"; postcard: CityPostcardDesign }
+);
 
 export interface CardPersonalization {
   recipientName: string;
