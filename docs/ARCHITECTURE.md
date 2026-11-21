@@ -14,7 +14,7 @@ src/types/                 Shared card data contracts
 docs/plans/                Feature designs and implementation plans
 ```
 
-The launcher lists three working recipient experiences from `src/lib/cards/catalog.ts`: the Sunshine envelope, the fold-open Same Sky card, and the Make a Wish birthday candle. Each card uses public sample personalization and owns its interaction state, animations and scoped CSS.
+The launcher groups published recipient experiences from `src/lib/cards/catalog.ts` into City Postcards, Birthday Cards and General Cards. The homepage and sender editor share collection filters; each template has one primary collection, independent occasion tags, and destination metadata when applicable. Collection browsing does not change template slugs or private-card storage. Each card uses public sample personalization and owns its interaction state, animations and scoped CSS.
 
 The retired `/create/little-sunshine` address redirects to the recipient demo to preserve existing prototype links. The public sender editor at `/create` creates expiring instances through a Turnstile-verified and rate-limited API. The private recipient route `/c/[token]` renders the same card experience with persisted content. No scheduled email delivery or checkout is implemented.
 

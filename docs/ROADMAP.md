@@ -41,8 +41,9 @@ Keep this roadmap destination-independent. Select individual cities and approve 
 
 ### 3B — Collection browsing and existing-card polish
 
-- [ ] Add collection metadata and intentional gallery grouping; preserve all existing design slugs and links
-- [ ] Keep occasion tags and city/country metadata separate from the primary collection
+- [x] Add collection metadata and intentional gallery grouping; preserve all existing design slugs and links
+- [x] Keep occasion tags and city/country metadata separate from the primary collection
+- [ ] Verify collection filters and preserved sender drafts on narrow devices and desktop
 - [ ] Review and refine the three existing designs with the card quality guide
 - [ ] Confirm all existing templates remain compatible with the creation and receiving flow
 
