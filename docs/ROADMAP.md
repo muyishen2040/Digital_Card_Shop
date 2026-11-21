@@ -29,15 +29,15 @@ The primary collections are City Postcards, Birthday Cards and General Cards. Se
 ### 3A — City Postcards (first)
 
 - [ ] Review and approve a reusable postcard art direction, front/back layout, typography, interaction and two-reference-photo generation recipe
-- [ ] Produce and approve Hong Kong's paired artwork assets, including a text-free reverse
+- [ ] Produce and approve the first destination's paired artwork assets, including a text-free reverse, in a separate destination-specific PR
 - [ ] Build one reusable city postcard renderer with accessible, reversible flip and DOM personalization
 - [ ] Integrate the first city with catalog metadata, gallery, demo, sender preview, server validation and database template allowlist
 - [ ] Validate at 320px, 390px, tablet and desktop, including 600-character notes, keyboard, touch and reduced motion
-- [ ] Publish Hong Kong only after real sender-to-recipient verification
+- [ ] Publish the first destination only after real sender-to-recipient verification
 - [ ] Add a second city to prove that a new destination needs only artwork, metadata and necessary registration/allowlisting, not a new interaction implementation
 - [ ] Expand to more cities after validating the pattern
 
-Candidate destinations include Taipei, Kyoto and Paris. Their order and artwork are not yet approved.
+Keep this roadmap destination-independent. Select individual cities and approve their artwork in separate destination-specific PRs. Validate the shared design with a contrasting second city before scaling.
 
 ### 3B — Collection browsing and existing-card polish
 

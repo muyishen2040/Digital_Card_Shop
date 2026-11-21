@@ -16,7 +16,7 @@ Organize the gallery around recognizable groups of designs rather than a flat li
 
 | Primary collection | Promise | Examples | Direction |
 | --- | --- | --- | --- |
-| City Postcards | Send a small, beautiful memory of a place. | Hong Kong, Taipei, Kyoto, Paris | First expansion; one consistent editorial postcard family |
+| City Postcards | Send a small, beautiful memory of a place. | Landmark, streetscape and waterfront postcards | First expansion; one consistent editorial postcard family |
 | Birthday Cards | Celebrate someone's birthday with a joyful personal reveal. | Make a Wish; future distinct birthday concepts | Expand after the postcard foundation |
 | General Cards | Send a meaningful note without needing a special occasion. | A Little Sunshine, Under the Same Sky; future gratitude and everyday greetings | Preserve and improve existing designs |
 
@@ -28,9 +28,9 @@ A design has one primary collection and may later carry optional occasion tags (
 
 Build a coherent, collectible series inspired by editorial travel photography and handmade paper illustration. Each destination uses a hero photograph, a complementary illustrated scene on the front, and a distinct illustrated paper reverse. The recipient turns the card over to reveal a real, personalized message. The front and back should feel like two sides of one physical postcard.
 
-Hong Kong is the first design direction. The series should share a repeatable artwork-production recipe, layout rules, typography and accessible flip interaction. Each city brings its own visual identity through carefully selected landmarks, palette and source images rather than custom animation code.
+The series should share a repeatable artwork-production recipe, layout rules, typography and accessible flip interaction. Each city brings its own visual identity through carefully selected landmarks, palette and source images rather than custom animation code.
 
-This is a planned collection; no city postcard is published by this document.
+This is a planned collection; no city postcard is published by this document. Destination selection, source photographs, approved artwork and individual design implementation belong in separate destination-specific PRs.
 
 ### Product and engineering boundaries
 
