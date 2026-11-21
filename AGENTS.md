@@ -15,11 +15,11 @@ This project deliberately uses https://github.com/obra/superpowers as its develo
 
 ## Project boundaries
 
-Phase 1 is **recipient-first visual prototyping only**. The homepage is a small launcher for card experiences, not a storefront. Do not build a mock checkout or sender studio at this stage. Do not silently introduce accounts, persistence, paid checkout, database credentials, email delivery, WooCommerce, Klaviyo, or hard-coded inventory limits.
+The app has a live, free sender → private link → recipient flow with abuse controls. The next product focus is **collection expansion, starting with City Postcards**. Keep the homepage a lightweight collection gallery, not a storefront. Preserve existing storage, security and expiration behavior. Do not introduce accounts, paid checkout, new credential requirements, email delivery, WooCommerce, Klaviyo or hard-coded inventory limits without an approved design.
 
 Concepts that should remain separate:
 1. **Card template:** Reusable interactive UI and customizable fields.
-2. **Card instance (later):** Personalized content, secret link, and expiration.
+2. **Card instance:** Personalized content, secret link, and expiration.
 3. **Order (later):** Storefront transaction and fulfillment.
 
 Card designs should be independently editable. Avoid shared global selectors that cause designs to override each other; prefer locally scoped CSS/modules and well-defined props.
@@ -53,9 +53,4 @@ For each design: define feeling, character, world, reveal moment, and signature 
 
 ## Design direction
 
-Explore three distinct experiences, not merely color variants:
-- A Little Sunshine: opening an envelope / blooming elements
-- Under the Same Sky: interactive star reveal
-- Make a Wish: birthday cake and candle
-
-These are *concepts*, not approved implementation specs. Agree on interaction, layout, accessibility, and customization behavior before building them.
+Organize new designs by the collections in [the product brief](docs/PRODUCT_BRIEF.md). Preserve A Little Sunshine (envelope), Under the Same Sky (fold-open card), and Make a Wish (candle). City Postcards intentionally share a consistent flip mechanic and art direction; non-postcard concepts should have a distinctive interaction beyond color changes. Agree on interaction, layout, accessibility and customization behavior before building each new family.

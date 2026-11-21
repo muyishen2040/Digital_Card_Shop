@@ -2,48 +2,75 @@
 
 ## Phase 1 — Recipient experience validation
 
-- [x] Create public GitHub repository and initial application scaffold
-- [x] Establish agent guidance for obra/superpowers
-- [x] Add product context, catalog metadata, tests, and lightweight experience launcher
-- [ ] Install Superpowers in the chosen local coding agent
-- [x] Brainstorm and approve the first card's interaction direction
-- [x] Implement first interactive card and personalization unit tests
-- [x] Complete the remaining distinct card experiences
-  - [x] Under the Same Sky — fold-open celestial friendship card
-  - [x] Make a Wish — candle-based birthday card
-- [ ] Review mobile layout, accessibility, and reduced-motion behavior
-- [x] Import the repository to Vercel
-- [ ] Review the Sunshine recipient interaction on phone and desktop
+- [x] Create repository and application scaffold
+- [x] Establish Superpowers workflow guidance, product context and catalog
+- [x] Implement three distinct recipient experiences: A Little Sunshine, Under the Same Sky, Make a Wish
+- [x] Deploy the application to Vercel
+- [ ] Review all existing cards on mobile and desktop, including long messages, accessibility and reduced motion
 
-**Phase 1 is recipient-first.** The launcher opens immersive card experiences. Sender forms and store features are deferred until they support a real API or purchase flow.
+## Phase 2 — Public shareable temporary cards
 
-## Phase 2 — Shareable temporary card instances
+- [x] Define private instances, hashed bearer tokens, and retention boundaries
+- [x] Provision Supabase and apply private-card and creation-quota migrations
+- [x] Implement sender editor, interactive preview and private recipient route
+- [x] Implement Cloudflare Turnstile verification, shared quota counters and public creation controls
+- [x] Implement native sharing and canonical public recipient links
+- [x] Enable public creation in production and verify a real personalized link can be created and opened without login
+- [x] Implement scheduled expiry cleanup
+- [ ] Verify quota exhaustion, invalid/expired access, actual scheduled cleanup and error handling in controlled tests
+- [ ] Test the complete creation, sharing and receiving journey on iOS and Android
 
-- [x] Define private instance IDs, token hashing, stored personalization and data-retention boundaries (schema proposal and server repository)
-- [x] Provision a dedicated Supabase project, apply the schema as a migration, and verify RLS/grants
-- [x] Implement the server-only private recipient route and uniform invalid/expired-link page (pending live database deployment and integration checks)
-- [ ] Validate a real personalized link and server-enforced expiry against the dedicated Supabase project
-- [x] Implement an editor, live interactive preview, and restricted pilot creation flow (requires pilot access code for deployment)
-- [ ] Introduce verified buyer/account authorization, shared rate limits, quotas and abuse controls before public creation
-- [x] Implement scheduled expiry cleanup and privacy-safe aggregate operational logs (pending production secret and first scheduled run)
-- [ ] Optional image uploads with validation/limits
+The existing three cards are live. Continue reliability checks alongside visual work; do not weaken abuse controls to add new designs.
 
-## Phase 3 — Delivery
+## Phase 3 — Collection expansion (next product focus)
+
+The primary collections are City Postcards, Birthday Cards and General Cards. See [the product brief](PRODUCT_BRIEF.md) for the taxonomy and rationale.
+
+### 3A — City Postcards (first)
+
+- [ ] Review and approve a reusable postcard art direction, front/back layout, typography, interaction and two-reference-photo generation recipe
+- [ ] Produce and approve the first destination's paired artwork assets, including a text-free reverse, in a separate destination-specific PR
+- [ ] Build one reusable city postcard renderer with accessible, reversible flip and DOM personalization
+- [ ] Integrate the first city with catalog metadata, gallery, demo, sender preview, server validation and database template allowlist
+- [ ] Validate at 320px, 390px, tablet and desktop, including 600-character notes, keyboard, touch and reduced motion
+- [ ] Publish the first destination only after real sender-to-recipient verification
+- [ ] Add a second city to prove that a new destination needs only artwork, metadata and necessary registration/allowlisting, not a new interaction implementation
+- [ ] Expand to more cities after validating the pattern
+
+Keep this roadmap destination-independent. Select individual cities and approve their artwork in separate destination-specific PRs. Validate the shared design with a contrasting second city before scaling.
+
+### 3B — Collection browsing and existing-card polish
+
+- [ ] Add collection metadata and intentional gallery grouping; preserve all existing design slugs and links
+- [ ] Keep occasion tags and city/country metadata separate from the primary collection
+- [ ] Review and refine the three existing designs with the card quality guide
+- [ ] Confirm all existing templates remain compatible with the creation and receiving flow
+
+Collection browsing can ship alongside the first postcard when useful. Do not add empty category pages or a storefront.
+
+### 3C — Birthday and General Cards (later)
+
+- [ ] Explore additional birthday designs with distinct celebrations
+- [ ] Explore gratitude, everyday friendship and encouragement designs
+- [ ] Reuse existing personalization infrastructure and distinguish each non-postcard concept's interaction
+
+## Phase 4 — Delivery
 
 - [ ] Verified sending domain, provider and rate limits
-- [ ] Timezone-safe scheduling, retries, and failure handling
+- [ ] Timezone-safe scheduling, retries and failure handling
 - [ ] Separate sender confirmation and recipient message
+- [ ] Evaluate optional image uploads with validation and limits
 
-## Phase 4 — Storefront
+## Phase 5 — Storefront
 
-- [ ] WordPress + WooCommerce
+- [ ] Evaluate WordPress + WooCommerce
 - [ ] Customization/checkout handoff and verified order webhooks
-- [ ] Atomic shared-capacity reservation and automatic replenishment
+- [ ] Atomic shared-capacity reservation and automatic replenishment if needed
 
-## Phase 5 — Klaviyo
+## Phase 6 — Klaviyo
 
 - [ ] WooCommerce integration and Customer Hub eligibility check
 - [ ] Buyer/customer events and optional marketing consent
 - [ ] Recommendation and retention experiments
 
-Phases 2–5 describe planned capabilities and are not part of the recipient-experience prototype.
+Phases 3–6 are planned, not deployed features.
