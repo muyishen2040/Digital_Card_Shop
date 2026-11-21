@@ -8,7 +8,6 @@ import { SKY_DEMO } from "@/lib/cards/sky-demo";
 import { SUNSHINE_DEMO } from "@/lib/cards/personalization";
 import { cardTemplates, getCardTemplate } from "@/lib/cards/catalog";
 import { renderRecipientCard } from "@/components/cards/RecipientCard";
-import { HONG_KONG_DEMO } from "@/lib/cards/postcards/hong-kong";
 
 export function generateStaticParams() {
   return cardTemplates.map(({ slug }) => ({ slug }));
@@ -25,7 +24,7 @@ export default async function CardConceptPage({
 
   // Recipient experience: no store, banners, instructional text, or demo chrome.
   if (template.theme === "city-postcard") {
-    const card = renderRecipientCard(slug, HONG_KONG_DEMO);
+    const card = renderRecipientCard(slug, template.postcardDemo);
     if (!card) notFound();
     return card;
   }

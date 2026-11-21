@@ -89,6 +89,12 @@ describe("public card creation", () => {
     expect(mocks.verifyTurnstile).not.toHaveBeenCalled();
     expect(mocks.reservePublicCardSlot).not.toHaveBeenCalled();
   });
+  it("creates Taipei through the existing verified creation flow", async () => {
+    expect((await POST(request({ ...draft, templateSlug: "city-postcard-taipei", textSize: "small" }))).status).toBe(201);
+    expect(mocks.verifyTurnstile).toHaveBeenCalledOnce();
+    expect(mocks.reservePublicCardSlot).toHaveBeenCalledOnce();
+    expect(mocks.createCardInstance).toHaveBeenCalledWith(expect.objectContaining({ templateSlug: "city-postcard-taipei", textSize: "small" }));
+  });
   it("fails closed if verification or quota storage is unavailable", async () => {
     mocks.reservePublicCardSlot.mockRejectedValue(new Error("database down"));
     expect((await POST(request())).status).toBe(503);

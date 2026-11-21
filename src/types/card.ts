@@ -26,7 +26,7 @@ interface CardTemplateMetadata {
 
 export type CardTemplate = CardTemplateMetadata & (
   | { theme: Exclude<CardTheme, "city-postcard">; collection: Exclude<CardCollectionId, "city-postcards">; postcard?: never }
-  | { theme: "city-postcard"; collection: "city-postcards"; postcard: CityPostcardDesign }
+  | { theme: "city-postcard"; collection: "city-postcards"; postcard: CityPostcardDesign; postcardDemo: Readonly<CardPersonalization> }
 );
 
 export type CardTextSize = "small" | "medium" | "large";

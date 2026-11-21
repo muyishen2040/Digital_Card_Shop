@@ -1,5 +1,6 @@
 import type { CardCollectionId, CardOccasion, CardTemplate } from "@/types/card";
-import { HONG_KONG_POSTCARD_SLUG, hongKongPostcardDesign } from "./postcards/hong-kong";
+import { HONG_KONG_DEMO, HONG_KONG_POSTCARD_SLUG, hongKongPostcardDesign } from "./postcards/hong-kong";
+import { TAIPEI_DEMO, TAIPEI_POSTCARD_SLUG, taipeiPostcardDesign } from "./postcards/taipei";
 
 export const cardTemplates: readonly CardTemplate[] = [
   {
@@ -34,6 +35,17 @@ export const cardTemplates: readonly CardTemplate[] = [
     description: "Victoria Harbour at night, with a handwritten note on the illustrated reverse.",
     theme: "city-postcard",
     postcard: hongKongPostcardDesign,
+    postcardDemo: HONG_KONG_DEMO,
+  },
+  {
+    slug: TAIPEI_POSTCARD_SLUG,
+    title: "Greetings from Taipei",
+    collection: "city-postcards",
+    occasions: ["travel", "friendship", "everyday"],
+    description: "Taipei 101 at sunset and a painted Dadaocheng streetscape on the reverse.",
+    theme: "city-postcard",
+    postcard: taipeiPostcardDesign,
+    postcardDemo: TAIPEI_DEMO,
   },
 ];
 
