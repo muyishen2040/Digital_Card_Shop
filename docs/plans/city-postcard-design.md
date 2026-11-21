@@ -68,7 +68,7 @@ All postcards retain the shared limits of 40 characters per name and 600 charact
 1. Arrive with the front visible, centered on a restrained full-viewport atmosphere. The complete artwork is the opening control.
 2. A native button with a descriptive accessible name responds to click, touch, Enter and Space. Use a subtle lift on pointer hover only, then a ~650–800 ms horizontal 3D rotation with perspective, hidden backfaces and no mirrored text.
 3. The reverse settles in place with the message readable, focus moved into the note. The hidden face must not be interactive or read by assistive technology.
-4. A discreet physical affordance or accessible reverse-flip control, integrated into the card edge, returns to the front. Noninteractive blank areas may also flip. Text selection and scrolling must never accidentally turn the card. Restore focus to the front control after closing.
+4. A simple tap or click anywhere on the reverse returns to the front, including the illustration, paper margins and note. A full-face native button provides the accessible return control behind the reading area; ordinary pointer taps inside the note also turn the card. Text selection, dragging and scrolling must never accidentally turn the card. Restore focus to the front control after closing.
 5. Prevent overlapping transitions and provide a completion fallback; reduced motion reveals the other side immediately. The message never automatically disappears.
 
 The prototype has no navigation, banner, detached action buttons or visible instructions. Avoid the temptation to expand the interaction solely because a city has a different landmark.

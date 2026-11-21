@@ -2,11 +2,13 @@
 
 import Image from "next/image";
 import { useEffect, useId, useRef, useState } from "react";
-import type { TransitionEvent } from "react";
+import type { MouseEvent, PointerEvent, TransitionEvent } from "react";
 import { finishFold, toggleFold } from "@/lib/cards/fold";
 import type { FoldPhase } from "@/lib/cards/fold";
 import { toPreviewContent } from "@/lib/cards/personalization";
 import type { CardPersonalization } from "@/types/card";
+import { isPostcardNoteTap } from "./note-tap";
+import type { NotePointer } from "./note-tap";
 import styles from "./CityPostcard.module.css";
 
 /** Trusted catalog artwork, never sender-provided image URLs or HTML. */
@@ -31,6 +33,7 @@ export function CityPostcard({
   const frontRef = useRef<HTMLButtonElement>(null);
   const readingRef = useRef<HTMLElement>(null);
   const restoreFrontFocus = useRef(false);
+  const notePointer = useRef<NotePointer | null>(null);
   const descriptionId = useId();
   const isClosed = phase === "closed";
   const isOpen = phase === "open";
@@ -62,6 +65,29 @@ export function CityPostcard({
     stageRef.current?.focus({ preventScroll: true });
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     setPhase((current) => toggleFold(current, reducedMotion));
+  }
+
+  function beginNoteTap(event: PointerEvent<HTMLElement>) {
+    notePointer.current = event.isPrimary && event.button === 0
+      ? { x: event.clientX, y: event.clientY, scrollTop: event.currentTarget.scrollTop }
+      : null;
+  }
+
+  function endNoteTap(event: MouseEvent<HTMLElement>) {
+    const start = notePointer.current;
+    notePointer.current = null;
+    // A normal tap anywhere on the note turns the card; selecting or
+    // scrolling text must remain possible without accidentally closing it.
+    if (!start || event.detail === 0) return;
+    const selection = window.getSelection();
+    const hasSelection = !!selection && !selection.isCollapsed;
+    if (isPostcardNoteTap(start, {
+      x: event.clientX,
+      y: event.clientY,
+      scrollTop: event.currentTarget.scrollTop,
+    }, hasSelection)) {
+      turn();
+    }
   }
 
   function settle(event: TransitionEvent<HTMLDivElement>) {
@@ -127,6 +153,13 @@ export function CityPostcard({
               loading="eager"
               sizes="(max-width: 600px) 100vw, 560px"
             />
+            <button
+              type="button"
+              className={styles.backControl}
+              aria-label="Turn postcard back to the photograph"
+              disabled={!isOpen}
+              onClick={turn}
+            />
             {/* This region stays laid out even when the reverse is inert, so
                 the sender preview can measure real text fit before turning. */}
             <article
@@ -135,20 +168,15 @@ export function CityPostcard({
               ref={readingRef}
               tabIndex={0}
               aria-label={"Message for " + note.recipientName}
+              onPointerDown={beginNoteTap}
+              onPointerCancel={() => { notePointer.current = null; }}
+              onClick={endNoteTap}
             >
               <p className={styles.salutation}>Dear {note.recipientName},</p>
               <p className={styles.message}>{note.message}</p>
               <p className={styles.signature}>— {note.senderName}</p>
             </article>
-            <button
-              type="button"
-              className={styles.returnCorner}
-              aria-label="Turn postcard back to the photograph"
-              disabled={!isOpen}
-              onClick={turn}
-            >
-              <span className={styles.cornerPaper} aria-hidden="true" />
-            </button>
+
           </div>
         </div>
       </div>

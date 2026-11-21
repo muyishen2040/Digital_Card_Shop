@@ -26,6 +26,10 @@ describe("City Postcard renderer", () => {
     expect(html).toContain("data-card-text-region");
     expect(html.match(/<button\b/g)).toHaveLength(2);
     expect(html).not.toContain("Checkout");
+    expect(html).not.toContain("cornerPaper");
+    // The back button is a sibling of the reading region, not a wrapper
+    // around selectable text or a nested interactive element.
+    expect(html.indexOf('aria-label="Turn postcard back to the photograph"')).toBeLessThan(html.indexOf("data-card-text-region"));
   });
 
   it("uses destination metadata rather than a fixed city or artwork", () => {

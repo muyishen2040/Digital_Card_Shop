@@ -83,7 +83,7 @@
   line-height: 1.15;
   overflow-wrap: anywhere;
 }
-.frontControl {
+.frontControl, .backControl {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -94,12 +94,14 @@
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 }
-.frontControl:focus-visible {
+.frontControl:focus-visible, .backControl:focus-visible {
   outline: 2px solid #67506b;
   outline-offset: -5px;
 }
 .note {
-  /* Art direction reserves this single full-width writing area. */
+  /* Keep the selectable, scrollable note above the full-face return button. */
+  z-index: 1;
+  cursor: text;
   position: absolute;
   inset: 12% 11.5% 32%;
   overflow-y: auto;
@@ -136,34 +138,11 @@
   text-align: right;
   margin: 16px 0 0;
 }
-.returnCorner {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 44px;
-  height: 44px;
-  display: grid;
-  place-items: start end;
-  border: 0;
-  padding: 0;
-  background: transparent;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-}
-.cornerPaper {
-  width: 25px;
-  height: 25px;
-  clip-path: polygon(0 0, 100% 0, 100% 100%);
-  background: linear-gradient(135deg, #d2c0b6, #f8f2e7);
-  transition: transform .16s ease;
-  transform-origin: top right;
-}
-.returnCorner:focus-visible { outline: 2px solid #67506b; outline-offset: -3px; }
 @media (hover: hover) and (pointer: fine) {
-  .front:has(.frontControl:not(:disabled):hover) {
+  .front:has(.frontControl:not(:disabled):hover),
+  .back:has(.backControl:not(:disabled):hover) {
     box-shadow: 0 22px 48px rgba(64, 48, 36, .25), 0 3px 7px rgba(64, 48, 36, .14);
   }
-  .returnCorner:not(:disabled):hover .cornerPaper { transform: scale(1.15); }
 }
 .srOnly {
   position: absolute;
@@ -176,5 +155,5 @@
   white-space: nowrap;
 }
 @media (prefers-reduced-motion: reduce) {
-  .card, .cornerPaper { transition: none !important; }
+  .card { transition: none !important; }
 }
