@@ -50,6 +50,14 @@ describe("City Postcard renderer", () => {
     expect(html).not.toContain(postcardFixture.city);
   });
 
+  it("does not duplicate fixed destination lettering already present in the artwork", () => {
+    const html = render({ ...postcardFixture, frontTitleInArtwork: true });
+    expect(html).not.toContain("Greetings from");
+    expect(html).toContain(postcardFixture.frontAlt);
+    expect(html).toContain(postcardFixture.city + " city postcard");
+    expect(html).toContain("Wish you were here.");
+  });
+
   it("renders personalized names and multiline Unicode text as escaped HTML", () => {
     const html = render(postcardFixture, {
       recipientName: "小明",

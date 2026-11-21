@@ -19,6 +19,8 @@ export interface CityPostcardDesign {
   readonly frontAlt: string;
   readonly backAlt: string;
   readonly sceneCaption?: string;
+  /** Opt out of the DOM title only when the approved front already includes fixed destination lettering. */
+  readonly frontTitleInArtwork?: boolean;
 }
 
 export function CityPostcard({
@@ -123,11 +125,13 @@ export function CityPostcard({
               sizes="(max-width: 600px) 100vw, 560px"
             />
             <span id={descriptionId} className={styles.srOnly}>{design.frontAlt}</span>
-            <div className={styles.title}>
-              <span className={styles.eyebrow}>Greetings from</span>
-              <span className={styles.city}>{design.city}</span>
-              {design.sceneCaption ? <span className={styles.caption}>{design.sceneCaption}</span> : null}
-            </div>
+            {!design.frontTitleInArtwork && (
+              <div className={styles.title}>
+                <span className={styles.eyebrow}>Greetings from</span>
+                <span className={styles.city}>{design.city}</span>
+                {design.sceneCaption ? <span className={styles.caption}>{design.sceneCaption}</span> : null}
+              </div>
+            )}
             <button
               ref={frontRef}
               className={styles.frontControl}
