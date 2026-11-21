@@ -9,7 +9,7 @@ Implement the collection's shared renderer against the approved [design specific
 - The client component in `src/components/cards/postcard/CityPostcard.tsx` accepts a trusted, typed destination-artwork configuration and the existing `CardPersonalization` content contract.
 - The two assets are pre-optimized, 3:4 public design files. Typography (destination title, optional caption, personal greeting, message and signature) is rendered as escaped DOM text, never flattened into artwork.
 - Scope layout and motion to the component's CSS module. Use the shared fold-state helper to prevent overlapping turns, settle interrupted transitions, and support reduced motion.
-- Both faces retain their layout when inert. The reading region can be measured by the sender preview without opening the card. The note scrolls independently, including the signature, while the corner control is separate from the text.
+- Both faces retain their layout when inert. The reading region can be measured by the sender preview without opening the card. The note scrolls independently, including the signature, while the full-face return button is separate from the text. An ordinary tap inside the note also returns to the front; selection, dragging and scrolling are excluded.
 - Use Next.js font loading for Pinyon Script, with the existing serif font roles and local fallbacks. Review actual typography with the first destination's art before publication.
 
 ## Verification
@@ -27,7 +27,7 @@ The neutral SVG fixtures are test geometry, **not** a design offered to senders.
 Manual acceptance before merging:
 
 1. Inspect both faces at 320 × 690, 390 × 844, tablet and desktop. The entire card should remain visible on normal viewports; zoom and short viewports permit page scrolling without clipping.
-2. Tap, click, press Enter and Space. Confirm a single flip, readable final face and corner turn-back. Repeat rapidly and verify focus restoration; hidden controls must not be keyboard targets.
+2. Tap, click, press Enter and Space. Confirm a single flip, readable final face and turn-back from the illustration, blank paper and an ordinary tap on the note. Repeat rapidly and verify focus restoration; hidden controls must not be keyboard targets.
 3. Use the long note route. Scroll to the signature, select text, and confirm neither action flips the card. The note region must not spill into the artwork. Use the Unicode route to check glyph fallback.
 4. Emulate reduced motion and verify an immediate, complete reveal. Inspect both browser console and actual focus.
 5. Confirm the three existing cards and existing private-link behavior are unchanged. No new destination should appear in the catalog. Check that the fixture route is unavailable in production.
