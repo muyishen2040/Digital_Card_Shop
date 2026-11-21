@@ -1,4 +1,6 @@
 import { getCardContentPolicy, characterCount } from "@/lib/cards/content-policy";
+import type { CardTextSize } from "@/types/card";
+import { isCardTextSize, LEGACY_TEXT_SIZE } from "./text-size";
 
 export const DEFAULT_TTL_HOURS = 48;
 export const ALLOWED_TTL_HOURS = [24, 48, 72] as const;
@@ -10,6 +12,7 @@ export interface CreateCardDraft {
   senderName: string;
   message: string;
   ttlHours?: CardTtlHours;
+  textSize?: CardTextSize;
 }
 
 export interface ValidatedCardDraft {
@@ -18,6 +21,7 @@ export interface ValidatedCardDraft {
   senderName: string;
   message: string;
   ttlHours: CardTtlHours;
+  textSize: CardTextSize;
 }
 
 export interface StoredCardInstance {
@@ -26,6 +30,7 @@ export interface StoredCardInstance {
   recipientName: string;
   senderName: string;
   message: string;
+  textSize: CardTextSize;
   expiresAt: string;
 }
 
@@ -60,7 +65,9 @@ export function validateCardDraft(value: CreateCardDraft): ValidatedCardDraft {
   if (!(ALLOWED_TTL_HOURS as readonly number[]).includes(ttlHours)) {
     throw new Error("Card access must last 24, 48, or 72 hours.");
   }
-  return { templateSlug: value.templateSlug, recipientName, senderName, message, ttlHours };
+  const textSize = value.textSize === undefined ? LEGACY_TEXT_SIZE : value.textSize;
+  if (!isCardTextSize(textSize)) throw new Error("Choose a valid card text size.");
+  return { templateSlug: value.templateSlug, recipientName, senderName, message, ttlHours, textSize };
 }
 
 export function expirationFor(availableAt: Date, ttlHours: CardTtlHours): string {

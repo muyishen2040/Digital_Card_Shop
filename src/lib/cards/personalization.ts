@@ -1,4 +1,5 @@
 import type { CardPersonalization } from "@/types/card";
+import { resolveCardTextSize } from "./text-size";
 
 // Display bounds use Unicode code points, consistent with database storage.
 // Recipient components never split an emoji from an otherwise valid message.
@@ -28,5 +29,6 @@ export function toPreviewContent(
     recipientName: normalizeName(draft.recipientName, "friend"),
     senderName: normalizeName(draft.senderName, "someone thinking of you"),
     message: message || "A little note to brighten your day.",
+    textSize: resolveCardTextSize(draft.textSize),
   };
 }

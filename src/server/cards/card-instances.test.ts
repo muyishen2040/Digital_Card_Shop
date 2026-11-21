@@ -32,6 +32,7 @@ describe("private Supabase card-instance repository", () => {
       senderName: "Taylor",
       message: "A private hello.",
       ttlHours: 24,
+      textSize: "small",
     });
 
     const [url, init] = mockFetch.mock.calls[0] as [URL, RequestInit];
@@ -41,6 +42,7 @@ describe("private Supabase card-instance repository", () => {
     expect(body.access_token_hash).not.toBe(result.accessToken);
     expect(JSON.stringify(body)).not.toContain(result.accessToken);
     expect(body.message).toBe("A private hello.");
+    expect(body.text_size).toBe("small");
     expect(result.expiresAt).toBe("2026-11-20T23:00:00.000Z");
     expect(init.method).toBe("POST");
     expect(init.cache).toBe("no-store");
@@ -86,6 +88,7 @@ describe("private Supabase card-instance repository", () => {
       recipient_name: "Morgan",
       sender_name: "Riley",
       message: "Enjoy your birthday!",
+      text_size: "medium",
       available_at: "2026-11-19T20:00:00Z",
       expires_at: "2026-11-20T20:00:00Z",
     }])));
@@ -97,6 +100,7 @@ describe("private Supabase card-instance repository", () => {
       recipientName: "Morgan",
       senderName: "Riley",
       message: "Enjoy your birthday!",
+      textSize: "medium",
       expiresAt: "2026-11-20T20:00:00Z",
     });
   });

@@ -28,7 +28,12 @@ describe("Sunshine preview personalization", () => {
       recipientName: "friend",
       senderName: "someone thinking of you",
       message: "A little note to brighten your day.",
+      textSize: "large",
     });
+  });
+
+  it("preserves the explicit size in preview content", () => {
+    expect(toPreviewContent({ ...SUNSHINE_DEMO, textSize: "small" }).textSize).toBe("small");
   });
 
   it("bounds very long input without mutating the original", () => {
