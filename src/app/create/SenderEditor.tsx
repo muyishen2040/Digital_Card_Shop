@@ -210,7 +210,7 @@ export function SenderEditor() {
               {cardTemplates.map((card) => <button type="button" key={card.slug}
                 aria-pressed={slug === card.slug}
                 className={slug === card.slug ? styles.selected : ""}
-                onClick={() => { setSlug(card.slug); changed(); }}>
+                onClick={() => { if (slug !== card.slug) { setSlug(card.slug); changed(); } }}>
                 <strong>{card.title}</strong><small>{card.category}</small>
               </button>)}
             </div>
@@ -290,7 +290,7 @@ export function SenderEditor() {
           <div className={styles.viewports} role="group" aria-label="Preview size">
             {SIZES.map((size, index) => <button type="button" key={size.width} title={size.label}
               aria-pressed={viewport === index} className={viewport === index ? styles.active : ""}
-              onClick={() => { setViewport(index); changed(); }}>{size.width}</button>)}
+              onClick={() => { if (viewport !== index) { setViewport(index); changed(); } }}>{size.width}</button>)}
           </div>
           <fieldset className={styles.textSizes}>
             <legend>Text size</legend>
