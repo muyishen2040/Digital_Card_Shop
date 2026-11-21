@@ -34,7 +34,7 @@ If you cannot describe the card's identity without naming colors, the concept ne
 - **Typography carries emotion and readability.** Use 1–2 complementary font families; reserve decorative/handwritten lettering for short featured phrases. Keep personalized messages comfortably readable, with clear contrast and enough room for unexpectedly long text. Avoid huge bold headings, generic inspirational filler, decorative all-caps labels, and gradients on text.
 - **Respect visual rhythm.** Use a small spacing scale (4/8/12/16/24/32px as useful), intentional alignment, and whitespace around the message. Not every element needs a rounded card or shadow. Let one part of the scene dominate.
 - **Specific words over AI copy.** A message should sound human. Keep UI actions short (*Open card*, *Read your note*, *Replay*) and avoid hype (*magical, supercharge, unlock*). Genuine greeting-card sentiment, poetry, and exclamation points are fine **when they fit the sender's message**.
-- **Different designs need different mechanics.** Changing only a background color or font does not make a new e-card. Vary scene, interaction, reveal, material, and emotional pacing.
+- **Different designs need different mechanics.** Changing only a background color or font does not make a new e-card. Vary scene, interaction, reveal, material, and emotional pacing across independent concepts. Within the intentional [City Postcards family](plans/city-postcard-design.md), reuse the same physical flip and layout; distinguish destinations through original photographic references, complementary illustrations and city-specific visual character. See the [two-photo artwork playbook](plans/city-postcard-artwork-playbook.md).
 
 ## Motion is the gift, not wallpaper
 
