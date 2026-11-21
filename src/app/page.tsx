@@ -1,9 +1,16 @@
+"use client";
+
 import Link from "next/link";
+import { useState } from "react";
 import Image from "next/image";
-import { cardTemplates } from "@/lib/cards/catalog";
+import { cardBrowseLabel, getCollectionGroups } from "@/lib/cards/catalog";
+import type { CollectionFilter as Filter } from "@/lib/cards/catalog";
+import { CollectionFilter } from "@/components/cards/CollectionFilter";
 import styles from "./page.module.css";
 
 export default function ExperienceLibrary() {
+  const [filter, setFilter] = useState<Filter>("all");
+  const groups = getCollectionGroups(filter);
   return (
     <main className={styles.page}>
       <div className={styles.shell}>
@@ -17,9 +24,20 @@ export default function ExperienceLibrary() {
         <div className={styles.intro}>
           <span className={styles.eyebrow}>THE COLLECTION</span>
           <h1>Choose a little moment.</h1>
+          <p>Find a beautiful way to say what matters.</p>
         </div>
-        <div className={styles.grid}>
-          {cardTemplates.map((card, index) => (
+        <div className={styles.filterBar}>
+          <CollectionFilter value={filter} onChange={setFilter} />
+        </div>
+        <div className={styles.collections}>
+          {groups.map(({ collection, cards }) => (
+            <section key={collection.id} className={styles.collection} aria-labelledby={collection.id + "-heading"}>
+              <div className={styles.collectionHeading}>
+                <h2 id={collection.id + "-heading"}>{collection.title}</h2>
+                <p>{collection.description}</p>
+              </div>
+              <div className={styles.grid}>
+                {cards.map((card) => (
             <Link
               key={card.slug}
               href={`/cards/${card.slug}`}
@@ -55,19 +73,21 @@ export default function ExperienceLibrary() {
                     unoptimized
                   />
                 )}
-                {card.theme !== "city-postcard" && <span className={styles.index}>0{index + 1}</span>}
+
               </div>
               <div className={styles.tileMeta}>
                 <div>
-                  <h2>{card.title}</h2>
-                  <span>{card.category}</span>
+                  <h3>{card.title}</h3>
+                  <span>{cardBrowseLabel(card)}</span>
                 </div>
                 <span className={styles.action} aria-hidden="true">
                   {"↗"}
                 </span>
               </div>
-              <p className={styles.status}>Interactive</p>
             </Link>
+          ))}
+              </div>
+            </section>
           ))}
         </div>
       </div>

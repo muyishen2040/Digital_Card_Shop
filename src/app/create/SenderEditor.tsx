@@ -2,7 +2,9 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { cardTemplates } from "@/lib/cards/catalog";
+import { cardBrowseLabel, getCardTemplate, getVisibleCardTemplates } from "@/lib/cards/catalog";
+import type { CollectionFilter as Filter } from "@/lib/cards/catalog";
+import { CollectionFilter } from "@/components/cards/CollectionFilter";
 import { characterCount, getCardContentPolicy } from "@/lib/cards/content-policy";
 import { validateCardDraft } from "@/lib/cards/instance-model";
 import type { CardTtlHours } from "@/lib/cards/instance-model";
@@ -26,6 +28,7 @@ type Fit = "checking" | CardTextFitResult["status"];
 
 export function SenderEditor() {
   const [slug, setSlug] = useState("little-sunshine");
+  const [collectionFilter, setCollectionFilter] = useState<Filter>("all");
   const [to, setTo] = useState("");
   const [from, setFrom] = useState("");
   const [message, setMessage] = useState("");
@@ -49,7 +52,8 @@ export function SenderEditor() {
   const previewStage = useRef<HTMLDivElement>(null);
   const [previewAvailableWidth, setPreviewAvailableWidth] = useState<number | null>(null);
   const revision = useRef(0);
-  const selected = cardTemplates.find((card) => card.slug === slug)!;
+  const selected = getCardTemplate(slug)!;
+  const visibleCards = getVisibleCardTemplates(collectionFilter);
   const hint = getCardContentPolicy(slug)!.recommendedMessageCharacters;
   const count = characterCount(message);
 
@@ -206,12 +210,16 @@ export function SenderEditor() {
         <form onSubmit={create}>
           <fieldset className={styles.choices}>
             <legend>Choose your card</legend>
+            <div className={styles.collectionFilters}>
+              <CollectionFilter value={collectionFilter} onChange={setCollectionFilter} disabled={creating} />
+            </div>
+            <p className={styles.selectedCard} role="status">Selected: <strong>{selected.title}</strong></p>
             <div className={styles.options}>
-              {cardTemplates.map((card) => <button type="button" key={card.slug}
+              {visibleCards.map((card) => <button type="button" key={card.slug} disabled={creating}
                 aria-pressed={slug === card.slug}
                 className={slug === card.slug ? styles.selected : ""}
                 onClick={() => { if (slug !== card.slug) { setSlug(card.slug); changed(); } }}>
-                <strong>{card.title}</strong><small>{card.category}</small>
+                <strong>{card.title}</strong><small>{cardBrowseLabel(card)}</small>
               </button>)}
             </div>
           </fieldset>

@@ -1,0 +1,29 @@
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+.filters button {
+  background: transparent;
+  color: #6b5b53;
+  border: 1px solid #dfd6cd;
+  border-radius: 999px;
+  min-height: 38px;
+  padding: 8px 15px;
+  cursor: pointer;
+  font: 13px/1.3 Arial, sans-serif;
+}
+.filters button[aria-pressed="true"] {
+  background: #e8dcd1;
+  border-color: #9b7b6b;
+  color: #49392f;
+  font-weight: 600;
+}
+.filters button:hover:not(:disabled) { border-color: #9b7b6b; }
+.filters button:focus-visible { outline: 2px solid #805f50; outline-offset: 3px; }
+.filters button:disabled { cursor: not-allowed; opacity: .65; }
+@media (max-width: 420px) {
+  .filters { gap: 6px; }
+  .filters button { font-size: 12px; min-height: 36px; padding: 7px 11px; }
+}

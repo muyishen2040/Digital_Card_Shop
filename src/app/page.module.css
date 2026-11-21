@@ -123,7 +123,7 @@
 .candle { position: absolute; width: 9px; height: 42px; left: calc(50% - 4px); top: -45px; background: #e8af88; }
 .candle::after { content: ""; position: absolute; width: 10px; height: 18px; top: -23px; left: -1px; border-radius: 80% 5% 75% 50%; transform: rotate(14deg); background: #e6ac61; }
 .tileMeta { display: flex; justify-content: space-between; align-items: center; padding: 21px 2px 0; gap: 14px; }
-.tileMeta h2 { margin: 0 0 6px; font: normal 25px Georgia, serif; letter-spacing: -.025em; }
+.tileMeta h3 { margin: 0 0 6px; font: normal 25px Georgia, serif; letter-spacing: -.025em; }
 .tileMeta span { color: #89807a; font: 12px Arial, sans-serif; }
 .action { font-size: 22px !important; line-height: 1; color: #8f6c5e !important; }
 .status { font: 11px Arial, sans-serif; color: #a18d81; margin: 13px 2px 0; }
@@ -150,3 +150,19 @@
 /* A postcard thumbnail shows the complete approved artwork, not a crop. */
 .city-postcard { background: #f3eae0; }
 .postcardThumbnail { object-fit: contain; padding: 16px; }
+
+.intro { padding-bottom: 30px; }
+.intro p { margin: 16px 0 0; font: 14px/1.65 Arial, sans-serif; color: #76685f; }
+.filterBar { padding-bottom: 28px; border-bottom: 1px solid #e9e4df; }
+.collections { display: flex; flex-direction: column; gap: clamp(40px, 6vw, 64px); padding-top: 32px; }
+.collection + .collection { border-top: 1px solid #e9e4df; padding-top: clamp(32px, 5vw, 52px); }
+.collectionHeading { margin-bottom: 24px; }
+.collectionHeading h2 { margin: 0 0 7px; font: normal clamp(26px, 3.2vw, 36px)/1.2 Georgia, serif; letter-spacing: -.03em; }
+.collectionHeading p { margin: 0; font: 13px/1.6 Arial, sans-serif; color: #76685f; }
+.tileMeta h3 { overflow-wrap: anywhere; }
+@media (max-width: 560px) {
+  .intro { padding-top: 48px; padding-bottom: 24px; }
+  .collectionHeading { margin-bottom: 17px; }
+  .tileMeta { padding-top: 14px; }
+  .tileMeta h3 { font-size: 23px; }
+}
