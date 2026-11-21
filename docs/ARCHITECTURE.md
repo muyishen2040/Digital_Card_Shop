@@ -1,8 +1,8 @@
 # Architecture
 
-## Current recipient-experience prototype
+## Recipient experiences and shared card creation
 
-This repository uses Next.js App Router, React, and TypeScript to serve reusable interactive greeting cards. The current goal is to validate the **recipient's experience**: every implemented card route is a complete interactive scene, without storefront UI or a sender customization form.
+This repository uses Next.js App Router, React, and TypeScript to serve reusable interactive greeting cards. Every recipient route is a complete interactive scene without storefront UI or a sender customization form. The separate sender editor creates expiring private card instances.
 
 ```text
 src/app/                    Next.js routes
@@ -16,17 +16,17 @@ docs/plans/                Feature designs and implementation plans
 
 The launcher lists three working recipient experiences from `src/lib/cards/catalog.ts`: the Sunshine envelope, the fold-open Same Sky card, and the Make a Wish birthday candle. Each card uses public sample personalization and owns its interaction state, animations and scoped CSS.
 
-The retired `/create/little-sunshine` address redirects to the recipient demo to preserve existing prototype links. No personalized card instance, API, database, or real delivery pipeline is deployed yet.
+The retired `/create/little-sunshine` address redirects to the recipient demo to preserve existing prototype links. The public sender editor at `/create` creates expiring instances through a Turnstile-verified and rate-limited API. The private recipient route `/c/[token]` renders the same card experience with persisted content. No scheduled email delivery or checkout is implemented.
 
-## Card-instance storage foundation (staged, not connected)
+## Card-instance storage
 
-The repository contains the **internal storage contract** (`src/lib/cards/instance-model.ts`), a **server-only Supabase REST repository** (`src/server/cards/card-instances.ts`), and a proposed restricted database schema (`db/schema/card_instances.sql`). These are build-tested foundations, not live services. The schema must be applied only to a dedicated Digital Card Shop Supabase project; this repository does not configure or apply it automatically.
+The repository contains the **internal storage contract** (`src/lib/cards/instance-model.ts`), a **server-only Supabase REST repository** (`src/server/cards/card-instances.ts`), and versioned schema migrations in `supabase/migrations/`. The dedicated Digital Card Shop Supabase project is deployed. Apply database changes through reviewed migrations, never by exposing credentials or public database access.
 
 The storage model binds a reusable template to a private message, a SHA-256 token digest, and explicit availability/expiration times. Supabase RLS is enabled with no public grants or policies. Internal server functions use a secret key, which may **never** be sent to the browser.
 
 See [card instance storage design](plans/card-instance-storage-design.md) and [database setup](../db/README.md).
 
-## Planned backend service boundary
+## Card creation service boundary
 
 The interactive card component should remain reusable when content comes from a real card instance instead of a sample.
 
@@ -48,8 +48,8 @@ Authorized card-creation request
                            -> renders existing interactive card component
 ```
 
-Card-creation callers can initially be an internal test client and later a verified WooCommerce order webhook. No client should be trusted to mark an order paid or to issue unbounded public emails.
+The current public creation caller is the sender editor with server-side Turnstile and quota verification. A future verified WooCommerce order webhook would be a separate authorized caller. No client should be trusted to mark an order paid or to issue unbounded public emails.
 
 Email delivery, scheduling and WooCommerce are separate later integrations. Order processing will need webhook signature verification, idempotency, retries, and atomic inventory reservation if capacity is enforced. Card access will need server-side expiration and data retention rules. Never put personal notes, email addresses or tokens in analytics events, public source code or insecure query parameters.
 
-The backend diagram is a target architecture, not an implemented feature.
+Collection expansion should reuse this boundary. No new persistence or authorization surface is needed solely because a card belongs to a different collection.

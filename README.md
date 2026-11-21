@@ -2,13 +2,13 @@
 
 A mobile-first, interactive digital greeting-card experiment.
 
-**Status:** Working pilot with three interactive cards, a sender editor, private expiring links, and Supabase persistence. Public checkout, delivery and account-based creation are not implemented.
+**Status:** Live free card creation with three interactive cards, a sender editor, private expiring links, native sharing, Supabase persistence and Turnstile/quota abuse controls. Checkout, scheduled delivery and account-based creation are not implemented.
 
 ## Product idea
 
 Send someone a tiny, personalized experience—not just an image. Eventually, buyers will choose a card template, personalize it with a message and optional photo, select a delivery time, and send a private link to a temporary (1–3 day) interactive page.
 
-**Current goal:** Validate the complete sender → private link → recipient experience while keeping creation restricted until purchase/account authorization and anti-abuse safeguards are ready.
+**Current goal:** Grow a coherent card collection, starting with City Postcards, while preserving the verified sender → private link → recipient flow. Birthday Cards and General Cards remain part of the collection strategy. See [the product brief](docs/PRODUCT_BRIEF.md) and [roadmap](docs/ROADMAP.md).
 
 ## Technology
 
@@ -61,7 +61,7 @@ For visual work, also use the compact [e-card anti-slop design guide](docs/CARD_
 
 This repo is linked to the separate [digital-card-shop Vercel project](https://vercel.com/muyishen4020-2251/digital-card-shop). Pushes to `main` deploy to production; PRs generate previews.
 
-The pilot uses `SUPABASE_URL` and server-only `SUPABASE_SECRET_KEY` for card storage. The sender creation API uses the independent `CARD_CREATOR_ACCESS_CODE` in the Preview environment; production public creation is disabled. Set `CRON_SECRET` **only for Production** before merging the retention job PR. The secret authorizes a scheduled daily deletion of expired rows. See [retention and monitoring runbook](docs/plans/expired-card-retention.md).
+The app uses `SUPABASE_URL` and server-only `SUPABASE_SECRET_KEY` for card storage. Public creation requires the frontend/backend feature flags, Turnstile credentials and a server-only rate-limit secret; see [public creation design](docs/plans/public-card-creation-design.md) and `.env.example`. Production public creation is enabled. `CRON_SECRET` authorizes the scheduled deletion of expired rows; see [retention and monitoring runbook](docs/plans/expired-card-retention.md). Never commit credential values.
 
 ## Privacy and safety
 

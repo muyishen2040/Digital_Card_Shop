@@ -1,42 +1,56 @@
-# Product brief (working draft)
+# Product brief
 
 ## Vision
 
-A free-to-use (initially), mobile-first digital card shop for meaningful tiny surprises. Rather than deliver a static image, each card opens as a personalized HTML/CSS/JS webpage with a delightful interaction.
+Little moments is a free-to-use, mobile-first collection of interactive digital greeting cards for meaningful tiny surprises. Rather than delivering a static image, each design opens as a personalized webpage with a tactile, purposeful interaction. The emotional experience of receiving a card comes first.
 
-## User journey (target, not yet implemented)
+## Current product
 
-1. Sender browses reusable card designs.
-2. Sender personalizes recipient/sender names, message, and possibly an image.
-3. Sender selects a delivery date/time and places an order through a future storefront.
-4. A unique, unguessable e-card link is created.
-5. At the requested time, a transactional email sends the link to the recipient and a separate confirmation/copy to the sender.
-6. Recipient opens and interacts with the card; card access expires 1–3 days after delivery.
-7. Expiration releases a shared capacity slot for later orders.
+A sender can browse three existing designs, personalize recipient and sender names and a message, create a private expiring link after Cloudflare Turnstile verification, and share it. The recipient can open the link without an account. The Next.js application uses Supabase for private card instances and Vercel for deployment. See [the roadmap](ROADMAP.md) for what is verified and what remains to be tested.
 
-## Current experiment
+The experience is free and does not require a purchase. Email delivery, scheduling, checkout, subscriptions and marketing integrations are not part of the current flow. Do not implement mock commerce to demonstrate new cards.
 
-The minimal launcher now offers three distinct interactive recipient card prototypes, suitable for reviewing on a phone. A received card shows the interaction and sender-provided content, not shopper UI, instruction copy, or extra framing. Phase 2 adds private card-instance foundations before a real sharing flow. **Do not implement mock checkout, order processing, emails or inventory merely to demonstrate the prototypes.**
+## Collection strategy
 
-Proposed design directions:
-- **A Little Sunshine:** envelope opening and floral/message reveal
-- **Under the Same Sky:** fold-open celestial greeting card with a moonlit message
-- **Make a Wish:** birthday candle and confetti interaction
+Organize the gallery around recognizable groups of designs rather than a flat list of unrelated cards. A collection provides an emotional or visual promise; an occasion helps a sender find the right card; a design is the actual reusable template. A card instance is a separate, private personalized copy of a design.
 
-New card concepts require an explicit interaction design and accessibility review before feature implementation.
+| Primary collection | Promise | Examples | Direction |
+| --- | --- | --- | --- |
+| City Postcards | Send a small, beautiful memory of a place. | Hong Kong, Taipei, Kyoto, Paris | First expansion; one consistent editorial postcard family |
+| Birthday Cards | Celebrate someone's birthday with a joyful personal reveal. | Make a Wish; future distinct birthday concepts | Expand after the postcard foundation |
+| General Cards | Send a meaningful note without needing a special occasion. | A Little Sunshine, Under the Same Sky; future gratitude and everyday greetings | Preserve and improve existing designs |
+
+Additional collections (seasonal holidays, milestones, or others) can be considered after the initial three are useful. Do not create empty categories merely to fill a navigation menu.
+
+A design has one primary collection and may later carry optional occasion tags (e.g. friendship, encouragement, gratitude, birthday), so discovery does not require duplicated templates. A city postcard is suitable for multiple occasions. Destination metadata (city, country/region) belongs to the postcard design, not the user's private message. Country/region is optional grouping metadata, not an assertion that city and country are interchangeable.
+
+### First focus: City Postcards
+
+Build a coherent, collectible series inspired by editorial travel photography and handmade paper illustration. Each destination uses a hero photograph, a complementary illustrated scene on the front, and a distinct illustrated paper reverse. The recipient turns the card over to reveal a real, personalized message. The front and back should feel like two sides of one physical postcard.
+
+Hong Kong is the first design direction. The series should share a repeatable artwork-production recipe, layout rules, typography and accessible flip interaction. Each city brings its own visual identity through carefully selected landmarks, palette and source images rather than custom animation code.
+
+This is a planned collection; no city postcard is published by this document.
+
+### Product and engineering boundaries
+
+- Keep the existing three card experiences and their private links compatible.
+- Reuse the existing sender, private-link, quota and expiration flow. A collection is discovery metadata, not a different storage or fulfillment system.
+- Keep the recipient experience immersive: no storefront chrome, tutorials or unrelated controls on a received card.
+- Within the postcard family, consistency of interaction is intentional. Other collections may use genuinely different mechanics.
+- Keep personalization separate from artwork. Do not bake names, private messages or sender signatures into generated assets.
+- New concepts require an explicit interaction/design specification and mobile accessibility review before feature implementation. Follow [the card design quality guide](CARD_DESIGN_QUALITY.md).
+
+## Future user journey
+
+A sender will be able to choose a design by collection and occasion, personalize a note, create a temporary private card and share it directly. Scheduled transactional delivery and an optional storefront may extend this flow later. A recipient's address does not imply permission to send marketing. Expiration must be enforced by access control, with eventual deletion for retention.
 
 ## Future integrations
 
-- Vercel / Next.js: all reusable e-card experiences under one app
-- Supabase: instances, schedules, expiration and optional images
-- Resend or equivalent transactional sender: scheduled delivery
-- WooCommerce / WordPress: storefront, $0 orders, catalog, inventory
-- Klaviyo: Customer Hub, buyer lifecycle, consented marketing and recommendations
+- Vercel / Next.js: reusable card experiences under one app
+- Supabase: card instances, expiration and future delivery schedules
+- Resend or equivalent: scheduled transactional delivery
+- WooCommerce / WordPress: optional storefront, orders and inventory
+- Klaviyo: consented customer lifecycle and recommendation experiments
 
-## Principles
-
-- The emotional experience of receiving a card comes first.
-- Do not assume every recipient is a marketing subscriber.
-- Expiration is access control plus eventual deletion; never treat delayed cleanup as the sole expiration mechanism.
-- Scheduling and inventory must be race-safe when added.
-- Use budget limits as guardrails; Vercel does not impose a fixed number of pages as inventory.
+Use budget limits as guardrails; do not assume a fixed number of deployed pages is inventory. Scheduling and inventory must be race-safe when introduced.
