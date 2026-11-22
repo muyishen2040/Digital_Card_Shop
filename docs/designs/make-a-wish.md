@@ -4,7 +4,7 @@
 
 Make a birthday greeting feel like a small celebration the recipient starts themselves. A handcrafted, colorful cake sits in a graphic paper-cut world. Tapping the candle extinguishes its flame; a short burst of paper confetti accompanies a playful birthday message. Tapping the wick again relights the candle and resets the scene.
 
-The experience lives at `/cards/make-a-wish` and initially uses public sample personalization. It is not a shop, a card editor, an order checkout, or an email preview.
+The demo experience lives at `/cards/make-a-wish`. Personalized private cards use the same component at `/c/[token]`. The recipient view is not a shop, editor, checkout, or email preview.
 
 ## Creative identity
 
@@ -47,4 +47,4 @@ The palette, illustrated cake and cheerful typography are deliberately different
 - Relighting returns the cake to its original appearance; the experience is repeatable.
 - Mobile, reduced-motion, keyboard access, and 600-character messages remain usable.
 
-Later, a card-serving backend can provide the existing typed `CardPersonalization` props from an expiring private card instance. That service is not part of this design.
+The sender flow creates expiring private instances that provide the component's typed `CardPersonalization` data. Private-link validation and storage remain independent of the visual interaction.

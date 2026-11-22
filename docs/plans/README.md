@@ -1,12 +1,11 @@
-# Feature designs and implementation plans
+# Active designs and plans
 
-This directory holds self-contained design specifications and implementation plans for Digital Card Shop. Each document should explain the feature's purpose, intended user experience, scope, key decisions, acceptance criteria, and any important constraints. A reader should not need a development conversation to understand it.
+Keep actionable implementation plans and unfinished verification work here. Store lasting card design specifications in [the design library](../designs/README.md). Every document should be understandable to a developer who has not seen the conversations that produced it.
 
-Prefer descriptive filenames based on the feature and document role:
+Start with the [product brief](../PRODUCT_BRIEF.md) and [architecture](../ARCHITECTURE.md) to understand the application. Each plan should explain its goal, the intended behavior, relevant code boundaries, acceptance criteria, and concrete verification steps.
 
-- `sunshine-experience-design.md`
-- `sunshine-experience-implementation.md`
+The project follows [Superpowers](https://github.com/obra/superpowers): agree on the design, write an actionable plan, implement with tests, and review the result. Use descriptive filenames rather than automatically adding dates to living documents.
 
-Use dates in filenames only for genuinely chronological records, such as a dated incident report, release note, migration plan or meeting record. Do not automatically add creation/revision dates to living specifications.
+Once a feature is complete, update the relevant design specification and current operational documentation, then move only the finished implementation plan to [the archive](../archive/README.md). Do not leave completed plans here with repeated status notices.
 
-Design documents define intended behavior; implementation plans identify code boundaries and verification. Where a design changes, update the specification to describe the coherent current decision, adding history only if it affects implementation or migration.
+Reusable City Postcards references are the [design specification](../designs/city-postcards.md) and [artwork playbook](../designs/city-postcard-artwork-playbook.md). The [text-fit calibration](card-text-fit-calibration.md) provides QA cases and explicitly non-binding exploratory measurements.

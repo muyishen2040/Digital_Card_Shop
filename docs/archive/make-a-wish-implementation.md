@@ -4,7 +4,7 @@
 
 Implement a stand-alone birthday card under `/cards/make-a-wish`. The recipient interacts directly with the candle to reveal a birthday message. No sender UI, orders, persistence, link delivery or WooCommerce.
 
-This design is specified in [make-a-wish-experience-design.md](make-a-wish-experience-design.md).
+This design is specified in [make-a-wish-experience-design.md](../designs/make-a-wish.md).
 
 ## Modules
 

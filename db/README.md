@@ -1,39 +1,43 @@
-# Digital Card Shop database foundation
+# Digital Card Shop — database runbook
 
-## Status
+Digital Card Shop stores temporary personalized cards in the dedicated Supabase project `digital-card-shop` (`zrgnwwrfrchhgmznbblb`, region `us-east-1`). The browser does not directly access private card rows.
 
-The dedicated Supabase project is **`digital-card-shop`** (reference `zrgnwwrfrchhgmznbblb`, `us-east-1`). The `card_instances` table was deployed from [schema/card_instances.sql](schema/card_instances.sql) via the Supabase migration API, which recorded migration `20261120050919_create_private_card_instances`. The exact applied SQL is tracked at [supabase/migrations/20261120050919_create_private_card_instances.sql](../supabase/migrations/20261120050919_create_private_card_instances.sql). No other project's database was modified.
+## How card storage works
 
-## Verified database setup and remaining app configuration
+- `src/app/api/public/cards/route.ts` checks same-origin requests, Cloudflare Turnstile and shared quotas before creating public cards.
+- `src/app/api/cards/route.ts` is an optional legacy creator-code endpoint, not the public flow.
+- `src/server/cards/card-instances.ts` accesses private storage with a server-only Supabase key.
+- `src/app/c/[token]/page.tsx` resolves private recipient links and refuses unknown or expired cards. The database stores a hash of the access token, never the raw token.
+- `src/app/api/cron/expire-cards/route.ts` removes expired rows on a schedule. See the [retention guide](../docs/RETENTION.md).
 
-1. Supabase project `digital-card-shop` was created at the quoted $0/month project cost and reports `ACTIVE_HEALTHY`. This quote does not guarantee that optional paid features or future usage are free.
-2. Migration `20261120050919_create_private_card_instances` is applied to that project. The table exists and is initially empty.
-3. [security-check.sql](security-check.sql) completed successfully, verifying RLS, denied `anon`/`authenticated` table privileges and expected `service_role` access.
-4. Supabase security advisors show only informational `rls_enabled_no_policy` for this table. **This is intentional:** no browser role is allowed to read private cards.
-5. Before sending real cards, configure the server environment in Vercel:
+Names may contain up to 40 Unicode code points, messages up to 600, and reading text sizes are `small`, `medium` or `large`. Cards expire after 24, 48 or 72 hours.
 
-   - `SUPABASE_URL` — `https://zrgnwwrfrchhgmznbblb.supabase.co`
-   - `SUPABASE_SECRET_KEY` — the project's `sb_secret_...` server-only key (retrieve and paste it **directly in Vercel**, never in a message or repository)
+## Database migrations
 
-Never expose the secret through `NEXT_PUBLIC_`, commit it, or place it in a client component.
+Use [`supabase/migrations/`](../supabase/migrations/) as the authoritative record of schema changes. The older [`db/schema/card_instances.sql`](schema/card_instances.sql) is a historical bootstrap snapshot; **do not apply it to the deployed database**.
 
-## Contract
+| Change | Migration |
+| --- | --- |
+| Private card storage and permissions | `20261120050919_create_private_card_instances.sql` |
+| Atomic public creation quotas | `20261120220816_public_card_creation_quota.sql` |
+| Hong Kong postcard allowlist | `20261121224534_allow_hong_kong_postcard.sql` |
+| Text-size support | `20261121230604_add_card_text_size.sql` |
+| Taipei postcard allowlist | `20261121235346_allow_taipei_postcard.sql` |
+| Kyoto, Seoul, Paris, San Francisco, and Singapore allowlist | `20261122192815_extend_city_postcard_allowlist.sql` |
 
-The `public.card_instances` table contains a `template_slug`, sender/recipient names, message, hashed bearer token, and availability/expiration times. The shared storage limits are 40 Unicode code points per name and 600 per message for all three templates. Design-specific writing recommendations (240 / 140 / 100) are guidance, not restrictions. Browser previews should measure actual layout and notify the sender about scrolling. The original token is returned only once by the internal `createCardInstance` server function and is never stored.
+**Merging a migration does not apply it.** Application deployment does not automatically execute database SQL. Before publishing a new destination, check that its migration is applied to the intended Supabase project and that `card_instances_template_slug_check` includes its slug. Preserve existing slugs in additive migrations, and never edit an already-applied migration.
 
-The internal `findActiveCardByToken` checks both availability and expiry, even if no cleanup job has deleted expired rows. Expiration is **not** implemented by hiding a page in the browser.
+## Release and security checks
 
-Only trusted server code uses these functions. **There is no public creation endpoint.** A dynamic `/c/[token]` recipient route is defined. The database schema is deployed, but live private-link rendering still needs `SUPABASE_SECRET_KEY` configured in Vercel and a real valid/expired-token integration test. Sender creation still requires authorization and abuse prevention.
+1. Confirm the target Supabase project and compare its recorded migrations against `supabase/migrations/`. Apply only missing, reviewed changes.
+2. Confirm row-level security is enabled on `public.card_instances`, browser roles (`anon` and `authenticated`) have no direct read/write privileges, and `service_role` has only the required access. [`security-check.sql`](security-check.sql) contains read-only permission checks.
+3. Confirm that `card_instances_template_slug_check` includes all published designs and that `card_instances_text_size_check` accepts only supported sizes.
+4. Confirm that the quota reservation function can be executed by `service_role`, not browser roles.
+5. Create a controlled card with non-sensitive text, open the private link in a separate anonymous session and verify invalid and expired-link behavior. Do not log access tokens or personal content.
+6. Check the Vercel cron schedule and execution logs separately; the existence of an endpoint alone does not prove the cleanup job has run.
 
-## Privacy and retention
+## Server configuration and privacy
 
-- RLS is enabled, and all grants to `anon` and `authenticated` are explicitly revoked. No user policies are installed.
-- The key bypasses RLS, so server functions must never be exposed without their own authorization checks.
-- Card data and bearer tokens must never appear in query strings used for analytics, error logs, or public static content.
-- The intended recipient URL will include a capability token (planned route `/c/[token]`); it must use `Referrer-Policy: no-referrer`, avoid third-party trackers, and set appropriate cache controls.
-- Before public launch, implement a scheduled cleanup and an explicit retention policy. A deleted row is cleanup; access is cut off immediately at `expires_at`.
-- Scheduled delivery is deferred. The current issuance window starts at card creation; later delivery work must define when a card becomes available without extending its lifetime unexpectedly.
+Use `SUPABASE_URL` and server-only `SUPABASE_SECRET_KEY` in trusted code. Never put secrets into source code, screenshots, tickets or variables prefixed with `NEXT_PUBLIC_`. Public creation also needs feature flags, Turnstile credentials and `CARD_RATE_LIMIT_SECRET`; see [`.env.example`](../.env.example), the [architecture](../docs/ARCHITECTURE.md), and the [public creation handler](../src/app/api/public/cards/route.ts).
 
-## Verification boundary
-
-TypeScript/Vitest tests cover input validation, access windows, and token generation. The live table, RLS and role grants have been verified against the dedicated database. Live service-key REST operations and personalized recipient-link expiration **remain unverified** until the backend secret is configured and integration tests can run.
+Private recipient links are bearer credentials. Use no-referrer, no-cache and no-index policies. The server enforces expiration even before the cleanup job removes a row. Scheduled email delivery is not implemented.

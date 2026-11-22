@@ -1,7 +1,5 @@
 # City Postcards — collection design specification
 
-**Status:** Established reusable design. Every destination still requires independent artwork and publication review.
-
 ## Purpose
 
 City Postcards is a family of collectible, mobile-first cards that let a sender share a memory of a place with someone they care about. Use one repeatable visual grammar and one tactile postcard flip across destinations. Each city should feel recognizable and individually art-directed, not like a generic template with a name swapped.

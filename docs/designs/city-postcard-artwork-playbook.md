@@ -1,7 +1,5 @@
 # City Postcards — two-photo artwork generation playbook
 
-**Status:** Reusable creative guidance. Use alongside [the City Postcard design specification](city-postcard-design.md) and [publishing guide](../CITY_POSTCARDS.md).
-
 ## Goal
 
 Given two suitable photos from the same city, produce one coherent front/back artwork pair with repeatable 3:4 composition, consistent material and artistic quality. The art assets are generated during design work, not at runtime for every sender. The same renderer adds typography and personalization and handles the flip.
@@ -140,7 +138,7 @@ The reverse's smaller artwork and blank area are non-negotiable for text readabi
 
 ## 4. Assemble the postcard
 
-Use the shared layout and flip interaction from the [design specification](city-postcard-design.md). Apply destination metadata and all personal lettering as real HTML, with the same approved typeface roles and sizes for every city. The recipient note is read-only; the sender editor supplies customization and the preview measures actual text fit.
+Use the shared layout and flip interaction from the [design specification](city-postcards.md). Apply destination metadata and all personal lettering as real HTML, with the same approved typeface roles and sizes for every city. The recipient note is read-only; the sender editor supplies customization and the preview measures actual text fit.
 
 The card should look like two sides of the same stationery object at identical dimensions. The front title is fixed destination metadata, not another mandatory field in the sender editor. Keep optional collection marks/short greetings quiet. Do not add visible headings to the reverse just to fill space.
 

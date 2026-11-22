@@ -33,9 +33,9 @@ The primary collections are City Postcards, Birthday Cards and General Cards. Se
 - [x] Build one reusable city postcard renderer with accessible, reversible flip and DOM personalization
 - [x] Integrate city postcards with catalog metadata, gallery, demo, sender preview, server validation and database template allowlist
 - [ ] Validate at 320px, 390px, tablet and desktop, including 600-character notes, keyboard, touch and reduced motion
-- [ ] Publish the first destination only after real sender-to-recipient verification
+- [ ] Verify complete card creation and recipient access for each new city after its database migration is applied
 - [x] Add a contrasting second city to validate reuse of the existing interaction
-- [ ] Expand to more cities after validating the pattern
+- [x] Expand to additional cities after validating the shared renderer
 
 Keep this roadmap destination-independent. Review each city's artwork, provenance and behavior independently; a pull request may publish multiple destinations without implying they are one permanent group. See the [publishing guide](CITY_POSTCARDS.md).
 

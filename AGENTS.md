@@ -1,6 +1,6 @@
 # Development instructions for coding agents
 
-Read `docs/PRODUCT_BRIEF.md`, `docs/ARCHITECTURE.md`, and `docs/ROADMAP.md` before substantial changes.
+Before substantial changes, read `docs/PRODUCT_BRIEF.md`, `docs/ARCHITECTURE.md`, and `docs/ROADMAP.md`. For implementation details, follow the current guides (such as `docs/CITY_POSTCARDS.md`, `docs/RETENTION.md`, and `db/README.md`). `docs/designs/` contains maintained card design specifications, `docs/plans/` contains implementation plans and unfinished verification, and `docs/archive/` contains completed plans.
 
 ## Use obra/superpowers
 
@@ -9,7 +9,7 @@ This project deliberately uses https://github.com/obra/superpowers as its develo
 - When Superpowers is installed in your coding harness, consult and follow its relevant skills. Do not imitate or claim a plugin skill is loaded when it is not.
 - For a new user-facing feature, first use `brainstorming`. Present a design and get user approval before writing implementation code.
 - Use `using-git-worktrees` for isolated branches, `writing-plans` for an approved implementation plan, `test-driven-development` to build in small verified steps, `requesting-code-review`, and `finishing-a-development-branch`.
-- Save approved designs and implementation plans under `docs/plans/`.
+- Keep approved card design specifications in `docs/designs/` and implementation plans in `docs/plans/`. After implementation, update the lasting design references and current guides, then move only completed implementation plans to `docs/archive/`.
 - If Superpowers is unavailable in the current agent environment, say so and preserve the same design → plan → test → review intent rather than pretending that skills executed.
 - Simple fixes and repository chores should stay appropriately small.
 
@@ -29,6 +29,7 @@ Card designs should be independently editable. Avoid shared global selectors tha
 - TypeScript strict mode. Minimize dependencies and abstractions until needed.
 - Keep routes in `src/app`, UI in `src/components`, catalog metadata and pure functions in `src/lib`.
 - Write a failing behavior test before implementing new logic when practical. Do not make tests assert only that a component exists.
+- Install dependencies with `npm ci` (Node 22, npm 11) using the committed lockfile. Update the lockfile intentionally when changing dependencies.
 - Before claiming completion: run `npm run check` and `npm run build`, and report any commands that could not be run.
 - Favor mobile-first, accessible designs; respect reduced-motion preferences.
 - Do not log personal messages, names, recipient addresses, or photos.
@@ -43,11 +44,11 @@ Before publishing a document, code comment, ticket, or PR, identify the audience
 - Avoid statements such as "as discussed," "per your feedback," "we changed this," "the latest version," or "previously requested" unless the artifact itself identifies and explains a relevant historical event.
 - PR descriptions should say what/why, important behavior, verification with evidence, and scope limits. Comments explain non-obvious engineering intent; do not narrate edits.
 - Dates should be used for meaningful time-sensitive milestones, migrations, or historical records—not automatically in titles or living design documents.
-- Self-review as if a new engineer will read this in six months without chat access.
+- Self-review as if a new engineer will read this without chat access. Verify file paths and links; remove obsolete launch steps from current guides instead of adding warnings that the guide is historical.
 
 ## Card design quality (required for visual features)
 
-Before designing or reviewing any interactive e-card, read [docs/CARD_DESIGN_QUALITY.md](docs/CARD_DESIGN_QUALITY.md), our concise card-specific adaptation of [unslop](https://github.com/heydamir/unslop). Distinguish the quiet launcher UI from the expressive recipient-facing card. Remove banners, guidance, status badges, and detached action buttons from recipient routes; the art object itself should be the accessible control. Keep replay discreet.
+Before designing or reviewing any interactive e-card, read [docs/CARD_DESIGN_QUALITY.md](docs/CARD_DESIGN_QUALITY.md) and the [existing card design specifications](docs/designs/README.md), our concise card-specific adaptation of [unslop](https://github.com/heydamir/unslop). Distinguish the quiet launcher UI from the expressive recipient-facing card. Remove banners, guidance, status badges, and detached action buttons from recipient routes; the art object itself should be the accessible control. Keep replay discreet.
 
 For each design: define feeling, character, world, reveal moment, and signature detail; get direction approved through Superpowers brainstorming; then validate the rendered experience before claiming visual quality. Check mobile, long personalized messages, keyboard access, and reduced motion. Do not treat the guide as an absolute ban on expressive card artwork.
 

@@ -34,7 +34,7 @@ If you cannot describe the card's identity without naming colors, the concept ne
 - **Typography carries emotion and readability.** Use 1–2 complementary font families; reserve decorative/handwritten lettering for short featured phrases. Keep personalized messages comfortably readable, with clear contrast and enough room for unexpectedly long text. Avoid huge bold headings, generic inspirational filler, decorative all-caps labels, and gradients on text.
 - **Respect visual rhythm.** Use a small spacing scale (4/8/12/16/24/32px as useful), intentional alignment, and whitespace around the message. Not every element needs a rounded card or shadow. Let one part of the scene dominate.
 - **Specific words over AI copy.** A message should sound human. Keep UI actions short (*Open card*, *Read your note*, *Replay*) and avoid hype (*magical, supercharge, unlock*). Genuine greeting-card sentiment, poetry, and exclamation points are fine **when they fit the sender's message**.
-- **Different designs need different mechanics.** Changing only a background color or font does not make a new e-card. Vary scene, interaction, reveal, material, and emotional pacing across independent concepts. Within the intentional [City Postcards family](plans/city-postcard-design.md), reuse the same physical flip and layout; distinguish destinations through original photographic references, complementary illustrations and city-specific visual character. See the [two-photo artwork playbook](plans/city-postcard-artwork-playbook.md).
+- **Different designs need different mechanics.** Changing only a background color or font does not make a new e-card. Vary scene, interaction, reveal, material, and emotional pacing across independent concepts. Within the intentional [City Postcards family](designs/city-postcards.md), reuse the same physical flip and layout; distinguish destinations through original photographic references, complementary illustrations and city-specific visual character. See the [two-photo artwork playbook](designs/city-postcard-artwork-playbook.md).
 
 ## Motion is the gift, not wallpaper
 
@@ -54,7 +54,7 @@ Build an intentional arc: **anticipation → recipient action → reveal → cal
 | **Under the Same Sky** | Midnight-blue folded card, celestial cover, moonlit interior | The cover folds outward to reveal the message, then folds back | Hidden star-selection puzzles and unreadably narrow mobile spreads |
 | **Make a Wish** | Tactile little cake, soft candlelight, playful paper accents | Blow/tap to extinguish candle; one celebratory reveal | Endless confetti and cartoonish overload |
 
-The table illustrates distinct design directions. Each implemented card must satisfy its own experience specification; see [A Little Sunshine design](plans/sunshine-experience-design.md).
+The table illustrates distinct design directions. See the maintained specifications for [A Little Sunshine](designs/a-little-sunshine.md), [Under the Same Sky](designs/under-the-same-sky.md), and [Make a Wish](designs/make-a-wish.md). Study them as examples of design intent and quality—not templates for duplicating the same interaction.
 
 ## Review a rendered card (mobile first)
 

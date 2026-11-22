@@ -4,7 +4,7 @@
 
 Under the Same Sky is a quiet greeting card about closeness across distance. The recipient sees a recognizable **folded night-sky card** floating in a full-screen twilight setting. Tapping the cover unfolds it outward into a two-page greeting; folding it back returns to the night-sky cover. The physical card itself is the interaction.
 
-The route is `/cards/same-sky`. It uses fixed public sample personalization until an authenticated card-serving backend exists. The recipient sees no store, developer labels or explanatory UI text.
+The sample route `/cards/same-sky` uses demo personalization, while expiring private recipient links at `/c/[token]` use stored sender messages. Neither recipient view includes store controls, developer labels, or instructional UI.
 
 ## Distinctive identity
 
@@ -20,7 +20,7 @@ Unlike A Little Sunshine, this design has **no envelope and no letter emerging f
 
 - The first frame clearly shows a card with physical edges, depth and a visible paper spine. It is centered as a closed object, not hidden among tappable stars.
 - At desktop widths, the closed right-hand cover pivots outward to the left around the spine; the book recenters into an open two-page spread. The left page is the inside of the cover, the right page contains the message.
-- On narrow phones, the opened message page uses most of the available screen width, while the cover folds back at a shallow perspective angle. This is a responsive variation of the same physical action, not a miniature unreadable two-column spread.
+- On narrow phones, keep both leaves visible in the open spread, with a separate full-width reading mode for the personal note. Do not crop the left page or compress the message into an unreadably narrow column.
 - In the opened state, the back of the cover is the main close surface on desktop. A small folded page corner remains available on the upper-right of the message page, especially for mobile users.
 - The text body itself never closes the card. It remains selectable and vertically scrollable for long messages.
 - The experience settles into a still reading state, with no ongoing sparkling or looping reveal animations.
@@ -43,4 +43,4 @@ The state model is `closed → opening → open → closing → closed`. Transit
 - Card controls remain keyboard-operable and labeled for assistive technology. Focus and reduced-motion behavior work.
 - No store, sender editor, price, navigation or generic replay icon appears in the recipient view.
 
-The component accepts the shared `CardPersonalization` contract so that a future private-link backend can supply recipient data without changing the interaction.
+The component accepts the shared `CardPersonalization` contract. Demo and private-link routes share the same interaction; the server handles private storage and token validation.

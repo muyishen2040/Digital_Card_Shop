@@ -32,7 +32,7 @@ Suggested lengths encourage an entire greeting to be visible at once, not a proh
 
 ## Required sender-editor behavior
 
-When the sender editor is implemented:
+When validating the sender editor:
 
 1. Display the selected real card template with the sender's actual names and message. Do not estimate based on character count alone.
 2. Await `document.fonts.ready` and at least one browser layout frame. The message regions are marked with `data-card-text-region`.
@@ -46,4 +46,4 @@ When the sender editor is implemented:
 
 Test the exact card renderer at 320 × 568, 375 × 667, 390 × 844, 768 × 1024, and 1440 × 900 with production fonts. Include long recipient/sender names, multiple paragraphs, Chinese text, emoji, unbroken strings, and high browser zoom. Confirm names and signature are visible alongside the entire message; verify that neither the border nor decorative art covers the text.
 
-When actual browser screenshots and computed dimensions are available, replace the exploratory values above with measured production results before finalizing publication UX. Avoid shrinking fonts or changing the card's visual design just to accommodate overly long input.
+Use real browser screenshots and computed dimensions to validate text fitting; do not treat the exploratory measurements above as production limits. Avoid shrinking fonts or changing the card's visual design just to accommodate overly long input.

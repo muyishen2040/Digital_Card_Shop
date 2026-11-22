@@ -2,7 +2,7 @@
 
 City Postcards is a collection of independent destinations sharing one tactile flip interaction. Destinations are **content**, not releases or upload batches. Each city owns its artwork, description, sample note and source/provenance review. The app's sender editor, catalog, text sizing and recipient routes are shared.
 
-For artistic direction, consult [the collection design](plans/city-postcard-design.md) and [artwork playbook](plans/city-postcard-artwork-playbook.md).
+For artistic direction, consult [the collection design](designs/city-postcards.md) and [artwork playbook](designs/city-postcard-artwork-playbook.md).
 
 ## Destination contract
 
