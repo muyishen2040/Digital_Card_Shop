@@ -1,5 +1,7 @@
 # Expired-card retention and monitoring
 
+**Status: Implemented — operational runbook with historical launch instructions.** The expiration-cleanup cron route and schedule are deployed. Recheck deployment configuration and real cron history before asserting successful execution; the original pre-merge setup steps below describe release preparation, not remaining work.
+
 ## Why this exists
 
 The recipient route already refuses an expired bearer link (`expires_at <= now()`), but the underlying message otherwise persists in Supabase. This change adds a separate data-retention job to permanently delete expired rows. It does **not** change link TTLs or the existing Supabase schema.

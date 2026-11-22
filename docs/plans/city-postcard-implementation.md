@@ -1,5 +1,7 @@
 # City Postcard — shared renderer implementation
 
+**Status: Implemented — historical renderer implementation plan.** The reusable renderer and City Postcards catalog are live. Original exclusions of destinations and the proposed first/second-city sequence below describe the original work scope. See [City Postcards publishing guide](../CITY_POSTCARDS.md) for ongoing work.
+
 ## Scope
 
 Implement the collection's shared renderer against the approved [design specification](city-postcard-design.md) and [artwork playbook](city-postcard-artwork-playbook.md). This foundation deliberately does not add a destination, catalog entry, sender template, database allowlist entry, gallery group or public creation capability.

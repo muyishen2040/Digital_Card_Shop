@@ -1,5 +1,7 @@
 # Native sharing — sender completion experience
 
+**Status: Implemented — historical implementation plan.** Native sharing and manual copying are part of the live sender editor; the PR stacking/dependency instructions below are no longer actionable. See [Architecture](../ARCHITECTURE.md).
+
 ## Goal
 After a verified sender creates a private card, provide one clear path to send it through the mobile OS share sheet, plus a browser-independent manual copy path. This is a presentation improvement on top of the public creation work in PR #11; no email, account, order, scheduling, or new server endpoint is required.
 

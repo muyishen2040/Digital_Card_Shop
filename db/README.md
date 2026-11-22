@@ -1,39 +1,44 @@
-# Digital Card Shop database foundation
+# Digital Card Shop — database runbook
 
-## Status
+## Current architecture
 
-The dedicated Supabase project is **`digital-card-shop`** (reference `zrgnwwrfrchhgmznbblb`, `us-east-1`). The `card_instances` table was deployed from [schema/card_instances.sql](schema/card_instances.sql) via the Supabase migration API, which recorded migration `20261120050919_create_private_card_instances`. The exact applied SQL is tracked at [supabase/migrations/20261120050919_create_private_card_instances.sql](../supabase/migrations/20261120050919_create_private_card_instances.sql). No other project's database was modified.
+The application stores temporary private cards in the dedicated Supabase project `digital-card-shop` (`zrgnwwrfrchhgmznbblb`, region `us-east-1`). It is **already deployed and used by the live public card-creation flow**.
 
-## Verified database setup and remaining app configuration
+- `src/app/api/public/cards/route.ts` is the anonymous creation endpoint. It requires same-origin requests, server-validated Cloudflare Turnstile and a shared atomic quota before the server writes a card.
+- `src/app/api/cards/route.ts` is a separate **legacy pilot** endpoint requiring a creator access code when configured. It is not the public flow.
+- `src/server/cards/card-instances.ts` uses a server-only Supabase key. Public roles do not receive table access.
+- `src/app/c/[token]/page.tsx` checks an unguessable link server-side and refuses unknown or expired instances. The raw bearer token is never stored in the table.
+- `src/app/api/cron/expire-cards/route.ts` implements authenticated scheduled cleanup; see the [retention runbook](../docs/plans/expired-card-retention.md).
+- Each card has names (at most 40 Unicode code points each), a message (at most 600), validated text size (`small`, `medium`, `large`) and an availability/expiration window of 24, 48 or 72 hours. The editor's recommended message length depends on design; it is not a database limit.
 
-1. Supabase project `digital-card-shop` was created at the quoted $0/month project cost and reports `ACTIVE_HEALTHY`. This quote does not guarantee that optional paid features or future usage are free.
-2. Migration `20261120050919_create_private_card_instances` is applied to that project. The table exists and is initially empty.
-3. [security-check.sql](security-check.sql) completed successfully, verifying RLS, denied `anon`/`authenticated` table privileges and expected `service_role` access.
-4. Supabase security advisors show only informational `rls_enabled_no_policy` for this table. **This is intentional:** no browser role is allowed to read private cards.
-5. Before sending real cards, configure the server environment in Vercel:
+## Migration history and rollout
 
-   - `SUPABASE_URL` — `https://zrgnwwrfrchhgmznbblb.supabase.co`
-   - `SUPABASE_SECRET_KEY` — the project's `sb_secret_...` server-only key (retrieve and paste it **directly in Vercel**, never in a message or repository)
+The original `db/schema/card_instances.sql` is a **historical bootstrap snapshot**, not the live schema or an up-to-date migration. Do not execute it against the deployed database.
 
-Never expose the secret through `NEXT_PUBLIC_`, commit it, or place it in a client component.
+The authoritative, ordered schema change history is in [`supabase/migrations/`](../supabase/migrations/). These were verified as applied in the dedicated project on **2026-11-22**:
 
-## Contract
+| Version | Change |
+| --- | --- |
+| `20261120050919` | Private card instance table and security |
+| `20261120220816` | Atomic public creation quota |
+| `20261121224534` | Hong Kong postcard allowlist |
+| `20261121230604` | Backward-compatible text size |
+| `20261121235346` | Taipei postcard allowlist |
 
-The `public.card_instances` table contains a `template_slug`, sender/recipient names, message, hashed bearer token, and availability/expiration times. The shared storage limits are 40 Unicode code points per name and 600 per message for all three templates. Design-specific writing recommendations (240 / 140 / 100) are guidance, not restrictions. Browser previews should measure actual layout and notify the sender about scrolling. The original token is returned only once by the internal `createCardInstance` server function and is never stored.
+**Deployment attention — recorded 2026-11-22:** The repository also contains `20261122192815_extend_city_postcard_allowlist.sql` for Kyoto, Seoul, Paris, San Francisco and Singapore. This migration was **not yet present in the live migration history** when checked. Until it is reviewed, applied and verified, the database rejects private-card creation for those five designs even if they appear in the deployed gallery. Confirm and update this status after applying the migration; do not assume merging a PR applies SQL.
 
-The internal `findActiveCardByToken` checks both availability and expiry, even if no cleanup job has deleted expired rows. Expiration is **not** implemented by hiding a page in the browser.
+For every new destination, preserve all existing allowed `template_slug` values in the forward migration and apply the reviewed migration **before** publishing an application build that enables the new slug. Never edit already-applied migrations.
 
-Only trusted server code uses these functions. **There is no public creation endpoint.** A dynamic `/c/[token]` recipient route is defined. The database schema is deployed, but live private-link rendering still needs `SUPABASE_SECRET_KEY` configured in Vercel and a real valid/expired-token integration test. Sender creation still requires authorization and abuse prevention.
+## Verification checklist
 
-## Privacy and retention
+1. Confirm the target Supabase project before running any SQL. Compare the project's recorded migration versions against `supabase/migrations/`; do not apply a migration twice or manually mark it as applied.
+2. Confirm that `public.card_instances` has RLS enabled, no direct `anon` or `authenticated` SELECT/INSERT/UPDATE/DELETE privileges, and server-only service role access. The dedicated project was rechecked on 2026-11-22: RLS was enabled, public SELECT/INSERT were denied and service-role SELECT/INSERT were allowed.
+3. Confirm that the current `card_instances_template_slug_check` includes every published template, including old slugs, and `card_instances_text_size_check` still accepts only the three supported sizes. Use read-only schema queries or [`db/security-check.sql`](security-check.sql) to verify privileges.
+4. Confirm that the quota reservation function can only be executed by `service_role`, not browser roles. The function permissions were rechecked on 2026-11-22.
+5. After an approved migration and deployment, perform a controlled creation-and-retrieval test with a non-sensitive message. Open the returned link in a fresh anonymous session; verify expiry/error handling separately. Do not log a real token or private content.
 
-- RLS is enabled, and all grants to `anon` and `authenticated` are explicitly revoked. No user policies are installed.
-- The key bypasses RLS, so server functions must never be exposed without their own authorization checks.
-- Card data and bearer tokens must never appear in query strings used for analytics, error logs, or public static content.
-- The intended recipient URL will include a capability token (planned route `/c/[token]`); it must use `Referrer-Policy: no-referrer`, avoid third-party trackers, and set appropriate cache controls.
-- Before public launch, implement a scheduled cleanup and an explicit retention policy. A deleted row is cleanup; access is cut off immediately at `expires_at`.
-- Scheduled delivery is deferred. The current issuance window starts at card creation; later delivery work must define when a card becomes available without extending its lifetime unexpectedly.
+## Server configuration and privacy
 
-## Verification boundary
+Use `SUPABASE_URL` and `SUPABASE_SECRET_KEY` only in trusted server code, with the secret entered directly into the deployment environment. Never prefix the secret with `NEXT_PUBLIC_` or put it into source, screenshots, issue comments or logs. Public creation also requires the feature flags, Turnstile server-side secret and `CARD_RATE_LIMIT_SECRET`; details live in [the security design](../docs/plans/public-card-creation-design.md) and [`.env.example`](../.env.example).
 
-TypeScript/Vitest tests cover input validation, access windows, and token generation. The live table, RLS and role grants have been verified against the dedicated database. Live service-key REST operations and personalized recipient-link expiration **remain unverified** until the backend secret is configured and integration tests can run.
+Recipient URLs contain capability tokens; apply `Referrer-Policy: no-referrer`, no caching, and no indexing. Access stops at the expiration timestamp even before asynchronous row deletion. No scheduled email delivery exists.

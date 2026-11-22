@@ -1,6 +1,6 @@
 # Development instructions for coding agents
 
-Read `docs/PRODUCT_BRIEF.md`, `docs/ARCHITECTURE.md`, and `docs/ROADMAP.md` before substantial changes.
+Read `docs/PRODUCT_BRIEF.md`, `docs/ARCHITECTURE.md`, and `docs/ROADMAP.md` before substantial changes. Treat `README.md`, `docs/ARCHITECTURE.md`, `docs/CITY_POSTCARDS.md` and `db/README.md` as current references; `docs/plans/` includes historical implementation documents that may intentionally retain superseded assumptions.
 
 ## Use obra/superpowers
 

@@ -1,3 +1,7 @@
+-- HISTORICAL BOOTSTRAP SNAPSHOT: this original schema is not the deployed schema.
+-- Do NOT execute it on an existing Supabase project. Changes since bootstrap
+-- (quota, allowed templates, text sizes) are tracked in supabase/migrations/.
+-- Refer to db/README.md for the current migration and deployment runbook.
 -- Digital Card Shop: server-only personalized card instances.
 -- Apply only to the dedicated Digital Card Shop Supabase project.
 -- This SQL is NOT automatically applied by a GitHub/Vercel deployment.

@@ -35,7 +35,7 @@ The primary collections are City Postcards, Birthday Cards and General Cards. Se
 - [ ] Validate at 320px, 390px, tablet and desktop, including 600-character notes, keyboard, touch and reduced motion
 - [ ] Publish the first destination only after real sender-to-recipient verification
 - [x] Add a contrasting second city to validate reuse of the existing interaction
-- [ ] Expand to more cities after validating the pattern
+- [x] Expand to additional cities after validating the shared renderer
 
 Keep this roadmap destination-independent. Review each city's artwork, provenance and behavior independently; a pull request may publish multiple destinations without implying they are one permanent group. See the [publishing guide](CITY_POSTCARDS.md).
 

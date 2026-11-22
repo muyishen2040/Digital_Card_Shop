@@ -1,5 +1,7 @@
 # Public card creation — anonymous beta security design
 
+**Status: Implemented — historical security design.** The public creation endpoint is enabled in production; the deployment/feature-flag rollout instructions below record the original release sequence. See [Architecture](../ARCHITECTURE.md) and [Database runbook](../../db/README.md) for the current state.
+
 ## Objective and boundaries
 Allow visitors to create personalized, short-lived interactive cards without accounts, email, or checkout. Preserve the existing pilot endpoint at `POST /api/cards` for authorized preview testing. Public publishing uses a separate `POST /api/public/cards` route; neither route may bypass the other's authorization.
 
