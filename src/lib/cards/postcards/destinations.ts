@@ -122,7 +122,7 @@ export const cityPostcardManifests: readonly CityPostcardManifest[] = [
 ];
 
 export const cityPostcardTemplates: readonly CardTemplate[] = cityPostcardManifests.map(
-  ({ slug, description, postcard, postcardDemo }) => ({
+  ({ slug, description, postcard, postcardDemo }): CardTemplate => ({
     slug,
     title: `Greetings from ${postcard.city}`,
     collection: "city-postcards",

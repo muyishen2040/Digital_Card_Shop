@@ -48,8 +48,8 @@ describe("card template catalog", () => {
       expect(template.occasions).toContain("travel");
       expect(template.postcard).toEqual(postcard);
       expect(template.postcardDemo).toEqual(postcardDemo);
-      expect(postcard.frontImage).toMatch(/^\\/cards\\/city-postcards\\/[a-z-]+\\/front\\.webp$/);
-      expect(postcard.backImage).toMatch(/^\\/cards\\/city-postcards\\/[a-z-]+\\/back\\.webp$/);
+      expect(postcard.frontImage).toBe(`/cards/city-postcards/${slug.replace(/^city-postcard-/, "")}/front.webp`);
+      expect(postcard.backImage).toBe(`/cards/city-postcards/${slug.replace(/^city-postcard-/, "")}/back.webp`);
       expect(postcard.frontTitleInArtwork).toBe(true);
       expect(postcardDemo.message.trim().length).toBeGreaterThan(20);
     }
