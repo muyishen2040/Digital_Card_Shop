@@ -11,9 +11,9 @@ const content = {
 
 describe("private recipient card rendering", () => {
   it.each([
-    ["little-sunshine", "Open the envelope for"],
-    ["same-sky", "Unfold the night-sky card"],
-    ["make-a-wish", "Blow out the birthday candle"],
+    ["little-sunshine", "Open the envelope for"] as const,
+    ["same-sky", "Unfold the night-sky card"] as const,
+    ["make-a-wish", "Blow out the birthday candle"] as const,
     ...cityPostcardManifests.map(({ slug }) => [slug, "Turn postcard over to read the message"] as const),
   ])("reuses %s without adding shop UI", (slug, controlLabel) => {
     const card = renderRecipientCard(slug, content);
