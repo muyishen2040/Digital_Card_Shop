@@ -4,7 +4,7 @@
 
 Create a comforting, interactive digital greeting card that feels like opening a personally addressed paper letter. The recipient should focus on a single tactile action and the sender's note, rather than a surrounding website or instructions.
 
-This specification covers the recipient experience at `/cards/little-sunshine`. Real personalized delivery is not implemented; the route uses a fixed sample note for testing.
+This specification covers the sample card at `/cards/little-sunshine` and personalized private cards at `/c/[token]`. The demo uses sample text; private cards load stored personalization. Email delivery and checkout are separate features and are not implemented.
 
 ## Art direction
 
@@ -43,7 +43,7 @@ The animation must respect `prefers-reduced-motion`, remain smooth on a typical 
 
 ## Page structure and component boundaries
 
-- `/`: a minimal launcher linking to standalone card routes, not a storefront
+- `/`: the gallery of card designs, not a storefront
 - `/cards/little-sunshine`: the uninterrupted recipient experience
 - `src/components/cards/sunshine/SunshineCard.tsx`: standalone interactive component receiving typed `CardPersonalization` props
 - `src/lib/cards/personalization.ts`: normalization and safe display defaults
@@ -60,8 +60,8 @@ The other card concepts, Under the Same Sky and Make a Wish, are separate design
 - Reduced-motion mode reveals the complete letter without animation-dependent behavior.
 - The card contains no shop, editor, payment, or delivery UI.
 
-## Deferred capabilities
+## Integration boundaries
 
-An authenticated backend may later save personalized card instances, create secret expiring links, and load recipient content into the same component. Email sending and WooCommerce checkout are separate integrations, not requirements of this experience prototype.
+The sender editor creates expiring private card instances, and the same card component renders both sample content and personalized recipient messages. Token validation, storage, and abuse controls are handled separately on the server. Email delivery and checkout are not part of this card design.
 
 See [CARD_DESIGN_QUALITY.md](../CARD_DESIGN_QUALITY.md) for cross-card design standards.
