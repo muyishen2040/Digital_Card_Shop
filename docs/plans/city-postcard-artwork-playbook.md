@@ -1,6 +1,6 @@
 # City Postcards — two-photo artwork generation playbook
 
-**Status:** Proposed production recipe. Use alongside [the City Postcard design specification](city-postcard-design.md).
+**Status:** Reusable creative guidance. Use alongside [the City Postcard design specification](city-postcard-design.md) and [publishing guide](../CITY_POSTCARDS.md).
 
 ## Goal
 
@@ -24,7 +24,7 @@ Record a small asset brief before generating:
 | Reverse text safe zone | 10–90% horizontal; 12–68% vertical |
 | Source provenance | Original file or permitted source URL, creator, license or permission, date accessed where relevant |
 
-Complete this brief in the individual destination PR. Document the actual references and verify their rights; the template itself does not approve any image. Verify real landmarks and avoid combining unrelated landmarks into a misleading photograph.
+Complete this brief for each destination, in its provenance record or its publication PR. Document actual references and verify their rights; the template itself does not approve any image. Verify real landmarks and avoid combining unrelated landmarks into a misleading photograph.
 
 Select a destination-specific signature motif, such as a locally recognizable botanical, architectural or cultural detail, only if it adds meaningful identity. If an approved pair already exists, include it as a **style reference** for later cities, not as a third content photo to mix into the new scene.
 
@@ -157,4 +157,4 @@ The card should look like two sides of the same stationery object at identical d
 
 A new city should require: two suitable source photos, a filled asset brief, two generated and reviewed art assets, catalog metadata and existing validation registration. If a new destination requires rewriting the component or bespoke animation, determine whether the visual spec or implementation has drifted before introducing a variant.
 
-Choose the first destination in a separate destination-specific PR, then use a contrasting second city to verify the reusable layout. Do not batch-produce dozens of cards until the first two pass rendered acceptance review.
+The same process applies to every city, whether one or several destinations are added in a PR. Review artwork fidelity, rights and real rendering separately for each destination. The number of cities in one delivery is an implementation detail, not a permanent part of the catalog.

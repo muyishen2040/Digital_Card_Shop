@@ -28,16 +28,16 @@ The primary collections are City Postcards, Birthday Cards and General Cards. Se
 
 ### 3A — City Postcards (first)
 
-- [ ] Review and approve a reusable postcard art direction, front/back layout, typography, interaction and two-reference-photo generation recipe
-- [ ] Produce and approve the first destination's paired artwork assets, including a text-free reverse, in a separate destination-specific PR
-- [ ] Build one reusable city postcard renderer with accessible, reversible flip and DOM personalization
-- [ ] Integrate the first city with catalog metadata, gallery, demo, sender preview, server validation and database template allowlist
+- [x] Establish a reusable postcard art direction, front/back layout, typography, interaction and artwork generation playbook
+- [x] Create and publish paired city artwork assets with text-free reverse writing space
+- [x] Build one reusable city postcard renderer with accessible, reversible flip and DOM personalization
+- [x] Integrate city postcards with catalog metadata, gallery, demo, sender preview, server validation and database template allowlist
 - [ ] Validate at 320px, 390px, tablet and desktop, including 600-character notes, keyboard, touch and reduced motion
 - [ ] Publish the first destination only after real sender-to-recipient verification
-- [ ] Add a second city to prove that a new destination needs only artwork, metadata and necessary registration/allowlisting, not a new interaction implementation
+- [x] Add a contrasting second city to validate reuse of the existing interaction
 - [ ] Expand to more cities after validating the pattern
 
-Keep this roadmap destination-independent. Select individual cities and approve their artwork in separate destination-specific PRs. Validate the shared design with a contrasting second city before scaling.
+Keep this roadmap destination-independent. Review each city's artwork, provenance and behavior independently; a pull request may publish multiple destinations without implying they are one permanent group. See the [publishing guide](CITY_POSTCARDS.md).
 
 ### 3B — Collection browsing and existing-card polish
 
