@@ -1,12 +1,12 @@
 # City Postcards — collection design specification
 
-**Status:** Proposed for review; implementation and production artwork approval are separate work.
+**Status:** Established reusable design. Every destination still requires independent artwork and publication review.
 
 ## Purpose
 
 City Postcards is a family of collectible, mobile-first cards that let a sender share a memory of a place with someone they care about. Use one repeatable visual grammar and one tactile postcard flip across destinations. Each city should feel recognizable and individually art-directed, not like a generic template with a name swapped.
 
-The [artwork generation playbook](city-postcard-artwork-playbook.md) defines the repeatable two-source-photo process. Destination selection, individual art direction, approved assets and implementation belong in separate destination-specific PRs. This specification does not select a first city.
+The [artwork generation playbook](city-postcard-artwork-playbook.md) describes one repeatable two-source-photo process. Each destination requires its own artwork, source-rights and rendering review regardless of whether multiple destinations share one pull request. See the [publishing guide](../CITY_POSTCARDS.md).
 
 ## Design identity
 
@@ -73,7 +73,7 @@ All postcards retain the shared limits of 40 characters per name and 600 charact
 
 The prototype has no navigation, banner, detached action buttons or visible instructions. Avoid the temptation to expand the interaction solely because a city has a different landmark.
 
-## Proposed reusable implementation (not part of this design PR)
+## Reusable implementation
 
 One `CityPostcard` component under `src/components/cards/postcard/` owns the layout, typography, animation and accessibility. Each destination supplies artwork URLs, scene description and title metadata. A single specification for front/back safe zones applies to every asset pair. Only add layout variants if rendered evidence demonstrates a real need.
 
@@ -84,7 +84,7 @@ Integration points to review:
 - `src/components/cards/RecipientCard.tsx`: dispatch postcard destinations to the same reusable renderer; demo route and sender preview should reuse it rather than duplicating behavior.
 - `src/app/cards/[slug]/page.tsx`, gallery and sender editor: discovery, sample note and actual creation selection.
 - `src/lib/cards/content-policy.ts`: explicit supported design validation and guidance; never allow arbitrary template slugs.
-- `supabase/migrations/20261120050919_create_private_card_instances.sql`: the existing template-slug CHECK permits three templates. Add a new reviewed forward migration (do not edit the applied migration) before enabling creation of new city templates, preserving all existing slugs, constraints and grants. Keep allowlisting explicit until scale justifies a different safe design.
+- `supabase/migrations/`: the existing template-slug CHECK explicitly allows reviewed templates. Extend it with a forward migration (do not edit applied migrations) before enabling creation of new city templates, preserving all existing slugs, constraints and grants. Keep allowlisting explicit until scale justifies another reviewed design.
 - Preserve current Turnstile, quota, private-link, expiry and retention behavior. No new credential or delivery service is required.
 
 Store public design assets in a predictable directory, e.g. `public/cards/city-postcards/<city-slug>/front.webp` and `back.webp`. Production assets are immutable when changed incompatibly; avoid breaking existing private cards. No personal photos or messages in these assets.
@@ -98,4 +98,4 @@ Store public design assets in a predictable directory, e.g. `public/cards/city-p
 - Run lint, type check, unit tests and production build, plus review rendered screenshots/recordings. An actual created private card opens without login.
 - Add a second approved destination without new interaction code to prove the pattern.
 
-Follow [the card design quality guide](../CARD_DESIGN_QUALITY.md) and [artwork playbook](city-postcard-artwork-playbook.md). This document does not approve new runtime code or publish a city.
+Follow [the card design quality guide](../CARD_DESIGN_QUALITY.md) and [artwork playbook](city-postcard-artwork-playbook.md). This design specification does not itself authorize publication of any new destination.

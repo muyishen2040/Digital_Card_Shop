@@ -1,10 +1,12 @@
 import { describe, expect, it } from "vitest";
 import { cardBrowseLabel, cardTemplates, getCardTemplate, getCollectionFilters, getCollectionGroups, getVisibleCardTemplates } from "./catalog";
+import { cityPostcardManifests } from "./postcards/destinations";
 
 describe("card template catalog", () => {
   it("preserves existing designs and gives every template a unique address", () => {
     expect(cardTemplates.map((template) => template.slug)).toEqual(expect.arrayContaining([
       "little-sunshine", "same-sky", "make-a-wish", "city-postcard-hong-kong", "city-postcard-taipei",
+      ...cityPostcardManifests.map((destination) => destination.slug),
     ]));
     expect(new Set(cardTemplates.map((template) => template.slug)).size).toBe(cardTemplates.length);
   });
@@ -32,11 +34,35 @@ describe("card template catalog", () => {
     expect(taipei.postcardDemo.message).not.toBe(hongKong.postcardDemo.message);
   });
 
+  it("registers every city independently with its own metadata and images", () => {
+    expect(cityPostcardManifests.length).toBeGreaterThanOrEqual(7);
+    expect(new Set(cityPostcardManifests.map((destination) => destination.slug)).size).toBe(cityPostcardManifests.length);
+    expect(cardTemplates.filter((card) => card.theme === "city-postcard")).toHaveLength(cityPostcardManifests.length);
+
+    for (const { slug, postcard, postcardDemo } of cityPostcardManifests) {
+      const template = getCardTemplate(slug);
+      expect(template?.theme).toBe("city-postcard");
+      if (template?.theme !== "city-postcard") throw new Error("Missing destination " + slug);
+      expect(template.collection).toBe("city-postcards");
+      expect(template.title).toBe("Greetings from " + postcard.city);
+      expect(template.occasions).toContain("travel");
+      expect(template.postcard).toEqual(postcard);
+      expect(template.postcardDemo).toEqual(postcardDemo);
+      expect(postcard.frontImage).toBe(`/cards/city-postcards/${slug.replace(/^city-postcard-/, "")}/front.webp`);
+      expect(postcard.backImage).toBe(`/cards/city-postcards/${slug.replace(/^city-postcard-/, "")}/back.webp`);
+      expect(postcard.frontTitleInArtwork).toBe(true);
+      expect(postcardDemo.message.trim().length).toBeGreaterThan(20);
+    }
+  });
+
   it("groups every published card once in the intended collection order", () => {
     const groups = getCollectionGroups();
     expect(groups.map(({ collection }) => collection.id)).toEqual(["city-postcards", "birthday", "general"]);
     expect(groups.flatMap(({ cards }) => cards.map((card) => card.slug)).sort()).toEqual(cardTemplates.map((card) => card.slug).sort());
-    expect(groups[0].cards.map((card) => card.slug)).toEqual(expect.arrayContaining(["city-postcard-hong-kong", "city-postcard-taipei"]));
+    expect(groups[0].cards.map((card) => card.slug)).toEqual(expect.arrayContaining([
+      "city-postcard-hong-kong", "city-postcard-taipei",
+      ...cityPostcardManifests.map((destination) => destination.slug),
+    ]));
     expect(groups[1].cards.map((card) => card.slug)).toContain("make-a-wish");
     expect(groups[2].cards.map((card) => card.slug)).toEqual(expect.arrayContaining(["little-sunshine", "same-sky"]));
   });

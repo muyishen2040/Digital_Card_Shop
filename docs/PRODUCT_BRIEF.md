@@ -30,7 +30,7 @@ Build a coherent, collectible series inspired by editorial travel photography an
 
 The series should share a repeatable artwork-production recipe, layout rules, typography and accessible flip interaction. Each city brings its own visual identity through carefully selected landmarks, palette and source images rather than custom animation code.
 
-The reusable postcard renderer supports destination-specific artwork and shared personalization. Destination selection, source photographs, approved artwork and individual design implementation belong in separate destination-specific PRs.
+The reusable postcard renderer supports destination-specific artwork and shared personalization. Every destination has independent artwork, source-rights and usability checks, even when several destinations are published together in one pull request. See the [City Postcards publishing guide](CITY_POSTCARDS.md).
 
 ### Product and engineering boundaries
 
