@@ -1,6 +1,6 @@
 # Private recipient links — design and implementation
 
-**Status: Historical design record (implemented).** The private recipient route exists and anonymous public card creation is now available with separate verification and quotas. The statements below that no public creation endpoint exists describe the original implementation scope, not current production status. See [Architecture](../ARCHITECTURE.md) and [Database runbook](../../db/README.md).
+**Historical design record.** Private recipient links and public card creation are implemented. References below to missing public creation describe the original scope; see [Architecture](../ARCHITECTURE.md) and the [database runbook](../../db/README.md) for the supported flow.
 
 ## Goal
 

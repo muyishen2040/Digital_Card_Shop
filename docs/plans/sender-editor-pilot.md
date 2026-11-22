@@ -1,6 +1,6 @@
 # Sender editor and controlled creation pilot
 
-**Status: Historical pilot design (implemented and superseded for public creation).** The current sender editor supports all registered cards, public Turnstile-verified creation and optional legacy creator-code testing. See [Architecture](../ARCHITECTURE.md) and [Public creation design](public-card-creation-design.md). The original pilot's three-card assumptions and authorization plan below are retained for history.
+**Historical pilot plan.** Public card creation now uses Turnstile and quotas. The creator-code workflow and three-card limits below describe the original pilot; see [Architecture](../ARCHITECTURE.md) for the supported flow.
 
 ## Product flow
 At `/create`, senders choose one of the three existing designs, enter recipient/sender names and a personal message, choose a 24/48/72-hour lifetime, and interact with the real card in a preview. The preview runs in a same-origin iframe at 320, 390 or 768 px; the content is sent by postMessage, not via the URL. The recipient's card and existing animations remain unchanged.

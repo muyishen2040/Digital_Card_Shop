@@ -1,12 +1,13 @@
 # Feature designs and implementation plans
 
-This directory holds self-contained design specifications and implementation plans for Digital Card Shop. **Some documents are historical records of a completed implementation** and deliberately retain original assumptions. For current product and code behavior, consult [the architecture](../ARCHITECTURE.md), [the product brief](../PRODUCT_BRIEF.md) and [the city postcard publishing guide](../CITY_POSTCARDS.md). Each document should explain the feature's purpose, intended user experience, scope, key decisions, acceptance criteria, and any important constraints. A reader should not need a development conversation to understand it.
+This folder contains design specifications and implementation plans for Digital Card Shop. Some describe completed work and may retain assumptions that have since changed.
 
-Prefer descriptive filenames based on the feature and document role:
+For supported behavior, start with the [architecture](../ARCHITECTURE.md), [product brief](../PRODUCT_BRIEF.md), and [City Postcards publishing guide](../CITY_POSTCARDS.md). Historical plans are useful for understanding earlier decisions, but should not be mistaken for a list of unfinished tasks.
 
-- `sunshine-experience-design.md`
-- `sunshine-experience-implementation.md`
+## Writing and naming
 
-Use dates in filenames only for genuinely chronological records, such as a dated incident report, release note, migration plan or meeting record. Do not automatically add creation/revision dates to living specifications.
+Use descriptive filenames based on the feature and document's purpose, such as `sunshine-experience-design.md` or `sunshine-experience-implementation.md`. Do not add dates to living documents merely to record when they were created. Dates belong in genuine chronological records, such as migrations, incidents, releases, or meeting notes.
 
-When an implementation plan is superseded, add a concise status note at the top linking to current documentation. Do not silently rewrite historical assumptions as if they were originally true. Design documents define intended behavior; implementation plans identify code boundaries and verification. Where a design changes, update the specification to describe the coherent current decision, adding history only if it affects implementation or migration.
+Write for someone who has not read the development conversations. Explain the feature's purpose, user experience, important decisions, constraints and verification steps. Focus on the design rather than the editing history.
+
+For completed or superseded plans, add a short note linking to current guidance. Preserve important earlier decisions without rewriting them as if they were always current.

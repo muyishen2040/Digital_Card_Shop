@@ -2,9 +2,9 @@
 
 A mobile-first collection of thoughtful, interactive digital greeting cards. Senders can personalize a card, create a free private link, and share an interactive experience that expires after 1–3 days.
 
-**Current product:** 10 reusable designs across City Postcards (Hong Kong, Taipei, Kyoto, Seoul, Paris, San Francisco, Singapore), Birthday Cards (Make a Wish), and General Cards (A Little Sunshine, Under the Same Sky). The sender editor supports collection filtering, name/message personalization, Small/Medium/Large reading text, live device-size previews, and native sharing when supported. Public creation is protected by Cloudflare Turnstile and shared quotas. Private messages are stored server-side in Supabase and accessed through expiring, unguessable links.
+Choose from City Postcards, Birthday Cards, and General Cards. Senders can personalize a message, preview it at different screen sizes, choose a reading text size, and share a private link. Supabase stores private cards, while Cloudflare Turnstile and shared quotas help protect free card creation.
 
-**Not implemented:** Paid checkout, email delivery, scheduled sending, accounts, and user-uploaded recipient photos. This project is currently a free, limited beta, not a production commerce storefront.
+This is a free beta, not an online storefront. Paid checkout, email delivery, scheduled sending, accounts, and recipient photo uploads are not available.
 
 ## Getting started
 
