@@ -12,7 +12,7 @@ vi.mock("@/server/cards/public-creation", () => ({
 }));
 vi.mock("server-only", () => ({}));
 import { POST } from "./route";
-import { batchOneCities } from "@/lib/cards/postcards/batch-01";
+import { cityPostcardManifests } from "@/lib/cards/postcards/destinations";
 
 const draft = { templateSlug: "same-sky", recipientName: "Jamie", senderName: "Taylor", message: "Hello!", ttlHours: 24, turnstileToken: "valid-token" };
 const request = (data: object = draft, origin = "https://cards.test") => new Request("https://cards.test/api/public/cards", {
@@ -96,10 +96,9 @@ describe("public card creation", () => {
     expect(mocks.reservePublicCardSlot).toHaveBeenCalledOnce();
     expect(mocks.createCardInstance).toHaveBeenCalledWith(expect.objectContaining({ templateSlug: "city-postcard-taipei", textSize: "small" }));
   });
-  it.each(batchOneCities.map((city) => city.assetKey))(
+  it.each(cityPostcardManifests.map((destination) => destination.slug))(
     "creates %s via the same verification and quota path",
-    async (assetKey) => {
-      const slug = `city-postcard-${assetKey}`;
+    async (slug) => {
       expect((await POST(request({ ...draft, templateSlug: slug, textSize: "medium" }))).status).toBe(201);
       expect(mocks.verifyTurnstile).toHaveBeenCalledOnce();
       expect(mocks.reservePublicCardSlot).toHaveBeenCalledOnce();

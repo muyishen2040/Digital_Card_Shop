@@ -1,12 +1,12 @@
 import { describe, expect, it } from "vitest";
 import { cardBrowseLabel, cardTemplates, getCardTemplate, getCollectionFilters, getCollectionGroups, getVisibleCardTemplates } from "./catalog";
-import { batchOneCities } from "./postcards/batch-01";
+import { cityPostcardManifests } from "./postcards/destinations";
 
 describe("card template catalog", () => {
   it("preserves existing designs and gives every template a unique address", () => {
     expect(cardTemplates.map((template) => template.slug)).toEqual(expect.arrayContaining([
       "little-sunshine", "same-sky", "make-a-wish", "city-postcard-hong-kong", "city-postcard-taipei",
-      ...batchOneCities.map((city) => `city-postcard-${city.assetKey}`),
+      ...cityPostcardManifests.map((destination) => destination.slug),
     ]));
     expect(new Set(cardTemplates.map((template) => template.slug)).size).toBe(cardTemplates.length);
   });
@@ -34,24 +34,24 @@ describe("card template catalog", () => {
     expect(taipei.postcardDemo.message).not.toBe(hongKong.postcardDemo.message);
   });
 
-  it("registers the five-city batch with consistent metadata and independent artwork", () => {
-    expect(batchOneCities).toHaveLength(5);
-    expect(new Set(batchOneCities.map((city) => city.assetKey)).size).toBe(5);
-    const originalSlugs = ["city-postcard-hong-kong", "city-postcard-taipei"];
-    for (const source of batchOneCities) {
-      const slug = `city-postcard-${source.assetKey}`;
+  it("registers every city independently with its own metadata and images", () => {
+    expect(cityPostcardManifests.length).toBeGreaterThanOrEqual(7);
+    expect(new Set(cityPostcardManifests.map((destination) => destination.slug)).size).toBe(cityPostcardManifests.length);
+    expect(cardTemplates.filter((card) => card.theme === "city-postcard")).toHaveLength(cityPostcardManifests.length);
+
+    for (const { slug, postcard, postcardDemo } of cityPostcardManifests) {
       const template = getCardTemplate(slug);
       expect(template?.theme).toBe("city-postcard");
-      if (template?.theme !== "city-postcard") throw new Error("Missing city template: " + slug);
+      if (template?.theme !== "city-postcard") throw new Error("Missing destination " + slug);
       expect(template.collection).toBe("city-postcards");
+      expect(template.title).toBe("Greetings from " + postcard.city);
       expect(template.occasions).toContain("travel");
-      expect(template.postcard.city).toBe(source.city);
-      expect(template.postcard.countryOrRegion).toBe(source.countryOrRegion);
-      expect(template.postcard.frontTitleInArtwork).toBe(true);
-      expect(template.postcard.frontImage).toBe(`/cards/city-postcards/${source.assetKey}/front.webp`);
-      expect(template.postcard.backImage).toBe(`/cards/city-postcards/${source.assetKey}/back.webp`);
-      expect(template.postcardDemo.message.trim().length).toBeGreaterThan(20);
-      expect(originalSlugs).not.toContain(slug);
+      expect(template.postcard).toEqual(postcard);
+      expect(template.postcardDemo).toEqual(postcardDemo);
+      expect(postcard.frontImage).toMatch(/^\\/cards\\/city-postcards\\/[a-z-]+\\/front\\.webp$/);
+      expect(postcard.backImage).toMatch(/^\\/cards\\/city-postcards\\/[a-z-]+\\/back\\.webp$/);
+      expect(postcard.frontTitleInArtwork).toBe(true);
+      expect(postcardDemo.message.trim().length).toBeGreaterThan(20);
     }
   });
 
@@ -61,7 +61,7 @@ describe("card template catalog", () => {
     expect(groups.flatMap(({ cards }) => cards.map((card) => card.slug)).sort()).toEqual(cardTemplates.map((card) => card.slug).sort());
     expect(groups[0].cards.map((card) => card.slug)).toEqual(expect.arrayContaining([
       "city-postcard-hong-kong", "city-postcard-taipei",
-      ...batchOneCities.map((city) => `city-postcard-${city.assetKey}`),
+      ...cityPostcardManifests.map((destination) => destination.slug),
     ]));
     expect(groups[1].cards.map((card) => card.slug)).toContain("make-a-wish");
     expect(groups[2].cards.map((card) => card.slug)).toEqual(expect.arrayContaining(["little-sunshine", "same-sky"]));

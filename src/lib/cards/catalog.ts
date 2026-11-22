@@ -1,7 +1,5 @@
 import type { CardCollectionId, CardOccasion, CardTemplate } from "@/types/card";
-import { HONG_KONG_DEMO, HONG_KONG_POSTCARD_SLUG, hongKongPostcardDesign } from "./postcards/hong-kong";
-import { TAIPEI_DEMO, TAIPEI_POSTCARD_SLUG, taipeiPostcardDesign } from "./postcards/taipei";
-import { batchOnePostcards } from "./postcards/batch-01";
+import { cityPostcardTemplates } from "./postcards/destinations";
 
 export const cardTemplates: readonly CardTemplate[] = [
   {
@@ -28,27 +26,7 @@ export const cardTemplates: readonly CardTemplate[] = [
     description: "A candle, a wish, and a burst of joyful confetti.",
     theme: "birthday",
   },
-  {
-    slug: HONG_KONG_POSTCARD_SLUG,
-    title: "Greetings from Hong Kong",
-    collection: "city-postcards",
-    occasions: ["travel", "friendship", "everyday"],
-    description: "Victoria Harbour at night, with a handwritten note on the illustrated reverse.",
-    theme: "city-postcard",
-    postcard: hongKongPostcardDesign,
-    postcardDemo: HONG_KONG_DEMO,
-  },
-  {
-    slug: TAIPEI_POSTCARD_SLUG,
-    title: "Greetings from Taipei",
-    collection: "city-postcards",
-    occasions: ["travel", "friendship", "everyday"],
-    description: "Taipei 101 at sunset and a painted Dadaocheng streetscape on the reverse.",
-    theme: "city-postcard",
-    postcard: taipeiPostcardDesign,
-    postcardDemo: TAIPEI_DEMO,
-  },
-  ...batchOnePostcards,
+  ...cityPostcardTemplates,
 ];
 
 export function getCardTemplate(slug: string): CardTemplate | undefined {
