@@ -54,7 +54,7 @@ Build an intentional arc: **anticipation → recipient action → reveal → cal
 | **Under the Same Sky** | Midnight-blue folded card, celestial cover, moonlit interior | The cover folds outward to reveal the message, then folds back | Hidden star-selection puzzles and unreadably narrow mobile spreads |
 | **Make a Wish** | Tactile little cake, soft candlelight, playful paper accents | Blow/tap to extinguish candle; one celebratory reveal | Endless confetti and cartoonish overload |
 
-The table illustrates distinct design directions. Each implemented card must satisfy its own experience specification; see [A Little Sunshine design](plans/sunshine-experience-design.md).
+The table illustrates distinct design directions. Review the actual card and current quality requirements before changing a shipped design. The [original A Little Sunshine design](archive/sunshine-experience-design.md) is available for creative background.
 
 ## Review a rendered card (mobile first)
 

@@ -38,6 +38,6 @@ Use [`supabase/migrations/`](../supabase/migrations/) as the authoritative recor
 
 ## Server configuration and privacy
 
-Use `SUPABASE_URL` and server-only `SUPABASE_SECRET_KEY` in trusted code. Never put secrets into source code, screenshots, tickets or variables prefixed with `NEXT_PUBLIC_`. Public creation also needs feature flags, Turnstile credentials and `CARD_RATE_LIMIT_SECRET`; see [`.env.example`](../.env.example) and the [public creation security design](../docs/plans/public-card-creation-design.md).
+Use `SUPABASE_URL` and server-only `SUPABASE_SECRET_KEY` in trusted code. Never put secrets into source code, screenshots, tickets or variables prefixed with `NEXT_PUBLIC_`. Public creation also needs feature flags, Turnstile credentials and `CARD_RATE_LIMIT_SECRET`; see [`.env.example`](../.env.example), the [architecture](../docs/ARCHITECTURE.md), and the [public creation handler](../src/app/api/public/cards/route.ts).
 
 Private recipient links are bearer credentials. Use no-referrer, no-cache and no-index policies. The server enforces expiration even before the cleanup job removes a row. Scheduled email delivery is not implemented.
