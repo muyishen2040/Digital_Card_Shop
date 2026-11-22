@@ -1,7 +1,5 @@
 # City Postcards — two-photo artwork generation playbook
 
-**Status:** Reusable creative guidance. Use alongside [the City Postcard design specification](city-postcard-design.md) and [publishing guide](../CITY_POSTCARDS.md).
-
 ## Goal
 
 Given two suitable photos from the same city, produce one coherent front/back artwork pair with repeatable 3:4 composition, consistent material and artistic quality. The art assets are generated during design work, not at runtime for every sender. The same renderer adds typography and personalization and handles the flip.

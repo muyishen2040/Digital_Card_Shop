@@ -1,7 +1,5 @@
 # Private recipient links — design and implementation
 
-**Historical design record.** Private recipient links and public card creation are implemented. References below to missing public creation describe the original scope; see [Architecture](../ARCHITECTURE.md) and the [database runbook](../../db/README.md) for the supported flow.
-
 ## Goal
 
 A card is a recipient-only experience, not an order page. Each recipient's private link must load the selected interactive template with the stored message, without revealing it to strangers, search engines, or people who only know the demo URL. The link must expire on the server.

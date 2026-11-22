@@ -1,10 +1,8 @@
 # City Postcard — shared renderer implementation
 
-**Historical implementation plan.** The shared renderer is implemented. The original rollout sequence below is preserved for reference; use the [City Postcards publishing guide](../CITY_POSTCARDS.md) to add destinations.
-
 ## Scope
 
-Implement the collection's shared renderer against the approved [design specification](city-postcard-design.md) and [artwork playbook](city-postcard-artwork-playbook.md). This foundation deliberately does not add a destination, catalog entry, sender template, database allowlist entry, gallery group or public creation capability.
+Implement the collection's shared renderer against the approved [design specification](../plans/city-postcard-design.md) and [artwork playbook](../plans/city-postcard-artwork-playbook.md). This foundation deliberately does not add a destination, catalog entry, sender template, database allowlist entry, gallery group or public creation capability.
 
 ## Component contract
 

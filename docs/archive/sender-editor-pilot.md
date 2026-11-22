@@ -1,7 +1,5 @@
 # Sender editor and controlled creation pilot
 
-**Historical pilot plan.** Public card creation now uses Turnstile and quotas. The creator-code workflow and three-card limits below describe the original pilot; see [Architecture](../ARCHITECTURE.md) for the supported flow.
-
 ## Product flow
 At `/create`, senders choose one of the three existing designs, enter recipient/sender names and a personal message, choose a 24/48/72-hour lifetime, and interact with the real card in a preview. The preview runs in a same-origin iframe at 320, 390 or 768 px; the content is sent by postMessage, not via the URL. The recipient's card and existing animations remain unchanged.
 

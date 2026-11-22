@@ -36,7 +36,7 @@ npm run build
 - `src/server/cards/` — Server-only persistence, public-creation security, quotas and retention.
 - `public/cards/city-postcards/` — Independent front/back artwork and provenance records for each city.
 - `supabase/migrations/` — Versioned database changes; a merged file is **not** proof that a migration is applied.
-- `docs/` — Current [architecture](docs/ARCHITECTURE.md), [product brief](docs/PRODUCT_BRIEF.md), [roadmap](docs/ROADMAP.md) and historical feature plans.
+- `docs/` — [Architecture](docs/ARCHITECTURE.md), [product brief](docs/PRODUCT_BRIEF.md), [roadmap](docs/ROADMAP.md), active [designs and plans](docs/plans/README.md), and [archived plans](docs/archive/README.md).
 
 To publish another city, follow [the City Postcards guide](docs/CITY_POSTCARDS.md). New destinations reuse the existing renderer and public/private creation flow; they need two reviewed image assets, metadata, integrity hashes and an approved database allowlist migration.
 
@@ -44,7 +44,7 @@ To publish another city, follow [the City Postcards guide](docs/CITY_POSTCARDS.m
 
 Production is deployed through the [Digital Card Shop Vercel project](https://vercel.com/muyishen4020-2251/digital-card-shop) when changes reach `main`; pull requests receive previews. The [database runbook](db/README.md) explains the dedicated Supabase schema and how to verify migrations. Deployment of application code does **not** automatically apply database SQL. Check migration status before enabling a new design in production.
 
-The application requires server-only `SUPABASE_SECRET_KEY` for private storage; public card creation additionally requires Turnstile and an independent rate-limit secret. The separate legacy creator-code endpoint remains optional, rather than serving as public access control. The retention job invokes `/api/cron/expire-cards` with `CRON_SECRET`; consult [its operational runbook](docs/plans/expired-card-retention.md).
+The application requires server-only `SUPABASE_SECRET_KEY` for private storage; public card creation additionally requires Turnstile and an independent rate-limit secret. The separate legacy creator-code endpoint remains optional, rather than serving as public access control. The retention job invokes `/api/cron/expire-cards` with `CRON_SECRET`; consult [its operational runbook](docs/RETENTION.md).
 
 Private links are bearer credentials. Never commit or log access tokens, private messages, secrets, real recipient addresses or unpublished source photos. Browser roles cannot directly access private card rows; requests to create cards are verified and rate-limited on the server.
 
@@ -52,4 +52,4 @@ Private links are bearer credentials. Never commit or log access tokens, private
 
 Read [AGENTS.md](AGENTS.md) and [docs/COMMUNICATION_STANDARDS.md](docs/COMMUNICATION_STANDARDS.md) before substantial changes. The repository uses the [Superpowers](https://github.com/obra/superpowers) approach when the plugin is available in your coding environment: design, plan, test, review, then PR. For visual work also read [CARD_DESIGN_QUALITY.md](docs/CARD_DESIGN_QUALITY.md).
 
-Documents under `docs/plans/` include **historical implementation plans**. Their original assumptions may predate current functionality. Use `README.md`, `docs/ARCHITECTURE.md`, `docs/PRODUCT_BRIEF.md`, `docs/CITY_POSTCARDS.md` and the actual code as current references; preserve useful planning history without treating it as outstanding work.
+Use `docs/plans/` for approved work that is still relevant to development. Completed plans and early design records live in `docs/archive/`; they are not instructions for deploying the current product. Keep implementation details and operational steps in their current guides.

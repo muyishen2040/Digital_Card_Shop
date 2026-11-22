@@ -1,13 +1,11 @@
-# Feature designs and implementation plans
+# Active designs and plans
 
-This folder contains design specifications and implementation plans for Digital Card Shop. Some describe completed work and may retain assumptions that have since changed.
+Keep approved design specifications, implementation plans, and unfinished verification work here. Every document should be understandable to a developer who has not seen the conversations that produced it.
 
-For supported behavior, start with the [architecture](../ARCHITECTURE.md), [product brief](../PRODUCT_BRIEF.md), and [City Postcards publishing guide](../CITY_POSTCARDS.md). Historical plans are useful for understanding earlier decisions, but should not be mistaken for a list of unfinished tasks.
+Start with the [product brief](../PRODUCT_BRIEF.md) and [architecture](../ARCHITECTURE.md) to understand the application. Each plan should explain its goal, the intended behavior, relevant code boundaries, acceptance criteria, and concrete verification steps.
 
-## Writing and naming
+The project follows [Superpowers](https://github.com/obra/superpowers): agree on the design, write an actionable plan, implement with tests, and review the result. Use descriptive filenames rather than automatically adding dates to living documents.
 
-Use descriptive filenames based on the feature and document's purpose, such as `sunshine-experience-design.md` or `sunshine-experience-implementation.md`. Do not add dates to living documents merely to record when they were created. Dates belong in genuine chronological records, such as migrations, incidents, releases, or meeting notes.
+Once a feature is complete, update the current product or operational documentation with the lasting decisions, then move the plan to [the archive](../archive/README.md). Do not leave completed plans here with repeated status notices.
 
-Write for someone who has not read the development conversations. Explain the feature's purpose, user experience, important decisions, constraints and verification steps. Focus on the design rather than the editing history.
-
-For completed or superseded plans, add a short note linking to current guidance. Preserve important earlier decisions without rewriting them as if they were always current.
+Reusable City Postcards references are the [design specification](city-postcard-design.md) and [artwork playbook](city-postcard-artwork-playbook.md). The [text-fit calibration](card-text-fit-calibration.md) provides QA cases and explicitly non-binding exploratory measurements.

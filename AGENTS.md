@@ -1,6 +1,6 @@
 # Development instructions for coding agents
 
-Read `docs/PRODUCT_BRIEF.md`, `docs/ARCHITECTURE.md`, and `docs/ROADMAP.md` before substantial changes. Treat `README.md`, `docs/ARCHITECTURE.md`, `docs/CITY_POSTCARDS.md` and `db/README.md` as current references; `docs/plans/` includes historical implementation documents that may intentionally retain superseded assumptions.
+Before substantial changes, read `docs/PRODUCT_BRIEF.md`, `docs/ARCHITECTURE.md`, and `docs/ROADMAP.md`. For implementation details, follow the current guides (such as `docs/CITY_POSTCARDS.md`, `docs/RETENTION.md`, and `db/README.md`). `docs/plans/` contains active design and verification work; `docs/archive/` contains completed plans and early design records, not current instructions.
 
 ## Use obra/superpowers
 
@@ -9,7 +9,7 @@ This project deliberately uses https://github.com/obra/superpowers as its develo
 - When Superpowers is installed in your coding harness, consult and follow its relevant skills. Do not imitate or claim a plugin skill is loaded when it is not.
 - For a new user-facing feature, first use `brainstorming`. Present a design and get user approval before writing implementation code.
 - Use `using-git-worktrees` for isolated branches, `writing-plans` for an approved implementation plan, `test-driven-development` to build in small verified steps, `requesting-code-review`, and `finishing-a-development-branch`.
-- Save approved designs and implementation plans under `docs/plans/`.
+- Keep approved designs and implementation plans under `docs/plans/` while the work is active. After implementation, incorporate lasting decisions into current documentation and move completed plans to `docs/archive/` without adding repetitive history notices.
 - If Superpowers is unavailable in the current agent environment, say so and preserve the same design → plan → test → review intent rather than pretending that skills executed.
 - Simple fixes and repository chores should stay appropriately small.
 
@@ -44,7 +44,7 @@ Before publishing a document, code comment, ticket, or PR, identify the audience
 - Avoid statements such as "as discussed," "per your feedback," "we changed this," "the latest version," or "previously requested" unless the artifact itself identifies and explains a relevant historical event.
 - PR descriptions should say what/why, important behavior, verification with evidence, and scope limits. Comments explain non-obvious engineering intent; do not narrate edits.
 - Dates should be used for meaningful time-sensitive milestones, migrations, or historical records—not automatically in titles or living design documents.
-- Self-review as if a new engineer will read this in six months without chat access.
+- Self-review as if a new engineer will read this without chat access. Verify file paths and links; remove obsolete launch steps from current guides instead of adding warnings that the guide is historical.
 
 ## Card design quality (required for visual features)
 

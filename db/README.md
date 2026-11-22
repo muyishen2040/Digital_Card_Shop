@@ -8,7 +8,7 @@ Digital Card Shop stores temporary personalized cards in the dedicated Supabase 
 - `src/app/api/cards/route.ts` is an optional legacy creator-code endpoint, not the public flow.
 - `src/server/cards/card-instances.ts` accesses private storage with a server-only Supabase key.
 - `src/app/c/[token]/page.tsx` resolves private recipient links and refuses unknown or expired cards. The database stores a hash of the access token, never the raw token.
-- `src/app/api/cron/expire-cards/route.ts` removes expired rows on a schedule. See the [retention guide](../docs/plans/expired-card-retention.md).
+- `src/app/api/cron/expire-cards/route.ts` removes expired rows on a schedule. See the [retention guide](../docs/RETENTION.md).
 
 Names may contain up to 40 Unicode code points, messages up to 600, and reading text sizes are `small`, `medium` or `large`. Cards expire after 24, 48 or 72 hours.
 

@@ -1,7 +1,5 @@
 # Expired-card retention and monitoring
 
-The cleanup route and schedule are deployed. This guide explains their operation and preserves the original launch checklist. Verify live cron execution in Vercel rather than treating the setup steps below as unfinished work.
-
 ## Why this exists
 
 The recipient route already refuses an expired bearer link (`expires_at <= now()`), but the underlying message otherwise persists in Supabase. This change adds a separate data-retention job to permanently delete expired rows. It does **not** change link TTLs or the existing Supabase schema.
