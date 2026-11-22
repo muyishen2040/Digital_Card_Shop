@@ -4,7 +4,7 @@ import { cardBrowseLabel, cardTemplates, getCardTemplate, getCollectionFilters, 
 describe("card template catalog", () => {
   it("preserves existing designs and gives every template a unique address", () => {
     expect(cardTemplates.map((template) => template.slug)).toEqual(expect.arrayContaining([
-      "little-sunshine", "same-sky", "make-a-wish", "city-postcard-hong-kong",
+      "little-sunshine", "same-sky", "make-a-wish", "city-postcard-hong-kong", "city-postcard-taipei",
     ]));
     expect(new Set(cardTemplates.map((template) => template.slug)).size).toBe(cardTemplates.length);
   });
@@ -19,11 +19,24 @@ describe("card template catalog", () => {
     expect(template.postcard.backImage).toMatch(/\/hong-kong\/back\.webp$/);
   });
 
+  it("gives each city independent artwork and demo content", () => {
+    const taipei = getCardTemplate("city-postcard-taipei");
+    const hongKong = getCardTemplate("city-postcard-hong-kong");
+    if (taipei?.theme !== "city-postcard" || hongKong?.theme !== "city-postcard") throw new Error("Missing city template");
+    expect(taipei.postcard.city).toBe("Taipei");
+    expect(taipei.postcard.countryOrRegion).toBe("Taiwan");
+    expect(taipei.postcard.frontTitleInArtwork).toBe(true);
+    expect(taipei.postcard.frontImage).toBe("/cards/city-postcards/taipei/front.webp");
+    expect(taipei.postcard.backImage).toBe("/cards/city-postcards/taipei/back.webp");
+    expect(taipei.postcardDemo.message).toContain("Taipei");
+    expect(taipei.postcardDemo.message).not.toBe(hongKong.postcardDemo.message);
+  });
+
   it("groups every published card once in the intended collection order", () => {
     const groups = getCollectionGroups();
     expect(groups.map(({ collection }) => collection.id)).toEqual(["city-postcards", "birthday", "general"]);
     expect(groups.flatMap(({ cards }) => cards.map((card) => card.slug)).sort()).toEqual(cardTemplates.map((card) => card.slug).sort());
-    expect(groups[0].cards.map((card) => card.slug)).toContain("city-postcard-hong-kong");
+    expect(groups[0].cards.map((card) => card.slug)).toEqual(expect.arrayContaining(["city-postcard-hong-kong", "city-postcard-taipei"]));
     expect(groups[1].cards.map((card) => card.slug)).toContain("make-a-wish");
     expect(groups[2].cards.map((card) => card.slug)).toEqual(expect.arrayContaining(["little-sunshine", "same-sky"]));
   });

@@ -14,6 +14,7 @@ describe("private recipient card rendering", () => {
     ["same-sky", "Unfold the night-sky card"],
     ["make-a-wish", "Blow out the birthday candle"],
     ["city-postcard-hong-kong", "Turn postcard over to read the message"],
+    ["city-postcard-taipei", "Turn postcard over to read the message"],
   ])("reuses %s without adding shop UI", (slug, controlLabel) => {
     const card = renderRecipientCard(slug, content);
     expect(card).not.toBeNull();
@@ -35,7 +36,16 @@ describe("private recipient card rendering", () => {
     expect(html).toContain("— Sender");
   });
 
-  it.each(["little-sunshine", "same-sky", "make-a-wish", "city-postcard-hong-kong"])(
+  it("renders Taipei artwork without duplicating the city title or using Hong Kong artwork", () => {
+    const html = renderToStaticMarkup(renderRecipientCard("city-postcard-taipei", content)!);
+    expect(html).toContain("/cards/city-postcards/taipei/front.webp");
+    expect(html).toContain("/cards/city-postcards/taipei/back.webp");
+    expect(html).not.toContain("/cards/city-postcards/hong-kong/");
+    expect(html).toContain("Taipei city postcard");
+    expect(html).toContain("Dear Recipient,");
+  });
+
+  it.each(["little-sunshine", "same-sky", "make-a-wish", "city-postcard-hong-kong", "city-postcard-taipei"])(
     "applies each text size to the reading region of %s",
     (slug) => {
       for (const [textSize, scale] of [["small", 0.6], ["medium", 0.8], ["large", 1]] as const) {
