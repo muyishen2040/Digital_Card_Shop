@@ -29,6 +29,7 @@ Card designs should be independently editable. Avoid shared global selectors tha
 - TypeScript strict mode. Minimize dependencies and abstractions until needed.
 - Keep routes in `src/app`, UI in `src/components`, catalog metadata and pure functions in `src/lib`.
 - Write a failing behavior test before implementing new logic when practical. Do not make tests assert only that a component exists.
+- Install dependencies with `npm ci` (Node 22, npm 11) using the committed lockfile. Update the lockfile intentionally when changing dependencies.
 - Before claiming completion: run `npm run check` and `npm run build`, and report any commands that could not be run.
 - Favor mobile-first, accessible designs; respect reduced-motion preferences.
 - Do not log personal messages, names, recipient addresses, or photos.
