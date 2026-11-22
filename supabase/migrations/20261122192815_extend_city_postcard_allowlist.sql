@@ -1,5 +1,5 @@
--- Register the five city postcards without changing RLS, grants or message rules.
--- This migration is additive to the approved public card-creation allowlist.
+-- Extend the explicit public-card template allowlist for approved destinations.
+-- This forward migration preserves earlier slugs, RLS, grants and message constraints.
 set local lock_timeout = '5s';
 alter table public.card_instances
   drop constraint card_instances_template_slug_check,
