@@ -4,7 +4,7 @@
 
 Implement a self-contained, recipient-first interactive envelope card at `/cards/little-sunshine`, plus a minimal launcher at `/` for testing multiple card experiences. This plan excludes accounts, sender customization, persisted instances, card APIs, email delivery, WooCommerce, and payments.
 
-The design contract is [sunshine-experience-design.md](sunshine-experience-design.md).
+The design contract is [sunshine-experience-design.md](../designs/a-little-sunshine.md).
 
 ## 1. Personalization contract
 
