@@ -1,48 +1,40 @@
+import { cardTemplates } from "./catalog";
+import type { CardTheme } from "@/types/card";
+
 /**
- * Per-template *recommendations* are editorial guidance, not publication
- * restrictions. The real rendered layout is measured in the sender preview.
+ * Per-design recommendations are editorial hints; the real sender preview
+ * measures rendered text fit. All templates retain the same storage limits.
  */
 export const MAX_CARD_NAME_CHARACTERS = 40;
 export const MAX_CARD_MESSAGE_CHARACTERS = 600;
-export const CARD_CONTENT_POLICIES = {
-  "little-sunshine": {
-    nameCharacters: MAX_CARD_NAME_CHARACTERS,
-    messageCharacters: MAX_CARD_MESSAGE_CHARACTERS,
-    recommendedMessageCharacters: 240,
-  },
-  "same-sky": {
-    nameCharacters: MAX_CARD_NAME_CHARACTERS,
-    messageCharacters: MAX_CARD_MESSAGE_CHARACTERS,
-    recommendedMessageCharacters: 140,
-  },
-  "city-postcard-hong-kong": {
-    nameCharacters: MAX_CARD_NAME_CHARACTERS,
-    messageCharacters: MAX_CARD_MESSAGE_CHARACTERS,
-    recommendedMessageCharacters: 180,
-  },
-  "city-postcard-taipei": {
-    nameCharacters: MAX_CARD_NAME_CHARACTERS,
-    messageCharacters: MAX_CARD_MESSAGE_CHARACTERS,
-    recommendedMessageCharacters: 180,
-  },
-  "make-a-wish": {
-    nameCharacters: MAX_CARD_NAME_CHARACTERS,
-    messageCharacters: MAX_CARD_MESSAGE_CHARACTERS,
-    recommendedMessageCharacters: 100,
-  },
-} as const;
 
-export type CardContentSlug = keyof typeof CARD_CONTENT_POLICIES;
 export type CardContentPolicy = Readonly<{
   nameCharacters: number;
   messageCharacters: number;
   recommendedMessageCharacters: number;
 }>;
 
+const RECOMMENDED_LENGTH: Readonly<Record<CardTheme, number>> = {
+  sunshine: 240,
+  "night-sky": 140,
+  birthday: 100,
+  "city-postcard": 180,
+};
+
+export const CARD_CONTENT_POLICIES: Readonly<Record<string, CardContentPolicy>> = Object.fromEntries(
+  cardTemplates.map(({ slug, theme }) => [slug, {
+    nameCharacters: MAX_CARD_NAME_CHARACTERS,
+    messageCharacters: MAX_CARD_MESSAGE_CHARACTERS,
+    recommendedMessageCharacters: RECOMMENDED_LENGTH[theme],
+  }]),
+);
+
+// Published catalog entries are the single source of truth for valid slugs.
+export type CardContentSlug = (typeof cardTemplates)[number]["slug"];
+
 export function getCardContentPolicy(slug: string): CardContentPolicy | null {
   return Object.prototype.hasOwnProperty.call(CARD_CONTENT_POLICIES, slug)
-    ? CARD_CONTENT_POLICIES[slug as CardContentSlug]
-    : null;
+    ? CARD_CONTENT_POLICIES[slug] : null;
 }
 
 /** PostgreSQL char_length counts Unicode code points rather than UTF-16 units. */

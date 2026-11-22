@@ -1,6 +1,7 @@
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import { renderRecipientCard } from "./RecipientCard";
+import { batchOneCities } from "@/lib/cards/postcards/batch-01";
 
 const content = {
   recipientName: "Recipient",
@@ -15,6 +16,7 @@ describe("private recipient card rendering", () => {
     ["make-a-wish", "Blow out the birthday candle"],
     ["city-postcard-hong-kong", "Turn postcard over to read the message"],
     ["city-postcard-taipei", "Turn postcard over to read the message"],
+    ...batchOneCities.map((city) => [`city-postcard-${city.assetKey}`, "Turn postcard over to read the message"]),
   ])("reuses %s without adding shop UI", (slug, controlLabel) => {
     const card = renderRecipientCard(slug, content);
     expect(card).not.toBeNull();
@@ -45,7 +47,21 @@ describe("private recipient card rendering", () => {
     expect(html).toContain("Dear Recipient,");
   });
 
-  it.each(["little-sunshine", "same-sky", "make-a-wish", "city-postcard-hong-kong", "city-postcard-taipei"])(
+  it.each(batchOneCities.map((city) => city.assetKey))(
+    "renders %s as a private HTML postcard with its own images",
+    (assetKey) => {
+      const html = renderToStaticMarkup(renderRecipientCard(`city-postcard-${assetKey}`, content)!);
+      expect(html).toContain(`/cards/city-postcards/${assetKey}/front.webp`);
+      expect(html).toContain(`/cards/city-postcards/${assetKey}/back.webp`);
+      expect(html).toContain("Dear Recipient,");
+      expect(html).toContain("— Sender");
+      expect(html).toContain("A private note for you.");
+      expect(html).not.toContain("Checkout");
+    },
+  );
+
+  it.each(["little-sunshine", "same-sky", "make-a-wish", "city-postcard-hong-kong", "city-postcard-taipei",
+    ...batchOneCities.map((city) => `city-postcard-${city.assetKey}`)])(
     "applies each text size to the reading region of %s",
     (slug) => {
       for (const [textSize, scale] of [["small", 0.6], ["medium", 0.8], ["large", 1]] as const) {

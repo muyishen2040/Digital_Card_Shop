@@ -1,6 +1,7 @@
 import type { CardCollectionId, CardOccasion, CardTemplate } from "@/types/card";
 import { HONG_KONG_DEMO, HONG_KONG_POSTCARD_SLUG, hongKongPostcardDesign } from "./postcards/hong-kong";
 import { TAIPEI_DEMO, TAIPEI_POSTCARD_SLUG, taipeiPostcardDesign } from "./postcards/taipei";
+import { batchOnePostcards } from "./postcards/batch-01";
 
 export const cardTemplates: readonly CardTemplate[] = [
   {
@@ -47,6 +48,7 @@ export const cardTemplates: readonly CardTemplate[] = [
     postcard: taipeiPostcardDesign,
     postcardDemo: TAIPEI_DEMO,
   },
+  ...batchOnePostcards,
 ];
 
 export function getCardTemplate(slug: string): CardTemplate | undefined {

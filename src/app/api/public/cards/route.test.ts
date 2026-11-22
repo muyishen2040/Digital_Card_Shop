@@ -12,6 +12,7 @@ vi.mock("@/server/cards/public-creation", () => ({
 }));
 vi.mock("server-only", () => ({}));
 import { POST } from "./route";
+import { batchOneCities } from "@/lib/cards/postcards/batch-01";
 
 const draft = { templateSlug: "same-sky", recipientName: "Jamie", senderName: "Taylor", message: "Hello!", ttlHours: 24, turnstileToken: "valid-token" };
 const request = (data: object = draft, origin = "https://cards.test") => new Request("https://cards.test/api/public/cards", {
@@ -95,6 +96,19 @@ describe("public card creation", () => {
     expect(mocks.reservePublicCardSlot).toHaveBeenCalledOnce();
     expect(mocks.createCardInstance).toHaveBeenCalledWith(expect.objectContaining({ templateSlug: "city-postcard-taipei", textSize: "small" }));
   });
+  it.each(batchOneCities.map((city) => city.assetKey))(
+    "creates %s via the same verification and quota path",
+    async (assetKey) => {
+      const slug = `city-postcard-${assetKey}`;
+      expect((await POST(request({ ...draft, templateSlug: slug, textSize: "medium" }))).status).toBe(201);
+      expect(mocks.verifyTurnstile).toHaveBeenCalledOnce();
+      expect(mocks.reservePublicCardSlot).toHaveBeenCalledOnce();
+      expect(mocks.createCardInstance).toHaveBeenCalledWith(
+        expect.objectContaining({ templateSlug: slug, textSize: "medium" }),
+      );
+    },
+  );
+
   it("fails closed if verification or quota storage is unavailable", async () => {
     mocks.reservePublicCardSlot.mockRejectedValue(new Error("database down"));
     expect((await POST(request())).status).toBe(503);
