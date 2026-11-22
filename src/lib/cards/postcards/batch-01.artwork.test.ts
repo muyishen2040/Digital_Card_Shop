@@ -55,7 +55,7 @@ const artwork = [
   [
     "singapore",
     "back",
-    "859486df2932c5036022a5d6ad46c633f98c30e8714f7b4f9b0f5b7bf0efdf"
+    "859486df2932c5036022a5d6ad46c633f98c30e8714f7b4f9b0f9f5b7bf0efdf"
   ]
 ] as const;
 
