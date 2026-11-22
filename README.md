@@ -36,7 +36,7 @@ npm run build
 - `src/server/cards/` — Server-only persistence, public-creation security, quotas and retention.
 - `public/cards/city-postcards/` — Independent front/back artwork and provenance records for each city.
 - `supabase/migrations/` — Versioned database changes; a merged file is **not** proof that a migration is applied.
-- `docs/` — [Architecture](docs/ARCHITECTURE.md), [product brief](docs/PRODUCT_BRIEF.md), [roadmap](docs/ROADMAP.md), active [designs and plans](docs/plans/README.md), and [archived plans](docs/archive/README.md).
+- `docs/` — [Architecture](docs/ARCHITECTURE.md), [product brief](docs/PRODUCT_BRIEF.md), [card design specifications](docs/designs/README.md), [roadmap](docs/ROADMAP.md), [implementation plans](docs/plans/README.md), and [archived plans](docs/archive/README.md).
 
 To publish another city, follow [the City Postcards guide](docs/CITY_POSTCARDS.md). New destinations reuse the existing renderer and public/private creation flow; they need two reviewed image assets, metadata, integrity hashes and an approved database allowlist migration.
 
@@ -52,4 +52,4 @@ Private links are bearer credentials. Never commit or log access tokens, private
 
 Read [AGENTS.md](AGENTS.md) and [docs/COMMUNICATION_STANDARDS.md](docs/COMMUNICATION_STANDARDS.md) before substantial changes. The repository uses the [Superpowers](https://github.com/obra/superpowers) approach when the plugin is available in your coding environment: design, plan, test, review, then PR. For visual work also read [CARD_DESIGN_QUALITY.md](docs/CARD_DESIGN_QUALITY.md).
 
-Use `docs/plans/` for approved work that is still relevant to development. Completed plans and early design records live in `docs/archive/`; they are not instructions for deploying the current product. Keep implementation details and operational steps in their current guides.
+Keep enduring card design specifications in `docs/designs/`, active execution plans in `docs/plans/`, and completed plans in `docs/archive/`. Update current guides with lasting technical and operational decisions.

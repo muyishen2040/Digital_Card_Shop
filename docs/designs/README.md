@@ -13,8 +13,8 @@ This folder holds maintained design specifications for shipped card experiences.
 
 ## City Postcards
 
-- [Collection design](../plans/city-postcard-design.md): the repeatable postcard layout and interaction.
-- [Artwork playbook](../plans/city-postcard-artwork-playbook.md): creation and review of each city's artwork.
+- [Collection design](city-postcards.md): the repeatable postcard layout and interaction.
+- [Artwork playbook](city-postcard-artwork-playbook.md): creation and review of each city's artwork.
 
 ## Designing a new card
 

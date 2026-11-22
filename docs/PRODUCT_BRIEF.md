@@ -39,7 +39,7 @@ The reusable postcard renderer supports destination-specific artwork and shared 
 - Keep the recipient experience immersive: no storefront chrome, tutorials or unrelated controls on a received card.
 - Within the postcard family, consistency of interaction is intentional. Other collections may use genuinely different mechanics.
 - Keep personalization separate from artwork. Do not bake names, private messages or sender signatures into generated assets.
-- New concepts require an explicit interaction/design specification and mobile accessibility review before feature implementation. Follow [the card design quality guide](CARD_DESIGN_QUALITY.md).
+- New concepts require an approved [card design specification](designs/README.md) and mobile accessibility review before implementation. Follow [the card design quality guide](CARD_DESIGN_QUALITY.md); use existing cards as examples of craft and verification, not interactions to copy.
 
 ## Future user journey
 

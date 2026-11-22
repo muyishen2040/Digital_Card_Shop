@@ -2,7 +2,7 @@
 
 ## Scope
 
-Implement the collection's shared renderer against the approved [design specification](../plans/city-postcard-design.md) and [artwork playbook](../plans/city-postcard-artwork-playbook.md). This foundation deliberately does not add a destination, catalog entry, sender template, database allowlist entry, gallery group or public creation capability.
+Implement the collection's shared renderer against the approved [design specification](../designs/city-postcards.md) and [artwork playbook](../designs/city-postcard-artwork-playbook.md). This foundation deliberately does not add a destination, catalog entry, sender template, database allowlist entry, gallery group or public creation capability.
 
 ## Component contract
 

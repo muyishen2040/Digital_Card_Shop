@@ -12,4 +12,4 @@ src/components/cards/
 
 Each template takes typed customization data. It should own its animations and CSS. Do not add three identical wrappers with different colors: each concept requires a distinct approved interaction design.
 
-City Postcards are a deliberate family exception: use the shared `postcard/CityPostcard.tsx` renderer, with destination metadata and two reviewed artwork assets rather than a new interaction per destination. See the [design specification](../../../docs/plans/city-postcard-design.md) and [destination publishing guide](../../../docs/CITY_POSTCARDS.md). The neutral fixture is available only in development/preview, and is not a catalog entry.
+City Postcards are a deliberate family exception: use the shared `postcard/CityPostcard.tsx` renderer, with destination metadata and two reviewed artwork assets rather than a new interaction per destination. See the [design specification](../../../docs/designs/city-postcards.md) and [destination publishing guide](../../../docs/CITY_POSTCARDS.md). The neutral fixture is available only in development/preview, and is not a catalog entry.

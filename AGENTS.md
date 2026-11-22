@@ -1,6 +1,6 @@
 # Development instructions for coding agents
 
-Before substantial changes, read `docs/PRODUCT_BRIEF.md`, `docs/ARCHITECTURE.md`, and `docs/ROADMAP.md`. For implementation details, follow the current guides (such as `docs/CITY_POSTCARDS.md`, `docs/RETENTION.md`, and `db/README.md`). `docs/plans/` contains active design and verification work; `docs/archive/` contains completed plans and early design records, not current instructions.
+Before substantial changes, read `docs/PRODUCT_BRIEF.md`, `docs/ARCHITECTURE.md`, and `docs/ROADMAP.md`. For implementation details, follow the current guides (such as `docs/CITY_POSTCARDS.md`, `docs/RETENTION.md`, and `db/README.md`). `docs/designs/` contains maintained card design specifications, `docs/plans/` contains implementation plans and unfinished verification, and `docs/archive/` contains completed plans.
 
 ## Use obra/superpowers
 
@@ -9,7 +9,7 @@ This project deliberately uses https://github.com/obra/superpowers as its develo
 - When Superpowers is installed in your coding harness, consult and follow its relevant skills. Do not imitate or claim a plugin skill is loaded when it is not.
 - For a new user-facing feature, first use `brainstorming`. Present a design and get user approval before writing implementation code.
 - Use `using-git-worktrees` for isolated branches, `writing-plans` for an approved implementation plan, `test-driven-development` to build in small verified steps, `requesting-code-review`, and `finishing-a-development-branch`.
-- Keep approved designs and implementation plans under `docs/plans/` while the work is active. After implementation, incorporate lasting decisions into current documentation and move completed plans to `docs/archive/` without adding repetitive history notices.
+- Keep approved card design specifications in `docs/designs/` and implementation plans in `docs/plans/`. After implementation, update the lasting design references and current guides, then move only completed implementation plans to `docs/archive/`.
 - If Superpowers is unavailable in the current agent environment, say so and preserve the same design → plan → test → review intent rather than pretending that skills executed.
 - Simple fixes and repository chores should stay appropriately small.
 
@@ -48,7 +48,7 @@ Before publishing a document, code comment, ticket, or PR, identify the audience
 
 ## Card design quality (required for visual features)
 
-Before designing or reviewing any interactive e-card, read [docs/CARD_DESIGN_QUALITY.md](docs/CARD_DESIGN_QUALITY.md), our concise card-specific adaptation of [unslop](https://github.com/heydamir/unslop). Distinguish the quiet launcher UI from the expressive recipient-facing card. Remove banners, guidance, status badges, and detached action buttons from recipient routes; the art object itself should be the accessible control. Keep replay discreet.
+Before designing or reviewing any interactive e-card, read [docs/CARD_DESIGN_QUALITY.md](docs/CARD_DESIGN_QUALITY.md) and the [existing card design specifications](docs/designs/README.md), our concise card-specific adaptation of [unslop](https://github.com/heydamir/unslop). Distinguish the quiet launcher UI from the expressive recipient-facing card. Remove banners, guidance, status badges, and detached action buttons from recipient routes; the art object itself should be the accessible control. Keep replay discreet.
 
 For each design: define feeling, character, world, reveal moment, and signature detail; get direction approved through Superpowers brainstorming; then validate the rendered experience before claiming visual quality. Check mobile, long personalized messages, keyboard access, and reduced motion. Do not treat the guide as an absolute ban on expressive card artwork.
 

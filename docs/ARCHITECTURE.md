@@ -11,7 +11,8 @@ src/app/cards/[slug]/       Recipient-facing card routes
 src/components/cards/       Independently styled card interactions
 src/lib/cards/             Template catalog and pure personalization helpers
 src/types/                 Shared card data contracts
-docs/plans/                Active designs and implementation plans
+docs/designs/              Current card design specifications
+docs/plans/                Active implementation plans
 docs/archive/              Completed plans and earlier design records
 ```
 
