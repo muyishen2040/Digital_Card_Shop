@@ -10,6 +10,11 @@ This folder holds maintained design specifications for shipped card experiences.
 ## Birthday Cards
 
 - [Make a Wish](make-a-wish.md): a candle-led birthday reveal and brief celebratory confetti.
+- [Velvet Encore](velvet-encore.md): part theatrical curtains to reveal a birthday note.
+- [Birthday Bloom](birthday-bloom.md): unfurl a garden bloom to reveal a botanical letter.
+- [Golden Parcel](golden-parcel.md): untie a present and discover a note.
+- [Another Orbit](another-orbit.md): launch an illustrated rocket and reveal a birthday mission.
+- [Birthday Record](birthday-record.md): slide a vinyl record from its sleeve to discover liner notes.
 
 ## City Postcards
 

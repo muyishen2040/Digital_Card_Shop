@@ -8,6 +8,7 @@ import { SKY_DEMO } from "@/lib/cards/sky-demo";
 import { SUNSHINE_DEMO } from "@/lib/cards/personalization";
 import { cardTemplates, getCardTemplate } from "@/lib/cards/catalog";
 import { renderRecipientCard } from "@/components/cards/RecipientCard";
+import { birthdayArtDemo, isBirthdayArtSlug } from "@/lib/cards/birthday/designs";
 
 export function generateStaticParams() {
   return cardTemplates.map(({ slug }) => ({ slug }));
@@ -33,6 +34,9 @@ export default async function CardConceptPage({
   }
   if (slug === "same-sky") {
     return <SkyCard content={SKY_DEMO} />;
+  }
+  if (isBirthdayArtSlug(slug)) {
+    return renderRecipientCard(slug, birthdayArtDemo[slug]);
   }
   if (slug === "make-a-wish") {
     return <WishCard content={WISH_DEMO} />;

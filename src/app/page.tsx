@@ -6,6 +6,8 @@ import Image from "next/image";
 import { cardBrowseLabel, getCollectionGroups } from "@/lib/cards/catalog";
 import type { CollectionFilter as Filter } from "@/lib/cards/catalog";
 import { CollectionFilter } from "@/components/cards/CollectionFilter";
+import { BirthdayTileArt } from "@/components/cards/birthday/BirthdayTileArt";
+import { isBirthdayArtSlug } from "@/lib/cards/birthday/designs";
 import styles from "./page.module.css";
 
 export default function ExperienceLibrary() {
@@ -58,11 +60,12 @@ export default function ExperienceLibrary() {
                           </span>
                         </div>
                       )}
-                      {card.theme === "birthday" && (
+                      {card.theme === "birthday" && card.slug === "make-a-wish" && (
                         <div className={styles.cakeScene} aria-hidden="true">
                           <span className={styles.candle} />
                         </div>
                       )}
+                      {isBirthdayArtSlug(card.slug) && <BirthdayTileArt design={card.slug} />}
                       {card.theme === "city-postcard" && (
                         <Image
                           className={styles.postcardThumbnail}

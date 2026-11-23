@@ -1,11 +1,13 @@
 import { describe, expect, it } from "vitest";
 import { cardBrowseLabel, cardTemplates, getCardTemplate, getCollectionFilters, getCollectionGroups, getVisibleCardTemplates } from "./catalog";
 import { cityPostcardManifests } from "./postcards/destinations";
+import { birthdayArtSlugs } from "./birthday/designs";
 
 describe("card template catalog", () => {
   it("preserves existing designs and gives every template a unique address", () => {
     expect(cardTemplates.map((template) => template.slug)).toEqual(expect.arrayContaining([
       "little-sunshine", "same-sky", "make-a-wish", "city-postcard-hong-kong", "city-postcard-taipei",
+      ...birthdayArtSlugs,
       ...cityPostcardManifests.map((destination) => destination.slug),
     ]));
     expect(new Set(cardTemplates.map((template) => template.slug)).size).toBe(cardTemplates.length);
@@ -63,7 +65,7 @@ describe("card template catalog", () => {
       "city-postcard-hong-kong", "city-postcard-taipei",
       ...cityPostcardManifests.map((destination) => destination.slug),
     ]));
-    expect(groups[1].cards.map((card) => card.slug)).toContain("make-a-wish");
+    expect(groups[1].cards.map((card) => card.slug)).toEqual(expect.arrayContaining(["make-a-wish", ...birthdayArtSlugs]));
     expect(groups[2].cards.map((card) => card.slug)).toEqual(expect.arrayContaining(["little-sunshine", "same-sky"]));
   });
 

@@ -2,6 +2,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import { renderRecipientCard } from "./RecipientCard";
 import { cityPostcardManifests } from "@/lib/cards/postcards/destinations";
+import { birthdayArtSlugs } from "@/lib/cards/birthday/designs";
 
 const content = {
   recipientName: "Recipient",
@@ -14,6 +15,7 @@ describe("private recipient card rendering", () => {
     ["little-sunshine", "Open the envelope for"] as const,
     ["same-sky", "Unfold the night-sky card"] as const,
     ["make-a-wish", "Blow out the birthday candle"] as const,
+    ...birthdayArtSlugs.map((slug) => [slug, "data-action"] as const),
     ...cityPostcardManifests.map(({ slug }) => [slug, "Turn postcard over to read the message"] as const),
   ])("reuses %s without adding shop UI", (slug, controlLabel) => {
     const card = renderRecipientCard(slug, content);
@@ -59,6 +61,7 @@ describe("private recipient card rendering", () => {
   );
 
   it.each(["little-sunshine", "same-sky", "make-a-wish",
+    ...birthdayArtSlugs,
     ...cityPostcardManifests.map((destination) => destination.slug)])(
     "applies each text size to the reading region of %s",
     (slug) => {

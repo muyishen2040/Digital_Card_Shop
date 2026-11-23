@@ -5,6 +5,8 @@ import { SkyCard } from "./sky/SkyCard";
 import { WishCard } from "./wish/WishCard";
 import { CityPostcard } from "./postcard/CityPostcard";
 import { getCardTemplate } from "@/lib/cards/catalog";
+import { BirthdayArtCard } from "./birthday/BirthdayArtCard";
+import { isBirthdayArtSlug } from "@/lib/cards/birthday/designs";
 
 /** Reuse the exact recipient experience; private instances never get storefront chrome. */
 export function renderRecipientCard(
@@ -14,6 +16,9 @@ export function renderRecipientCard(
   const template = getCardTemplate(templateSlug);
   if (template?.theme === "city-postcard") {
     return <CityPostcard design={template.postcard} content={content} />;
+  }
+  if (isBirthdayArtSlug(templateSlug)) {
+    return <BirthdayArtCard design={templateSlug} content={content} />;
   }
   switch (templateSlug) {
     case "little-sunshine":
