@@ -249,25 +249,41 @@
 /* A full two-page spread remains visible on a narrow phone. The recipient can
    enlarge the right page to read instead of losing the left leaf off-screen. */
 .readingToggle { display: none; }
+/* The closed mobile cover and the opened leaves keep an approximately 4:5 paper
+   ratio. Changing the reading height must not stretch the physical card. */
 @media (max-width: 700px) {
-  .scene { padding: 18px; perspective: 1300px; }
+  .scene { padding: 12px; perspective: 1300px; grid-template-columns: minmax(0, 1fr); }
   .book {
-    width: min(calc(100vw - 36px), 510px);
-    height: clamp(415px, 76svh, 660px);
-    transform: translateX(-25%);
+    --mobile-book-width: min(calc(100vw - 28px), 500px);
+    width: var(--mobile-book-width);
+    height: calc(var(--mobile-book-width) * 1.125);
+    transform: none;
+    transition: height .46s cubic-bezier(.22, 1, .36, 1);
   }
-  .book.unfolded { transform: none; }
+  .book.unfolded {
+    height: calc(var(--mobile-book-width) * .65);
+    transform: none;
+  }
+  .book.readingMode { height: min(75svh, 610px); }
   .rightPage {
     left: 50%;
     width: 50%;
-    padding: 57px 14px 30px;
+    padding: 48px 13px 18px;
     border-radius: 0 5px 5px 0;
-    transition: left .32s ease, width .32s ease, padding .32s ease;
+    opacity: 0;
+    visibility: hidden;
+    transition: left .32s ease, width .32s ease, padding .32s ease, opacity .3s ease;
   }
+  .unfolded .rightPage { opacity: 1; visibility: visible; }
   .rightPage::after { inset: 13px; }
-  .cover { left: 50%; width: 50%; }
-  .unfolded .cover { transform: rotateY(-180deg); }
-  .coverTitle { font-size: clamp(24px, 6.8vw, 34px); }
+  .cover {
+    left: 5%;
+    width: 90%;
+    transition: transform .92s cubic-bezier(.22, 1, .36, 1), left .92s cubic-bezier(.22, 1, .36, 1), width .92s cubic-bezier(.22, 1, .36, 1);
+  }
+  .unfolded .cover { left: 50%; width: 50%; transform: rotateY(-180deg); }
+  .book.readingMode .cover { opacity: 0; pointer-events: none; }
+  .coverTitle { top: 59%; font-size: clamp(26px, 7.5vw, 38px); }
   .messagePage h1 { font-size: calc(var(--card-text-scale, 1) * clamp(22px, 5.7vw, 30px)); margin-bottom: 16px; }
   .insideSun { font-size: 23px; margin-bottom: 15px; }
   .message { font-size: calc(var(--card-text-scale, 1) * 13.5px); line-height: 1.65; }
@@ -276,19 +292,30 @@
   .insideArt .moon { width: 53px; height: 53px; }
   .coverBorder { inset: 9px; }
   .coverBottom { bottom: 5%; }
+  .cornerShape { width: 42px; height: 42px; justify-self: end; align-self: start; }
   .readingToggle {
-    display: block; position: absolute; z-index: 7;
-    top: 12px; left: 14px;
-    padding: 6px 5px; border: 0; border-bottom: 1px solid #bcb1c8;
-    background: transparent; color: #5a5376;
-    font: 600 11px/1.2 var(--font-sky-body), Arial, sans-serif;
+    display: block;
+    position: absolute;
+    z-index: 7;
+    top: 6px;
+    left: 10px;
+    min-width: 78px;
+    height: 42px;
+    padding: 0 5px;
+    border: 0;
+    border-bottom: 1px solid #bcb1c8;
+    background: transparent;
+    color: #5a5376;
+    font: 600 12px/1.2 var(--font-sky-body), Arial, sans-serif;
     cursor: pointer;
   }
   .readingToggle:disabled { visibility: hidden; }
   .readingToggle:focus-visible { outline: 2px solid #74769d; outline-offset: 2px; }
   .readingExpanded {
-    z-index: 6; left: 0; width: 100%;
-    padding: 62px clamp(25px, 6vw, 45px) 34px;
+    z-index: 6;
+    left: 0;
+    width: 100%;
+    padding: 64px clamp(25px, 6vw, 45px) 26px;
     border-radius: 5px;
   }
   .readingExpanded .messagePage h1 { font-size: calc(var(--card-text-scale, 1) * clamp(35px, 7vw, 46px)); }
@@ -296,14 +323,13 @@
   .readingExpanded .signature { font-size: calc(var(--card-text-scale, 1) * 13px); letter-spacing: .07em; }
 }
 @media (max-width: 370px) {
-  .scene { padding: 11px; }
-  .book { width: calc(100vw - 22px); height: clamp(400px, 79svh, 580px); }
-  .rightPage { padding: 52px 11px 25px; }
+  .scene { padding: 10px; }
+  .rightPage { padding: 48px 11px 18px; }
   .rightPage::after { inset: 9px; }
   .messagePage h1 { font-size: calc(var(--card-text-scale, 1) * 21px); }
   .message { font-size: calc(var(--card-text-scale, 1) * 13px); line-height: 1.6; }
-  .coverTitle { font-size: 23px; }
-  .readingExpanded { padding: 62px 24px 27px; }
+  .coverTitle { font-size: 26px; }
+  .readingExpanded { padding: 60px 24px 27px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .book, .cover, .cornerShape, .rightPage { transition: none !important; }

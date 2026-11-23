@@ -20,7 +20,7 @@ Unlike A Little Sunshine, this design has **no envelope and no letter emerging f
 
 - The first frame clearly shows a card with physical edges, depth and a visible paper spine. It is centered as a closed object, not hidden among tappable stars.
 - At desktop widths, the closed right-hand cover pivots outward to the left around the spine; the book recenters into an open two-page spread. The left page is the inside of the cover, the right page contains the message.
-- On narrow phones, keep both leaves visible in the open spread, with a separate full-width reading mode for the personal note. Do not crop the left page or compress the message into an unreadably narrow column.
+- On narrow phones, size the closed cover at approximately a 4:5 portrait ratio rather than stretching it to the viewport height. The unfolded two-leaf spread fits the viewport at a similar per-leaf ratio; the dedicated reading mode expands to the available card width and a bounded viewport height with scrolling for long notes. Do not crop either leaf or compress the message into an unreadably narrow column. The shared component is used in both the sender preview and private recipient page.
 - In the opened state, the back of the cover is the main close surface on desktop. A small folded page corner remains available on the upper-right of the message page, especially for mobile users.
 - The text body itself never closes the card. It remains selectable and vertically scrollable for long messages.
 - The experience settles into a still reading state, with no ongoing sparkling or looping reveal animations.

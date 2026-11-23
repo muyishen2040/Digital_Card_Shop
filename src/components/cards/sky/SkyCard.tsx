@@ -93,7 +93,7 @@ export function SkyCard({ content }: { content: CardPersonalization }) {
         ))}
       </div>
       <div className={styles.scene}>
-        <div className={`${styles.book} ${unfolded ? styles.unfolded : ""}`}>
+        <div className={`${styles.book} ${unfolded ? styles.unfolded : ""} ${readingExpanded ? styles.readingMode : ""}`}>
           <section
             className={`${styles.rightPage} ${readingExpanded ? styles.readingExpanded : ""}`}
             aria-hidden={phase !== "open"}
