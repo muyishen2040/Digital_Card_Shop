@@ -1,0 +1,23 @@
+.scene {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+.scene svg {
+  width: min(82%, 320px);
+  height: min(90%, 380px);
+  filter: drop-shadow(0 14px 17px rgba(29, 23, 22, .17));
+  transition: transform .35s cubic-bezier(.22, 1, .36, 1);
+}
+.scene:hover svg { transform: translateY(-4px); }
+.velvet-encore { background: #301f2a; }
+.birthday-bloom { background: #ecece2; }
+.golden-parcel { background: #293743; }
+.another-orbit { background: #1c3948; }
+.birthday-record { background: #ab725f; }
+@media (prefers-reduced-motion: reduce) {
+  .scene svg { transition: none; }
+}
