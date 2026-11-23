@@ -1,5 +1,6 @@
 import type { CardCollectionId, CardOccasion, CardTemplate } from "@/types/card";
 import { cityPostcardTemplates } from "./postcards/destinations";
+import { birthdayArtTemplates } from "./birthday/designs";
 
 export const cardTemplates: readonly CardTemplate[] = [
   {
@@ -26,6 +27,7 @@ export const cardTemplates: readonly CardTemplate[] = [
     description: "A candle, a wish, and a burst of joyful confetti.",
     theme: "birthday",
   },
+  ...birthdayArtTemplates,
   ...cityPostcardTemplates,
 ];
 
