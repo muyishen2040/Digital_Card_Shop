@@ -18,8 +18,8 @@ describe("Under the Same Sky recipient card", () => {
     expect(html).toContain("— Taylor");
     expect(html).not.toContain("Illuminate western star");
     expect(html).not.toContain("constellation complete");
-    expect(html).toContain("Read note");
-    expect(html).toContain('aria-pressed="false"');
-    expect(html.match(/<button\b/g)).toHaveLength(3);
+    expect(html).not.toContain("Read note");
+    expect(html).not.toContain("Full card");
+    expect(html.match(/<button\b/g)).toHaveLength(2);
   });
 });

@@ -246,11 +246,7 @@
 }
 .foldCorner:not(:disabled):active .cornerShape { transform: translate(-1px, 1px) scale(.97); }
 .srOnly { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; border: 0; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; }
-/* A full two-page spread remains visible on a narrow phone. The recipient can
-   enlarge the right page to read instead of losing the left leaf off-screen. */
-.readingToggle { display: none; }
-/* The closed mobile cover and the opened leaves keep an approximately 4:5 paper
-   ratio. Changing the reading height must not stretch the physical card. */
+/* The paper opens directly to a full-width note on phones; no extra control. */
 @media (max-width: 700px) {
   .scene { padding: 12px; perspective: 1300px; grid-template-columns: minmax(0, 1fr); }
   .book {
@@ -258,78 +254,52 @@
     width: var(--mobile-book-width);
     height: calc(var(--mobile-book-width) * 1.125);
     transform: none;
-    transition: height .46s cubic-bezier(.22, 1, .36, 1);
   }
-  .book.unfolded {
-    height: calc(var(--mobile-book-width) * .65);
-    transform: none;
-  }
-  .book.readingMode { height: min(75svh, 610px); }
+  .book.unfolded { transform: none; }
   .rightPage {
-    left: 50%;
-    width: 50%;
-    padding: 48px 13px 18px;
-    border-radius: 0 5px 5px 0;
+    left: 0;
+    width: 100%;
+    padding: 62px clamp(25px, 6vw, 45px) 28px;
+    border-radius: 5px;
     opacity: 0;
     visibility: hidden;
-    transition: left .32s ease, width .32s ease, padding .32s ease, opacity .3s ease;
+    transition: opacity .4s ease, visibility 0s linear .4s;
   }
-  .unfolded .rightPage { opacity: 1; visibility: visible; }
-  .rightPage::after { inset: 13px; }
+  .unfolded .rightPage {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity .4s ease .16s, visibility 0s;
+  }
+  .rightPage::after { inset: 14px; }
   .cover {
-    left: 5%;
-    width: 90%;
-    transition: transform .92s cubic-bezier(.22, 1, .36, 1), left .92s cubic-bezier(.22, 1, .36, 1), width .92s cubic-bezier(.22, 1, .36, 1);
+    left: 5%; width: 90%;
+    transition: transform .92s cubic-bezier(.22, 1, .36, 1),
+      left .92s cubic-bezier(.22, 1, .36, 1),
+      width .92s cubic-bezier(.22, 1, .36, 1);
   }
   .unfolded .cover { left: 50%; width: 50%; transform: rotateY(-180deg); }
-  .book.readingMode .cover { opacity: 0; pointer-events: none; }
+  .fullyOpen .cover {
+    opacity: 0; visibility: hidden; pointer-events: none;
+    transition: opacity .16s ease, visibility 0s linear .16s;
+  }
   .coverTitle { top: 59%; font-size: clamp(26px, 7.5vw, 38px); }
-  .messagePage h1 { font-size: calc(var(--card-text-scale, 1) * clamp(22px, 5.7vw, 30px)); margin-bottom: 16px; }
-  .insideSun { font-size: 23px; margin-bottom: 15px; }
-  .message { font-size: calc(var(--card-text-scale, 1) * 13.5px); line-height: 1.65; }
-  .signature { font-size: calc(var(--card-text-scale, 1) * 11px); margin-top: 16px; letter-spacing: .02em; }
+  .messagePage h1 { font-size: calc(var(--card-text-scale, 1) * clamp(32px, 7vw, 43px)); margin-bottom: 20px; }
+  .insideSun { font-size: 26px; margin-bottom: 18px; }
+  .message { font-size: calc(var(--card-text-scale, 1) * 15px); line-height: 1.8; }
+  .signature { font-size: calc(var(--card-text-scale, 1) * 13px); margin-top: 20px; letter-spacing: .06em; }
   .moon { width: 57px; height: 57px; }
   .insideArt .moon { width: 53px; height: 53px; }
   .coverBorder { inset: 9px; }
   .coverBottom { bottom: 5%; }
   .cornerShape { width: 42px; height: 42px; justify-self: end; align-self: start; }
-  .readingToggle {
-    display: block;
-    position: absolute;
-    z-index: 7;
-    top: 6px;
-    left: 10px;
-    min-width: 78px;
-    height: 42px;
-    padding: 0 5px;
-    border: 0;
-    border-bottom: 1px solid #bcb1c8;
-    background: transparent;
-    color: #5a5376;
-    font: 600 12px/1.2 var(--font-sky-body), Arial, sans-serif;
-    cursor: pointer;
-  }
-  .readingToggle:disabled { visibility: hidden; }
-  .readingToggle:focus-visible { outline: 2px solid #74769d; outline-offset: 2px; }
-  .readingExpanded {
-    z-index: 6;
-    left: 0;
-    width: 100%;
-    padding: 64px clamp(25px, 6vw, 45px) 26px;
-    border-radius: 5px;
-  }
-  .readingExpanded .messagePage h1 { font-size: calc(var(--card-text-scale, 1) * clamp(35px, 7vw, 46px)); }
-  .readingExpanded .message { font-size: calc(var(--card-text-scale, 1) * 15px); line-height: 1.8; }
-  .readingExpanded .signature { font-size: calc(var(--card-text-scale, 1) * 13px); letter-spacing: .07em; }
 }
 @media (max-width: 370px) {
   .scene { padding: 10px; }
-  .rightPage { padding: 48px 11px 18px; }
+  .rightPage { padding: 52px 23px 26px; }
   .rightPage::after { inset: 9px; }
-  .messagePage h1 { font-size: calc(var(--card-text-scale, 1) * 21px); }
-  .message { font-size: calc(var(--card-text-scale, 1) * 13px); line-height: 1.6; }
+  .messagePage h1 { font-size: calc(var(--card-text-scale, 1) * 32px); }
+  .message { font-size: calc(var(--card-text-scale, 1) * 14px); line-height: 1.75; }
   .coverTitle { font-size: 26px; }
-  .readingExpanded { padding: 60px 24px 27px; }
 }
 /* A short landscape viewport should not crop the closed card off-screen. */
 @media (min-width: 701px) and (max-height: 500px) {

@@ -46,7 +46,6 @@ function CelestialArt({ inside = false }: { inside?: boolean }) {
 
 export function SkyCard({ content }: { content: CardPersonalization }) {
   const [phase, setPhase] = useState<FoldPhase>("closed");
-  const [readingExpanded, setReadingExpanded] = useState(false);
   const coverRef = useRef<HTMLButtonElement>(null);
   const messageRef = useRef<HTMLElement>(null);
   const restoreCoverFocus = useRef(false);
@@ -74,7 +73,6 @@ export function SkyCard({ content }: { content: CardPersonalization }) {
   function activateFold() {
     if (phase === "open") {
       restoreCoverFocus.current = true;
-      setReadingExpanded(false);
     }
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     setPhase((current) => toggleFold(current, reducedMotion));
@@ -93,9 +91,9 @@ export function SkyCard({ content }: { content: CardPersonalization }) {
         ))}
       </div>
       <div className={styles.scene}>
-        <div className={`${styles.book} ${unfolded ? styles.unfolded : ""} ${readingExpanded ? styles.readingMode : ""}`}>
+        <div className={`${styles.book} ${unfolded ? styles.unfolded : ""} ${phase === "open" ? styles.fullyOpen : ""}`}>
           <section
-            className={`${styles.rightPage} ${readingExpanded ? styles.readingExpanded : ""}`}
+            className={styles.rightPage}
             aria-hidden={phase !== "open"}
             inert={phase !== "open"}
           >
@@ -112,18 +110,6 @@ export function SkyCard({ content }: { content: CardPersonalization }) {
               <p className={styles.message}>{note.message}</p>
               <p className={styles.signature}>— {note.senderName}</p>
             </article>
-            <button
-              className={styles.readingToggle}
-              type="button"
-              onClick={() => {
-                setReadingExpanded((wasExpanded) => !wasExpanded);
-                requestAnimationFrame(() => messageRef.current?.focus());
-              }}
-              aria-pressed={readingExpanded}
-              disabled={phase !== "open"}
-            >
-              {readingExpanded ? "Full card" : "Read note"}
-            </button>
             <button
               type="button"
               className={styles.foldCorner}
