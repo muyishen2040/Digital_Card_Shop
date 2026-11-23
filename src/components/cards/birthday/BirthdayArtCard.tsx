@@ -47,7 +47,8 @@ export function birthdaySceneMarkup(
     .replace("__CARD_MESSAGE__", escapeCardHtml(data.message))
     .replace('<main class="world">', `<main class="world" style="--font-multiplier:${FONT_MULTIPLIER[size]}">`)
     .replace("data-card-text-region", `data-card-text-region style="--card-text-scale:${scale}"`)
-    .replace('class="recipient-note"', 'class="recipient-note" aria-hidden="true" inert');
+    .replace('class="recipient-note"', 'class="recipient-note" inert')
+    .replace(/<article(?![^>]*aria-hidden)[^>]*class="recipient-note"/, '.replace('class="recipient-note"', 'class="recipient-note" aria-hidden="true" inert'); aria-hidden="true"');
 }
 
 /** The same recipient object is rendered for demo, sender preview and private links. */
